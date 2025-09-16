@@ -28,9 +28,9 @@ source venv/bin/activate
 
 ### 4. Save Environment Variables
 ```bash
-export DATABASE_URL='postgresql://neondb_owner:npg_RocZpHi5ey8f@ep-mute-violet-a1l6ie92-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
-export DATABASE_ENCRYPTION_KEY='mYDncrsm3liEgbXcMqPWbMN/riyOnCnJh26Z9wkE0K0='
-export HUGGINGFACE_TOKEN='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'
+export DATABASE_URL=''
+export DATABASE_ENCRYPTION_KEY=''
+export HUGGINGFACE_TOKEN=''
 ```
 
 ### 5. Install Dependencies
@@ -51,10 +51,6 @@ cd elder_companion_flask
 python -m venv venv
 
 source venv/bin/activate  
-
-export DATABASE_URL='postgresql://neondb_owner:npg_RocZpHi5ey8f@ep-mute-violet-a1l6ie92-pooler.ap-southeast-1.aws.neon.tech/neondb?sslmode=require&channel_binding=require'
-export DATABASE_ENCRYPTION_KEY='mYDncrsm3liEgbXcMqPWbMN/riyOnCnJh26Z9wkE0K0='
-export HUGGINGFACE_TOKEN='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'
 
 pip install -r requirements.txt
 
