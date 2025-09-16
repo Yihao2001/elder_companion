@@ -27,11 +27,6 @@ source venv/bin/activate
 ```
 
 ### 4. Save Environment Variables
-```bash
-export DATABASE_URL=''
-export DATABASE_ENCRYPTION_KEY=''
-export HUGGINGFACE_TOKEN=''
-```
 
 ### 5. Install Dependencies
 ```bash
