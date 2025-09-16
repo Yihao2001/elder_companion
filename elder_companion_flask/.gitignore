@@ -4,3 +4,6 @@ env/
 
 # Python cache files
 __pycache__/
+
+# Environment variables
+.env
