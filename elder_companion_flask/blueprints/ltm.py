@@ -6,8 +6,37 @@ from ..utils import get_embedding
 
 ltm_bp = Blueprint("ltm", __name__)
 
+@ltm_bp.route("/ltm", methods=["GET"])
+def get_ltm():
+    db: Session = next(get_db())
+    query = db.query(LongTermMemory)
+
+    elderly_id = request.args.get("elderly_id")
+    category = request.args.get("category")
+
+    if elderly_id:
+        query = query.filter(LongTermMemory.elderly_id == elderly_id)
+    else:
+        return jsonify({"error": "Missing elderly_id"}), 400
+
+    if category:
+        query = query.filter(LongTermMemory.category == category)
+
+    records = query.all()
+    db.close()
+
+    result = [
+        {
+            "category": r.category.value if r.category else None,
+            "key": r.key,
+            "value": r.value,
+            "last_updated": r.last_updated.isoformat()
+        } for r in records
+    ]
+    return jsonify(result), 200
+
 @ltm_bp.route("/ltm", methods=["POST"])
-def add_ltm():
+def post_ltm():
     data = request.json
     elderly_id = data.get("elderly_id")
     category = data.get("category")

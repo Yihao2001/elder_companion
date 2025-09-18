@@ -8,6 +8,47 @@ elderly_bp = Blueprint("elderly", __name__)
 
 SECRET_KEY = Config.DATABASE_ENCRYPTION_KEY
 
+@elderly_bp.route("/elderly", methods=["GET"])
+def get_elderly():
+
+    # return None if elderly_id not present
+    elderly_id = request.args.get("elderly_id")
+    if not elderly_id:
+        return jsonify({"error": "Missing elderly_id"}), 400
+
+    db: Session = next(get_db())
+    params = {"elderly_id": elderly_id, "key": SECRET_KEY}
+
+    # Query with decryption using pgp_sym_decrypt
+    query = text(f"""
+        SELECT
+            id,
+            pgp_sym_decrypt(name::bytea, :key) AS name,
+            pgp_sym_decrypt(date_of_birth::bytea, :key) AS date_of_birth,
+            gender,
+            pgp_sym_decrypt(nationality::bytea, :key) AS nationality,
+            pgp_sym_decrypt(dialect_group::bytea, :key) AS dialect_group,
+            marital_status,
+            pgp_sym_decrypt(address::bytea, :key) AS address
+        FROM elderly_profile
+        WHERE id = :elderly_id
+    """)
+
+    row = db.execute(query, params).fetchone()
+    db.close()
+
+    result = {
+        "id": str(row["id"]),
+        "name": row["name"],
+        "date_of_birth": row["date_of_birth"],
+        "gender": row["gender"],
+        "nationality": row["nationality"],
+        "dialect_group": row["dialect_group"],
+        "marital_status": row["marital_status"],
+        "address": row["address"]
+    }
+    return jsonify(result), 200
+
 @elderly_bp.route("/elderly", methods=["POST"])
 def add_elderly():
     data = request.json
