@@ -15,3 +15,5 @@ class Config:
     # Encryption key
     DATABASE_ENCRYPTION_KEY = os.getenv("DATABASE_ENCRYPTION_KEY")
 
+    # Authorisation key for Flask endpoints
+    AUTHORISATION_KEY = os.getenv("AUTHORISATION_KEY")
