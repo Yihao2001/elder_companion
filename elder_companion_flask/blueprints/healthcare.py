@@ -6,8 +6,37 @@ from ..utils import get_embedding
 
 healthcare_bp = Blueprint("healthcare", __name__)
 
+@healthcare_bp.route("/healthcare", methods=["GET"])
+def get_healthcare():
+    db: Session = next(get_db())
+    query = db.query(HealthcareRecord)
+
+    elderly_id = request.args.get("elderly_id")
+    record_type = request.args.get("record_type")
+
+    if elderly_id:
+        query = query.filter(HealthcareRecord.elderly_id == elderly_id)
+    else:
+        return jsonify({"error": "Missing elderly_id"}), 400
+
+    if record_type:
+        query = query.filter(HealthcareRecord.record_type == record_type)
+
+    records = query.all()
+    db.close()
+
+    result = [
+        {
+            "record_type": r.record_type.value if r.record_type else None,
+            "description": r.description,
+            "diagnosis_date": r.diagnosis_date.isoformat() if r.diagnosis_date else None,
+            "last_updated": r.last_updated.isoformat()
+        } for r in records
+    ]
+    return jsonify(result), 200
+
 @healthcare_bp.route("/healthcare", methods=["POST"])
-def add_healthcare():
+def post_healthcare():
     data = request.json
     elderly_id = data.get("elderly_id")
     record_type = data.get("record_type")
