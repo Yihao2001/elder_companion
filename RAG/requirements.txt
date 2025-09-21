@@ -1,0 +1,21 @@
+# Core agentic frameworks
+langchain
+langgraph
+langchain-core
+langchain-google-genai
+
+# Environment & validation
+python-dotenv
+pydantic
+
+# Database
+psycopg2-binary
+sqlalchemy
+
+# Embeddings / HuggingFace
+sentence-transformers
+huggingface_hub
+
+# Notebook & visualization
+ipython
+graphviz
