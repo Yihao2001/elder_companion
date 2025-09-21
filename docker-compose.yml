@@ -1,0 +1,11 @@
+services:
+  backend:
+    build:
+      context: ./elder_companion_flask
+      dockerfile: Dockerfile.dev
+    env_file:
+      - ./elder_companion_flask/.env
+    volumes:
+      - ./elder_companion_flask:/app
+    ports:
+      - "8000:8000"
