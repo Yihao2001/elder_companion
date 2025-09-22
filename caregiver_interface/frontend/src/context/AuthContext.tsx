@@ -61,28 +61,50 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     };
 
     const login = async (username: string, password: string): Promise<boolean> => {
-        try {
-            const response = await axios.post('/auth/login', {
+        // Local (no backend)
+        if (
+            (username === "caregiver1" && password === "password123") ||
+            (username === "admin" && password === "admin123")
+        ) {
+            const fakeUser: User = {
+                id: "1",
                 username,
-                password,
-            });
+                full_name: username === "admin" ? "System Admin" : "Caregiver One",
+                role: username === "admin" ? "admin" : "caregiver",
+            };
 
-            const { access_token } = response.data;
-
-            // Store token
-            localStorage.setItem('token', access_token);
-            axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-
-            // Get user info
-            const userResponse = await axios.get('/auth/me');
-            setUser(userResponse.data);
-
+            setUser(fakeUser);
+            localStorage.setItem("token", "fake-demo-token"); // optional
             return true;
-        } catch (error) {
-            console.error('Login failed:', error);
-            return false;
         }
+        return false;
     };
+
+
+    // TO UNCOMMENT WHEN WE CONNECT TO THE BACKEND
+    // const login = async (username: string, password: string): Promise<boolean> => {
+    //     try {
+    //         const response = await axios.post('/auth/login', {
+    //             username,
+    //             password,
+    //         });
+
+    //         const { access_token } = response.data;
+
+    //         // Store token
+    //         localStorage.setItem('token', access_token);
+    //         axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
+
+    //         // Get user info
+    //         const userResponse = await axios.get('/auth/me');
+    //         setUser(userResponse.data);
+
+    //         return true;
+    //     } catch (error) {
+    //         console.error('Login failed:', error);
+    //         return false;
+    //     }
+    // };
 
     const logout = () => {
         localStorage.removeItem('token');
