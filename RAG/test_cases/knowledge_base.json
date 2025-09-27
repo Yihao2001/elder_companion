@@ -1,0 +1,202 @@
+{
+  "STM_conversations":[
+    {
+      "content": "Please remind me to call my grandson tonight.",
+      "timestamp": "2024-03-12 09:15:00"
+    },
+    {
+      "content": "Who do I need to call tonight?",
+      "timestamp": "2024-03-12 20:10:00"
+    },
+    {
+      "content": "I’d like chicken for dinner today.",
+      "timestamp": "2024-04-05 11:30:00"
+    },
+    {
+      "content": "What did I say I wanted for dinner?",
+      "timestamp": "2024-04-05 18:15:00"
+    },
+    {
+      "content": "I feel like going to the park later this evening.",
+      "timestamp": "2024-05-09 14:00:00"
+    },
+    {
+      "content": "What did I say I wanted to do later?",
+      "timestamp": "2024-05-09 18:20:00"
+    },
+    {
+      "content": "Please remind me to water the plants after lunch.",
+      "timestamp": "2024-06-01 10:45:00"
+    },
+    {
+      "content": "What do I need to do after lunch?",
+      "timestamp": "2024-06-01 13:30:00"
+    },
+    {
+      "content": "I’ll be meeting my friend Ah Seng tomorrow afternoon.",
+      "timestamp": "2024-07-14 16:00:00"
+    },
+    {
+      "content": "Who am I meeting tomorrow?",
+      "timestamp": "2024-07-15 09:20:00"
+    },
+    {
+      "content": "Let’s listen to Teresa Teng songs later.",
+      "timestamp": "2024-08-20 15:10:00"
+    },
+    {
+      "content": "What did I say I want to listen to later?",
+      "timestamp": "2024-08-20 19:30:00"
+    },
+    {
+      "content": "Also, remind me to buy oranges after my cardiology appointment.",
+      "timestamp": "2024-09-30 09:40:00"
+    },
+    {
+      "content": "What do I need to do after my cardiology appointment?",
+      "timestamp": "2024-09-30 11:20:00"
+    },
+    {
+      "content": "Can you remind me to ask Mr. Lim tomorrow morning?",
+      "timestamp": "2024-10-04 19:45:00"
+    },
+    {
+      "content": "Remind me to call David Tan on Sunday.",
+      "timestamp": "2024-11-03 17:20:00"
+    },
+    {
+      "content": "Please remind me to skip my walk if it rains tomorrow.",
+      "timestamp": "2024-11-12 20:05:00"
+    },
+    {
+      "content": "Can you remind me to bring my glucose monitor for my next check-up?",
+      "timestamp": "2024-12-05 14:50:00"
+    },
+    {
+      "content": "Remind me to get a cake for this year’s celebration.",
+      "timestamp": "2024-12-15 10:00:00"
+    },
+    {
+      "content": "Can you remind me to tell my grandson that badminton story later?",
+      "timestamp": "2024-12-28 18:40:00"
+    }
+  ],
+  "LTM_facts": [
+    {
+      "type": "identity",
+      "preferred_name": "Mr. Tan Wei Ming",
+      "full_name": "Tan Wei Ming",
+      "date_of_birth": "1947-06-12",
+      "address": "123 Ang Mo Kio Ave 5, Singapore"
+    },
+    {
+      "type": "contact",
+      "contact_name": "Alice Tan",
+      "relationship_type": "daughter",
+      "is_emergency_contact": true
+    },
+    {
+      "type": "contact",
+      "contact_name": "David Tan",
+      "relationship_type": "eldest son"
+    },
+    {
+      "type": "contact",
+      "contact_name": "Ah Seng",
+      "relationship_type": "friend"
+    },
+    {
+      "type": "contact",
+      "contact_name": "Mr. Lim",
+      "relationship_type": "neighbor",
+      "activity": "morning walks"
+    },
+    {
+      "type": "family",
+      "family_info": "Children and grandchildren usually join birthday celebrations"
+    },
+    {
+      "type": "preference",
+      "category": "music",
+      "value": "jazz"
+    },
+    {
+      "type": "hobby",
+      "value": "gardening"
+    },
+    {
+      "type": "routine",
+      "routine_name": "breakfast",
+      "food_preference": "soft boiled eggs and coffee"
+    },
+    {
+      "type": "routine",
+      "routine_name": "morning routine",
+      "activity": "morning walk at 7am"
+    },
+    {
+      "type": "life_memory",
+      "memory": "used to play badminton in school days"
+    }
+  ],
+  "HCM_data": [
+    {
+      "type": "medication",
+      "medication_name": "Metformin",
+      "dosage": "500mg",
+      "frequency": "every morning"
+    },
+    {
+      "type": "medication",
+      "medication_name": "Amlodipine",
+      "dosage": "10mg",
+      "frequency": "every morning"
+    },
+    {
+      "type": "allergy",
+      "allergen": "penicillin",
+      "reaction_type": "rash"
+    },
+    {
+      "type": "condition",
+      "condition_name": "Type 2 Diabetes",
+      "diagnosis_date": "2024-05-10",
+      "status": "stable"
+    },
+    {
+      "type": "condition",
+      "condition_name": "Hypertension",
+      "status": "active"
+    },
+    {
+      "type": "vital_sign",
+      "vital": "blood pressure",
+      "value": "128/82",
+      "date": "2025-09-18"
+    },
+    {
+      "type": "appointment",
+      "event": "cardiology appointment",
+      "time": "2024-09-30 10:00:00",
+      "facility": "Yishun Polyclinic"
+    },
+    {
+      "type": "appointment",
+      "event": "next polyclinic appointment",
+      "time": "2024-10-05 09:00:00",
+      "facility": "Polyclinic"
+    },
+    {
+      "type": "facility",
+      "facility_name": "Tan Tock Seng Hospital",
+      "purpose": "check-ups"
+    }
+  ],
+  "elderly_profile": {
+    "type": "identity",
+    "preferred_name": "Mr. Tan Wei Ming",
+    "full_name": "Tan Wei Ming",
+    "date_of_birth": "1947-06-12",
+    "address": "123 Ang Mo Kio Ave 5, Singapore"
+  }
+}
