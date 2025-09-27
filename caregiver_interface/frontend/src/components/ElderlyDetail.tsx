@@ -40,7 +40,7 @@ const ElderlyDetail: React.FC = () => {
     const [healthcareInfo, setHealthcareInfo] = useState<HealthcareInfo[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const db_auth = { headers: { Authorization: `Bearer TOKEN` }}
+    const db_auth = { headers: { Authorization: `Bearer 3cb6ec9cca42a2924cc3a592418006afa6b3487eeff92e3b714a5a004de3f033` }}
 
     useEffect(() => {
         const fetchProfile = async () => {
