@@ -40,37 +40,16 @@ const ElderlyDetail: React.FC = () => {
     const [healthcareInfo, setHealthcareInfo] = useState<HealthcareInfo[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const db_auth = { headers: { Authorization: `Bearer 3cb6ec9cca42a2924cc3a592418006afa6b3487eeff92e3b714a5a004de3f033` }}
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
                 const [elderlyRes, ltmRes, healthcareRes] = await Promise.all([
-                    axios.get(
-                        `http://127.0.0.1:5000/api/elderly?elderly_id=${id}`,
-                        {
-                            headers: {
-                                Authorization: `Bearer 3cb6ec9cca42a2924cc3a592418006afa6b3487eeff92e3b714a5a004de3f033`
-                            }
-                        }
-                    ),
-                    axios.get(
-                        `http://127.0.0.1:5000/api/ltm?elderly_id=${id}`,
-                        {
-                            headers: {
-                                Authorization: `Bearer 3cb6ec9cca42a2924cc3a592418006afa6b3487eeff92e3b714a5a004de3f033`
-                            }
-                        }
-                    ),
-                    axios.get(
-                        `http://127.0.0.1:5000/api/healthcare?elderly_id=${id}`,
-                        {
-                            headers: {
-                                Authorization: `Bearer 3cb6ec9cca42a2924cc3a592418006afa6b3487eeff92e3b714a5a004de3f033`
-                            }
-                        }
-                    )
+                    axios.get(`http://127.0.0.1:5000/api/elderly?elderly_id=${id}`, db_auth),
+                    axios.get(`http://127.0.0.1:5000/api/ltm?elderly_id=${id}`, db_auth),
+                    axios.get(`http://127.0.0.1:5000/api/healthcare?elderly_id=${id}`, db_auth)
                 ]);
-
                 setElderly(elderlyRes.data);
                 setLtmInfo(ltmRes.data);
                 setHealthcareInfo(healthcareRes.data);
@@ -84,6 +63,10 @@ const ElderlyDetail: React.FC = () => {
 
         fetchProfile();
     }, [id]);
+
+    const handleEditClick = () => {
+        navigate(`/elderly/${id}/edit`);
+    };
 
     if (loading) return <div>Loading profile...</div>;
     if (error) return <div>{error}</div>;
@@ -102,6 +85,11 @@ const ElderlyDetail: React.FC = () => {
             </div>
 
             <h2>{elderly.name}</h2>
+            <div className="profile-header">
+                <button onClick={handleEditClick} className="edit-button">
+                    ✏️ Edit Records
+                </button>
+            </div>
             {elderly.preferred_name && (
                 <p><strong>Preferred Name:</strong> {elderly.preferred_name}</p>
             )}

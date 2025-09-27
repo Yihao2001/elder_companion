@@ -4,6 +4,7 @@ import Login from './components/Login';
 import Dashboard from './components/Dashboard';
 import ElderlyList from './components/ElderlyList';
 import ElderlyDetail from './components/ElderlyDetail';
+import ElderlyEdit from './components/ElderlyEdit';
 import { AuthProvider, useAuth } from './context/AuthContext';
 import './App.css';
 
@@ -40,6 +41,14 @@ const App: React.FC = () => {
                             element={
                                 <ProtectedRoute>
                                     <ElderlyDetail />
+                                </ProtectedRoute>
+                            }
+                        />
+                        <Route
+                            path="/elderly/:id/edit"
+                            element={
+                                <ProtectedRoute>
+                                    <ElderlyEdit />
                                 </ProtectedRoute>
                             }
                         />

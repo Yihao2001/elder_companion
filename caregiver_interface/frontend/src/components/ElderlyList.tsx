@@ -22,22 +22,17 @@ const ElderlyList: React.FC = () => {
     const [elderly, setElderly] = useState<ElderlyProfile[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const [expandedId, setExpandedId] = useState<string | null>(null);
-
+    const db_auth = { headers: { Authorization: `Bearer 3cb6ec9cca42a2924cc3a592418006afa6b3487eeff92e3b714a5a004de3f033` }}
 
     useEffect(() => {
     // Temporary hardcoded list of elderly IDs you want to fetch
-    const elderlyIds = ['1632319b-05ba-4ff9-ba35-be63a24e42af', '1632319b-05ba-4ff9-ba35-be63a24e42af'];
+    const elderlyIds = ['1632319b-05ba-4ff9-ba35-be63a24e42af'];
 
     const fetchProfiles = async () => {
         try {
             const results = await Promise.all(
                 elderlyIds.map(id =>
-                    axios.get(`http://127.0.0.1:5000/api/elderly?elderly_id=${id}`, {
-                    headers: {
-                        Authorization: `Bearer 3cb6ec9cca42a2924cc3a592418006afa6b3487eeff92e3b714a5a004de3f033`
-                    }
-                    }).then(res => res.data)
+                    axios.get(`http://127.0.0.1:5000/api/elderly?elderly_id=${id}`, db_auth).then(res => res.data)
                 )
             );
             setElderly(results);
@@ -49,7 +44,7 @@ const ElderlyList: React.FC = () => {
         }};
 
         fetchProfiles();
-    }, []);
+    });
 
     const handleElderlyClick = (elderlyId: string) => {
         navigate(`/elderly/${elderlyId}`);
