@@ -5,15 +5,15 @@ import axios from 'axios';
 
 interface ElderlyProfile {
     id: string;
-    first_name: string;
-    last_name: string;
-    preferred_name?: string;
+    name: string;
+    preferred_name: string;
     date_of_birth?: string;
     gender?: string;
     phone_number?: string;
-    emergency_contact_name?: string;
-    emergency_contact_phone?: string;
     address?: string;
+    marital_status?: string;
+    dialect_group?: string;
+    nationality?: string;
 }
 
 const ElderlyList: React.FC = () => {
@@ -22,22 +22,34 @@ const ElderlyList: React.FC = () => {
     const [elderly, setElderly] = useState<ElderlyProfile[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
+    const [expandedId, setExpandedId] = useState<string | null>(null);
+
 
     useEffect(() => {
-        fetchElderlyProfiles();
-    }, []);
+    // Temporary hardcoded list of elderly IDs you want to fetch
+    const elderlyIds = ['1632319b-05ba-4ff9-ba35-be63a24e42af', '1632319b-05ba-4ff9-ba35-be63a24e42af'];
 
-    const fetchElderlyProfiles = async () => {
+    const fetchProfiles = async () => {
         try {
-            const response = await axios.get('/elderly');
-            setElderly(response.data);
+            const results = await Promise.all(
+                elderlyIds.map(id =>
+                    axios.get(`http://127.0.0.1:5000/api/elderly?elderly_id=${id}`, {
+                    headers: {
+                        Authorization: `Bearer 3cb6ec9cca42a2924cc3a592418006afa6b3487eeff92e3b714a5a004de3f033`
+                    }
+                    }).then(res => res.data)
+                )
+            );
+            setElderly(results);
         } catch (err) {
-            setError('Failed to load elderly profiles');
-            console.error('Elderly profiles fetch error:', err);
+            setError("Failed to load elderly profiles");
+            console.error("Elderly profiles fetch error:", err);
         } finally {
             setLoading(false);
-        }
-    };
+        }};
+
+        fetchProfiles();
+    }, []);
 
     const handleElderlyClick = (elderlyId: string) => {
         navigate(`/elderly/${elderlyId}`);
@@ -60,7 +72,7 @@ const ElderlyList: React.FC = () => {
             </div>
 
             <div className="nav-links">
-                <Link to="/dashboard" className="nav-link">Dashboard</Link>
+                {/* <Link to="/dashboard" className="nav-link">Dashboard</Link> */}
                 <Link to="/elderly" className="nav-link">Elderly Profiles</Link>
             </div>
 
@@ -79,7 +91,7 @@ const ElderlyList: React.FC = () => {
                         onClick={() => handleElderlyClick(person.id)}
                     >
                         <div className="elderly-name">
-                            {person.first_name} {person.last_name}
+                            {person.name}
                             {person.preferred_name && (
                                 <span style={{ fontSize: '0.9rem', color: '#666', fontWeight: 'normal' }}>
                                     {' '}({person.preferred_name})
@@ -99,26 +111,6 @@ const ElderlyList: React.FC = () => {
                             </div>
                         )}
 
-                        {person.phone_number && (
-                            <div className="elderly-info">
-                                <strong>Phone:</strong> {person.phone_number}
-                            </div>
-                        )}
-
-                        {person.emergency_contact_name && (
-                            <div className="elderly-info">
-                                <strong>Emergency Contact:</strong> {person.emergency_contact_name}
-                                {person.emergency_contact_phone && (
-                                    <span> ({person.emergency_contact_phone})</span>
-                                )}
-                            </div>
-                        )}
-
-                        {person.address && (
-                            <div className="elderly-info">
-                                <strong>Address:</strong> {person.address}
-                            </div>
-                        )}
                     </div>
                 ))}
             </div>

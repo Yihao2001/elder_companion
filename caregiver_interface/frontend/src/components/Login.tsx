@@ -19,7 +19,7 @@ const Login: React.FC = () => {
         try {
             const success = await login(username, password);
             if (success) {
-                navigate('/dashboard');
+                navigate('/elderly');
             } else {
                 setError('Invalid username or password');
             }
