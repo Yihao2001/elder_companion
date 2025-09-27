@@ -35,11 +35,11 @@ from langgraph.prebuilt import ToolNode, create_react_agent
 from langgraph.graph.message import add_messages
 
 # Import embedder
-from embedder import Embedder
+from RAG.embedder import Embedder
 
-from shared.schemas.schema_stm import InsertShortTermSchema
-from shared.schemas.schema_ltm import InsertLongTermSchema, LTMCategories
-from shared.schemas.schema_hcm import InsertHealthSchema, HealthRecordTypes
+from RAG.shared.schemas.schema_stm import InsertShortTermSchema
+from RAG.shared.schemas.schema_ltm import InsertLongTermSchema, LTMCategories
+from RAG.shared.schemas.schema_hcm import InsertHealthSchema, HealthRecordTypes
 
 
 class AgentState(TypedDict):
@@ -110,7 +110,7 @@ class InsertionAgent:
     - Only store what's explicitly shared and matches a bucket.
     """
 
-    def __init__(self, elderly_id: str = "12345678-1234-1234-1234-012345678910"):
+    def __init__(self, elderly_id: str):
         """
         Initialize the Insertion Agent
 
@@ -172,6 +172,7 @@ class InsertionAgent:
         )
 
     def _ensure_elderly_profile(self):
+        default_elderly_id = "12345678-1234-1234-1234-012345678910"
         """Ensure the elderly profile exists in the database"""
         profile_data = {
             "name": "Admiralty Bedok Canberra Tan",
@@ -193,7 +194,7 @@ class InsertionAgent:
                                 pgp_sym_encrypt(%s,%s), pgp_sym_encrypt(%s,%s), %s, pgp_sym_encrypt(%s,%s))
                         ON CONFLICT (id) DO NOTHING;
                     """, (
-                        self.elderly_id,
+                        default_elderly_id,
                         profile_data["name"], self.secret_key,
                         profile_data["date_of_birth"], self.secret_key,
                         profile_data["gender"],
@@ -204,6 +205,63 @@ class InsertionAgent:
                     ))
         except Exception as e:
             logging.warning(f"Could not ensure elderly profile: {e}")
+
+    def manual_insert_short_term(self, content: str, timestamp: str = None, elderly_id: str = None) -> dict:
+        """Manual insertion of short-term memory item with fine-grained control over insertion timing etc.
+        This method is solely used for testing and debugging purposes and not to be used in production.
+
+        Args:
+            content: The content to store
+            timestamp: Custom timestamp in ISO format (YYYY-MM-DDTHH:MM:SS) or None for current time
+            elderly_id: Elderly profile ID or None to use default
+        """
+        if elderly_id is None:
+            elderly_id = self.elderly_id
+
+        # Parse and validate timestamp
+        if timestamp is None:
+            created_at = datetime.utcnow()
+        else:
+            try:
+                # Parse the timestamp string to datetime object
+                created_at = datetime.fromisoformat(timestamp.replace('Z', '+00:00'))
+            except ValueError as e:
+                return {"success": False, "error": f"Invalid timestamp format: {str(e)}. Use ISO format like '2024-01-15T10:30:00'"}
+
+        if not content or not content.strip():
+            return {"success": False, "error": "content is required and cannot be empty."}
+
+        # Use embedder instance instead of local embedding function
+        embedding = self.embedder.embed(content)
+
+        try:
+            with self.engine.connect() as conn:
+                query = text("""
+                             INSERT INTO short_term_memory (elderly_id, content, embedding, created_at)
+                             VALUES (:elderly_id, :content, :embedding, :created_at) RETURNING id, created_at;
+                             """)
+                result = conn.execute(query, {
+                    "elderly_id": elderly_id.strip(),
+                    "content": content.strip(),
+                    "embedding": str(embedding),
+                    "created_at": created_at
+                }).fetchone()
+                conn.commit()
+
+                return {
+                    "success": True,
+                    "message": "Short-term memory stored successfully",
+                    "record_id": str(result.id),
+                    "created_at": result.created_at.isoformat() if result.created_at else None,
+                    "embedding_provided": embedding is not None
+                }
+
+        except SQLAlchemyError as e:
+            logging.error(f"❌ Database error inserting STM: {str(e)}")
+            return {"success": False, "error": f"Database error: {str(e)}"}
+        except Exception as e:
+            logging.error(f"Unexpected error inserting STM: {str(e)}")
+            return {"success": False, "error": f"Unexpected error: {str(e)}"}
 
     def insert_short_term(self, content: str, elderly_id: str = None) -> dict:
         """Insert short-term memory item"""
@@ -248,109 +306,109 @@ class InsertionAgent:
             logging.error(f"Unexpected error inserting STM: {str(e)}")
             return {"success": False, "error": f"Unexpected error: {str(e)}"}
 
-    # def insert_long_term(self, category: str, key: str, value: str, elderly_id: str = None) -> dict:
-    #     """Insert long-term memory item"""
-    #     if elderly_id is None:
-    #         elderly_id = self.elderly_id
-    #
-    #     if not category or not category.strip():
-    #         return {"success": False, "error": "category is required and cannot be empty."}
-    #     if not key or not key.strip():
-    #         return {"success": False, "error": "key is required and cannot be empty."}
-    #     if not value or not value.strip():
-    #         return {"success": False, "error": "value is required and cannot be empty."}
-    #
-    #     # Use embedder instance instead of local embedding function
-    #     embedding = self.embedder.embed(value)
-    #
-    #     try:
-    #         with self.engine.connect() as conn:
-    #             query = text("""
-    #                 INSERT INTO long_term_memory (
-    #                     elderly_id, category, key, value, embedding
-    #                 ) VALUES (
-    #                     :elderly_id, :category, :key, :value, :embedding
-    #                 )
-    #                 RETURNING id, last_updated;
-    #             """)
-    #             result = conn.execute(query, {
-    #                 "elderly_id": elderly_id.strip(),
-    #                 "category": category.strip(),
-    #                 "key": key.strip(),
-    #                 "value": value.strip(),
-    #                 "embedding": str(embedding)
-    #             }).fetchone()
-    #             conn.commit()
-    #
-    #             return {
-    #                 "success": True,
-    #                 "message": "Long-term memory stored successfully",
-    #                 "record_id": str(result.id),
-    #                 "last_updated": result.last_updated.isoformat() if result.last_updated else None,
-    #                 "embedding_provided": embedding is not None
-    #             }
-    #
-    #     except SQLAlchemyError as e:
-    #         logging.error(f"❌ Database error inserting LTM: {str(e)}")
-    #         return {"success": False, "error": f"Database error: {str(e)}"}
-    #     except Exception as e:
-    #         logging.error(f"Unexpected error inserting LTM: {str(e)}")
-    #         return {"success": False, "error": f"Unexpected error: {str(e)}"}
-    #
-    # def insert_health_record(self, record_type: str, description: str, diagnosis_date: Optional[str] = None, elderly_id: str = None) -> dict:
-    #     """Insert healthcare record"""
-    #     if elderly_id is None:
-    #         elderly_id = self.elderly_id
-    #
-    #     if not record_type or not record_type.strip():
-    #         return {"success": False, "error": "record_type is required and cannot be empty."}
-    #     if not description or not description.strip():
-    #         return {"success": False, "error": "description is required and cannot be empty."}
-    #
-    #     # Validate date format if provided
-    #     if diagnosis_date:
-    #         try:
-    #             datetime.strptime(diagnosis_date, "%Y-%m-%d")
-    #         except ValueError:
-    #             return {"success": False, "error": "diagnosis_date must be in YYYY-MM-DD format if provided."}
-    #
-    #     # Use embedder instance instead of local embedding function
-    #     embedding = self.embedder.embed(description)
-    #
-    #     try:
-    #         with self.engine.connect() as conn:
-    #             query = text("""
-    #                 INSERT INTO healthcare_records (
-    #                     elderly_id, record_type, description, diagnosis_date, embedding
-    #                 ) VALUES (
-    #                     :elderly_id, :record_type, :description, :diagnosis_date, :embedding
-    #                 )
-    #                 RETURNING id, last_updated;
-    #             """)
-    #             result = conn.execute(query, {
-    #                 "elderly_id": elderly_id.strip(),
-    #                 "record_type": record_type.strip(),
-    #                 "description": description.strip(),
-    #                 "diagnosis_date": diagnosis_date if diagnosis_date else None,
-    #                 "embedding": str(embedding) if embedding else None
-    #             }).fetchone()
-    #             conn.commit()
-    #
-    #             return {
-    #                 "success": True,
-    #                 "message": "Healthcare record stored successfully",
-    #                 "record_id": str(result.id),
-    #                 "last_updated": result.last_updated.isoformat() if result.last_updated else None,
-    #                 "embedding_provided": embedding is not None,
-    #                 "diagnosis_date": diagnosis_date
-    #             }
-    #
-    #     except SQLAlchemyError as e:
-    #         logging.error(f"❌ Database error inserting health record: {str(e)}")
-    #         return {"success": False, "error": f"Database error: {str(e)}"}
-    #     except Exception as e:
-    #         logging.error(f"Unexpected error inserting health record: {str(e)}")
-    #         return {"success": False, "error": f"Unexpected error: {str(e)}"}
+    def insert_long_term(self, category: str, key: str, value: str, elderly_id: str = None) -> dict:
+        """Insert long-term memory item"""
+        if elderly_id is None:
+            elderly_id = self.elderly_id
+
+        if not category or not category.strip():
+            return {"success": False, "error": "category is required and cannot be empty."}
+        if not key or not key.strip():
+            return {"success": False, "error": "key is required and cannot be empty."}
+        if not value or not value.strip():
+            return {"success": False, "error": "value is required and cannot be empty."}
+
+        # Use embedder instance instead of local embedding function
+        embedding = self.embedder.embed(value)
+
+        try:
+            with self.engine.connect() as conn:
+                query = text("""
+                    INSERT INTO long_term_memory (
+                        elderly_id, category, key, value, embedding
+                    ) VALUES (
+                        :elderly_id, :category, :key, :value, :embedding
+                    )
+                    RETURNING id, last_updated;
+                """)
+                result = conn.execute(query, {
+                    "elderly_id": elderly_id.strip(),
+                    "category": category.strip(),
+                    "key": key.strip(),
+                    "value": value.strip(),
+                    "embedding": str(embedding)
+                }).fetchone()
+                conn.commit()
+
+                return {
+                    "success": True,
+                    "message": "Long-term memory stored successfully",
+                    "record_id": str(result.id),
+                    "last_updated": result.last_updated.isoformat() if result.last_updated else None,
+                    "embedding_provided": embedding is not None
+                }
+
+        except SQLAlchemyError as e:
+            logging.error(f"❌ Database error inserting LTM: {str(e)}")
+            return {"success": False, "error": f"Database error: {str(e)}"}
+        except Exception as e:
+            logging.error(f"Unexpected error inserting LTM: {str(e)}")
+            return {"success": False, "error": f"Unexpected error: {str(e)}"}
+
+    def insert_health_record(self, record_type: str, description: str, diagnosis_date: Optional[str] = None, elderly_id: str = None) -> dict:
+        """Insert healthcare record"""
+        if elderly_id is None:
+            elderly_id = self.elderly_id
+
+        if not record_type or not record_type.strip():
+            return {"success": False, "error": "record_type is required and cannot be empty."}
+        if not description or not description.strip():
+            return {"success": False, "error": "description is required and cannot be empty."}
+
+        # Validate date format if provided
+        if diagnosis_date:
+            try:
+                datetime.strptime(diagnosis_date, "%Y-%m-%d")
+            except ValueError:
+                return {"success": False, "error": "diagnosis_date must be in YYYY-MM-DD format if provided."}
+
+        # Use embedder instance instead of local embedding function
+        embedding = self.embedder.embed(description)
+
+        try:
+            with self.engine.connect() as conn:
+                query = text("""
+                    INSERT INTO healthcare_records (
+                        elderly_id, record_type, description, diagnosis_date, embedding
+                    ) VALUES (
+                        :elderly_id, :record_type, :description, :diagnosis_date, :embedding
+                    )
+                    RETURNING id, last_updated;
+                """)
+                result = conn.execute(query, {
+                    "elderly_id": elderly_id.strip(),
+                    "record_type": record_type.strip(),
+                    "description": description.strip(),
+                    "diagnosis_date": diagnosis_date if diagnosis_date else None,
+                    "embedding": str(embedding) if embedding else None
+                }).fetchone()
+                conn.commit()
+
+                return {
+                    "success": True,
+                    "message": "Healthcare record stored successfully",
+                    "record_id": str(result.id),
+                    "last_updated": result.last_updated.isoformat() if result.last_updated else None,
+                    "embedding_provided": embedding is not None,
+                    "diagnosis_date": diagnosis_date
+                }
+
+        except SQLAlchemyError as e:
+            logging.error(f"❌ Database error inserting health record: {str(e)}")
+            return {"success": False, "error": f"Database error: {str(e)}"}
+        except Exception as e:
+            logging.error(f"Unexpected error inserting health record: {str(e)}")
+            return {"success": False, "error": f"Unexpected error: {str(e)}"}
 
     def _setup_tools(self):
         """Setup LangChain tools for the insertion functions"""
@@ -361,18 +419,18 @@ class InsertionAgent:
             result = self.insert_short_term(content=content)
             return str(result)
 
-        # @tool(args_schema=InsertLongTermSchema)
-        # def insert_long_term_tool(category: LTMCategories, key: str, value: str) -> str:
-        #     """Insert a long-term memory fact (stable traits, demographics, preferences)."""
-        #     result = self.insert_long_term(category=category, key=key, value=value)
-        #     return str(result)
-        #
-        # @tool(args_schema=InsertHealthSchema)
-        # def insert_health_tool(record_type: HealthRecordTypes, description: str, diagnosis_date: Optional[str] = None) -> str:
-        #     """Insert a healthcare record (conditions, medications, appointments)."""
-        #     result = self.insert_health_record(record_type=record_type, description=description, diagnosis_date=diagnosis_date)
-        #     return str(result)
-        # self.insertion_tools = [insert_long_term_tool, insert_health_tool, insert_short_term_tool]
+        @tool(args_schema=InsertLongTermSchema)
+        def insert_long_term_tool(category: LTMCategories, key: str, value: str) -> str:
+            """Insert a long-term memory fact (stable traits, demographics, preferences)."""
+            result = self.insert_long_term(category=category, key=key, value=value)
+            return str(result)
+
+        @tool(args_schema=InsertHealthSchema)
+        def insert_health_tool(record_type: HealthRecordTypes, description: str, diagnosis_date: Optional[str] = None) -> str:
+            """Insert a healthcare record (conditions, medications, appointments)."""
+            result = self.insert_health_record(record_type=record_type, description=description, diagnosis_date=diagnosis_date)
+            return str(result)
+        self.insertion_tools = [insert_long_term_tool, insert_health_tool, insert_short_term_tool]
 
         self.insertion_tools = [insert_short_term_tool]
         self.react_insertion_agent = create_react_agent(

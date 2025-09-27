@@ -34,11 +34,12 @@ class Embedder:
             if huggingface_token:
                 login(token=huggingface_token)
             else:
-                logging.ERROR("Huggingface token not found. Make sure the model is public or you have access.")
-            logging.INFO(f"Loading embedding model: {self.embedding_model_name}")
+                logging.error("Huggingface token not found. Make sure the model is public or you have access.")
+            logging.info(f"Loading embedding model: {self.embedding_model_name}")
 
             self.model = SentenceTransformer(self.embedding_model_name)
-            logging.INFO(f"embedding model loaded successfully: {self.embedding_model_name}")
+            logging.info(f"embedding model loaded successfully: {self.embedding_model_name}")
+            return self.model
         return self.model
 
     def embed(self, txt: str) -> list:
