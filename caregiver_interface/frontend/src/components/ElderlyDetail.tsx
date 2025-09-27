@@ -74,69 +74,143 @@ const ElderlyDetail: React.FC = () => {
 
     return (
         <div className="elderly-detail">
-            <div className="header">
-                <h1>Elderly Profiles</h1>
-                <div className="user-info">
-                    <span>Welcome, {user?.full_name}</span>
-                    <button onClick={logout} className="logout-button">
-                        Logout
-                    </button>
+            <div className="content-wrapper">
+                <div className="header">
+                    <h1>Elderly Profiles</h1>
+                    <div className="user-info">
+                        <span>Welcome, {user?.full_name}</span>
+                        <button onClick={logout} className="logout-button">
+                            Logout
+                        </button>
+                    </div>
                 </div>
-            </div>
 
-            <h2>{elderly.name}</h2>
-            <div className="profile-header">
-                <button onClick={handleEditClick} className="edit-button">
-                    ✏️ Edit Records
+                {/* Elderly Section */}
+                <div className="section elderly-section">
+                    <h2>{elderly.name}</h2>
+                    <button onClick={handleEditClick} className="edit-button">
+                        ✏️ Edit Records
+                    </button>
+                    <table>
+                        <tbody>
+                            {elderly.preferred_name && (
+                                <tr>
+                                    <td>Preferred Name</td>
+                                    <td>{elderly.preferred_name}</td>
+                                </tr>
+                            )}
+                            {elderly.date_of_birth && (
+                                <tr>
+                                    <td>Date of Birth</td>
+                                    <td>{new Date(elderly.date_of_birth).toLocaleDateString()}</td>
+                                </tr>
+                            )}
+                            {elderly.gender && (
+                                <tr>
+                                    <td>Gender</td>
+                                    <td>{elderly.gender}</td>
+                                </tr>
+                            )}
+                            {elderly.dialect_group && (
+                                <tr>
+                                    <td>Dialect Group</td>
+                                    <td>{elderly.dialect_group}</td>
+                                </tr>
+                            )}
+                            {elderly.marital_status && (
+                                <tr>
+                                    <td>Marital Status</td>
+                                    <td>{elderly.marital_status}</td>
+                                </tr>
+                            )}
+                            {elderly.nationality && (
+                                <tr>
+                                    <td>Nationality</td>
+                                    <td>{elderly.nationality}</td>
+                                </tr>
+                            )}
+                            {elderly.phone_number && (
+                                <tr>
+                                    <td>Phone</td>
+                                    <td>{elderly.phone_number}</td>
+                                </tr>
+                            )}
+                            {elderly.address && (
+                                <tr>
+                                    <td>Address</td>
+                                    <td>{elderly.address}</td>
+                                </tr>
+                            )}
+                        </tbody>
+                    </table>
+                </div>
+
+                {/* Healthcare Section */}
+                {healthcareInfo.length > 0 && (
+                    <div className="section healthcare-section">
+                        <h3 className="section-header">Healthcare Records</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Condition</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {healthcareInfo.map((record, index) => (
+                                    <>
+                                        <tr key={`main-${index}`}>
+                                            <td rowSpan={3}>{record.description}</td>
+                                            <td>Type</td>
+                                            <td>{record.record_type}</td>
+                                        </tr>
+                                        <tr key={`diagnosis-${index}`}>
+                                            <td>Diagnosed</td>
+                                            <td>{new Date(record.diagnosis_date).toLocaleDateString()}</td>
+                                        </tr>
+                                        <tr key={`updated-${index}`}>
+                                            <td>Last Updated</td>
+                                            <td>{new Date(record.last_updated).toLocaleDateString()}</td>
+                                        </tr>
+                                    </>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+
+                {/* LTM Section */}
+                {ltmInfo.length > 0 && (
+                    <div className="section ltm-section">
+                        <h3 className="section-header">Additional Information</h3>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Category</th>
+                                    <th></th>
+                                    <th></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {ltmInfo.map((item, idx) => (
+                                    <tr key={idx}>
+                                        <td>{item.category}</td>
+                                        <td>{item.key.replace('_', ' ')}</td>
+                                        <td>{item.value}</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                )}
+
+                <button onClick={() => navigate(-1)} className="back-button">
+                    ← Back
                 </button>
             </div>
-            {elderly.preferred_name && (
-                <p><strong>Preferred Name:</strong> {elderly.preferred_name}</p>
-            )}
-            {elderly.date_of_birth && (
-                <p><strong>Date of Birth:</strong> {new Date(elderly.date_of_birth).toLocaleDateString()}</p>
-            )}
-            {elderly.gender && <p><strong>Gender:</strong> {elderly.gender}</p>}
-            {elderly.dialect_group && <p><strong>Dialect Group:</strong> {elderly.dialect_group}</p>}
-            {elderly.marital_status && <p><strong>Marital Status:</strong> {elderly.marital_status}</p>}
-            {elderly.nationality && <p><strong>Nationality:</strong> {elderly.nationality}</p>}
-            {elderly.phone_number && <p><strong>Phone:</strong> {elderly.phone_number}</p>}
-            {elderly.address && <p><strong>Address:</strong> {elderly.address}</p>}
-
-            {/* Healthcare Info Section */}
-            {healthcareInfo.length > 0 && (
-                <div className="healthcare-section">
-                    <h3>Healthcare Records</h3>
-                    <ul>
-                        {healthcareInfo.map((record, index) => (
-                            <li key={index}>
-                                <strong>{record.description}</strong> ({record.record_type})<br />
-                                Diagnosed: {new Date(record.diagnosis_date).toLocaleDateString()}<br />
-                                <small><em>Last updated: {new Date(record.last_updated).toLocaleDateString()}</em></small>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-
-            {/* Extra LTM Info Section */}
-            {ltmInfo.length > 0 && (
-                <div className="ltm-section">
-                    <h3>Additional Information</h3>
-                    <ul>
-                        {ltmInfo.map((item, idx) => (
-                            <li key={idx}>
-                                <strong>{item.key.replace('_', ' ')}:</strong> {item.value} <br />
-                                <small><em>(Category: {item.category}, Last updated: {new Date(item.last_updated).toLocaleDateString()})</em></small>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-            <button onClick={() => navigate(-1)} className="back-button">
-                ← Back
-            </button>
         </div>
+
     );
 };
 
