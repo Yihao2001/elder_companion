@@ -17,3 +17,5 @@ class Config:
 
     # Authorisation token for Flask endpoints
     AUTHORIZATION_TOKEN = os.getenv("AUTHORIZATION_TOKEN")
+
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
