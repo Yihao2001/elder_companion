@@ -334,6 +334,7 @@ tr:nth-child(even) {
 }
 
 .section-selector,
+.mode-selector,
 .record-selector,
 .edit-form {
   width: 100%;   /* respect container width */
@@ -348,9 +349,23 @@ tr:nth-child(even) {
 }
 
 .section-dropdown {
-    width: 100%;
+    width: 50%;
     padding: 8px;
     font-size: 1.1em;
+    margin-top: 5px;
+}
+
+/* Mode Selector */
+.mode-selector label {
+    font-size: 1.1em;
+    display: block;
+    margin-top: 15px;
+}
+
+.mode-dropdown {
+    width: 50%;
+    padding: 8px;
+    font-size: 1.05em;
     margin-top: 5px;
 }
 
@@ -362,28 +377,32 @@ tr:nth-child(even) {
 }
 
 .record-dropdown {
-    width: 100%;
+    width: 50%;
     padding: 8px;
     font-size: 1.05em;
     margin-top: 5px;
 }
 
 /* Edit Table */
-.edit-table {
+.edit-table,
+.create-table {
     width: 100%;
     border-collapse: collapse;
     margin: 20px 0;
 }
 
-.edit-table td {
+.edit-table td,
+.create-table td {
     border: 1px solid #ddd;
     padding: 10px;
     vertical-align: top;
 }
 
 .edit-table input,
-.edit-table textarea {
-    width: 100%;
+.edit-table textarea,
+.create-table input,
+.create-table textarea {
+    width: 50%;
     padding: 6px;
     font-size: 1em;
 }

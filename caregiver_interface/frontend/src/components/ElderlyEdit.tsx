@@ -24,7 +24,8 @@ const ElderlyEdit: React.FC = () => {
     const { user, logout } = useAuth();
     const navigate = useNavigate();
 
-    const [selectedSection, setSelectedSection] = useState<'ltm' | 'healthcare'>('ltm');
+    const [selectedSection, setSelectedSection] = useState<'ltm' | 'healthcare'>('healthcare');
+    const [mode, setMode] = useState<'edit' | 'create'>('edit');
     const [ltmInfo, setLtmInfo] = useState<LTMInfo[]>([]);
     const [healthcareInfo, setHealthcareInfo] = useState<HealthcareInfo[]>([]);
     const [selectedRecord, setSelectedRecord] = useState<LTMInfo | HealthcareInfo | null>(null);
@@ -33,7 +34,7 @@ const ElderlyEdit: React.FC = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const db_auth = { headers: { Authorization: `Bearer TOKEN` }};
+    const db_auth = { headers: { Authorization: `Bearer 3cb6ec9cca42a2924cc3a592418006afa6b3487eeff92e3b714a5a004de3f033` }};
 
     useEffect(() => {
         const fetchData = async () => {
@@ -128,123 +129,163 @@ const ElderlyEdit: React.FC = () => {
 
     if (loading) return <div>Loading records...</div>;
 
-    const currentRecords = selectedSection === 'ltm' ? ltmInfo : healthcareInfo;
+    const currentRecords = selectedSection === 'healthcare' ? healthcareInfo : ltmInfo;
 
     return (
         <div className="elderly-edit">
-            <div className="header">
-                <h1>Edit Elderly Records</h1>
-                <div className="user-info">
-                    <span>Welcome, {user?.full_name}</span>
-                    <button onClick={logout} className="logout-button">
-                        Logout
-                    </button>
-                </div>
-            </div>
-
             <div className="edit-container">
+                <div className="header">
+                    <h1>Edit Elderly Records</h1>
+                    <div className="user-info">
+                        <span>Welcome, {user?.full_name}</span>
+                        <button onClick={logout} className="logout-button">
+                            Logout
+                        </button>
+                    </div>
+                </div>
+
                 {/* Section Selection Dropdown */}
                 <div className="section-selector">
-                    <label htmlFor="section-select"><strong>Select Section to Edit:</strong></label>
+                    <label htmlFor="section-select"><strong>Information Type:</strong></label>
                     <select 
                         id="section-select"
                         value={selectedSection} 
-                        onChange={(e) => handleSectionChange(e.target.value as 'ltm' | 'healthcare')}
+                        onChange={(e) => handleSectionChange(e.target.value as 'healthcare' | 'ltm')}
                         className="section-dropdown"
                     >
-                        <option value="ltm">Long Term Memory (LTM)</option>
                         <option value="healthcare">Healthcare Records</option>
+                        <option value="ltm">Long Term Memory (LTM)</option>
                     </select>
                 </div>
 
-                {/* Record Selection */}
-                {currentRecords.length > 0 && (
+                {/* Mode Selection Dropdown */}
+                <div className="mode-selector">
+                    <label htmlFor="mode-select"><strong>Action:</strong></label>
+                    <select
+                        id="mode-select"
+                        value={mode}
+                        onChange={(e) => {
+                        const newMode = e.target.value as 'edit' | 'create';
+                        setMode(newMode);
+                        setSelectedRecord(null); // reset record
+                        }}
+                        className="mode-dropdown"
+                    >
+                        <option value="edit">Edit Existing Record</option>
+                        <option value="create">Create New Record</option>
+                    </select>
+                </div>
+
+                {/* Record Selection Dropdown */}
+                {mode === 'edit' && currentRecords.length > 0 && (
                     <div className="record-selector">
-                        <label><strong>Select Record to Edit:</strong></label>
-                        <div className="records-list">
+                        <label htmlFor="record-select"><strong>
+                            {selectedSection === 'ltm' ? 'Select Category:' : 'Select Description:'}
+                        </strong></label>
+                        <select
+                            id="record-select"
+                            className="record-dropdown"
+                            onChange={(e) => {
+                                const value = e.target.value;
+
+                                if (selectedSection === "ltm") {
+                                    const records = currentRecords as LTMInfo[];
+                                    const record = records.find((r: LTMInfo) => r.category === value);
+                                    setSelectedRecord(record || null);
+                                } else {
+                                    const records = currentRecords as HealthcareInfo[];
+                                    const record = records.find((r: HealthcareInfo) => r.description === value);
+                                    setSelectedRecord(record || null);
+                                }
+                            }}
+
+                        >
+                            <option value="">-- Choose --</option>
                             {currentRecords.map((record, index) => (
-                                <div 
+                                <option 
                                     key={index} 
-                                    className={`record-item ${selectedRecord === record ? 'selected' : ''}`}
-                                    onClick={() => handleRecordSelect(record)}
+                                    value={selectedSection === 'ltm' 
+                                        ? (record as LTMInfo).category 
+                                        : (record as HealthcareInfo).description}
                                 >
-                                    {selectedSection === 'ltm' ? (
-                                        <span>{(record as LTMInfo).key.replace('_', ' ')}: {(record as LTMInfo).value}</span>
-                                    ) : (
-                                        <span>{(record as HealthcareInfo).description} ({(record as HealthcareInfo).record_type})</span>
-                                    )}
-                                </div>
+                                    {selectedSection === 'ltm' 
+                                        ? (record as LTMInfo).category 
+                                        : (record as HealthcareInfo).description}
+                                </option>
                             ))}
-                        </div>
+                        </select>
                     </div>
                 )}
 
-                {/* Edit Form */}
-                {selectedRecord && (
-                    <div className="edit-form">
-                        <h3>Edit {selectedSection === 'ltm' ? 'LTM' : 'Healthcare'} Record</h3>
-                        
-                        {selectedSection === 'ltm' ? (
-                            <div className="ltm-form">
-                                <div className="form-group">
-                                    <label><strong>Category:</strong></label>
-                                    <input 
-                                        type="text" 
-                                        value={(selectedRecord as LTMInfo).category}
-                                        onChange={(e) => handleFieldChange('category', e.target.value)}
-                                        className="form-input"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label><strong>Key:</strong></label>
-                                    <input 
-                                        type="text" 
-                                        value={(selectedRecord as LTMInfo).key}
-                                        onChange={(e) => handleFieldChange('key', e.target.value)}
-                                        className="form-input"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label><strong>Value:</strong></label>
-                                    <textarea 
-                                        value={(selectedRecord as LTMInfo).value}
-                                        onChange={(e) => handleFieldChange('value', e.target.value)}
-                                        className="form-textarea"
-                                        rows={4}
-                                    />
-                                </div>
-                            </div>
-                        ) : (
-                            <div className="healthcare-form">
-                                <div className="form-group">
-                                    <label><strong>Description:</strong></label>
-                                    <textarea 
-                                        value={(selectedRecord as HealthcareInfo).description}
-                                        onChange={(e) => handleFieldChange('description', e.target.value)}
-                                        className="form-textarea"
-                                        rows={3}
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label><strong>Record Type:</strong></label>
-                                    <input 
-                                        type="text" 
-                                        value={(selectedRecord as HealthcareInfo).record_type}
-                                        onChange={(e) => handleFieldChange('record_type', e.target.value)}
-                                        className="form-input"
-                                    />
-                                </div>
-                                <div className="form-group">
-                                    <label><strong>Diagnosis Date:</strong></label>
-                                    <input 
-                                        type="date" 
-                                        value={(selectedRecord as HealthcareInfo).diagnosis_date ? new Date((selectedRecord as HealthcareInfo).diagnosis_date).toISOString().split('T')[0] : ''}
-                                        onChange={(e) => handleFieldChange('diagnosis_date', e.target.value)}
-                                        className="form-input"
-                                    />
-                                </div>
-                            </div>
-                        )}
+                {/* Create Form in Table Format */}
+                {mode === 'create' && (
+                    <div className="create-form">
+                        <h3>Create {selectedSection === 'ltm' ? 'LTM' : 'Healthcare'} Record</h3>
+                        <table className="create-table">
+                            <tbody>
+                                {selectedSection === 'ltm' ? (
+                                    <>
+                                        <tr>
+                                            <td><strong>Category</strong></td>
+                                            <td>
+                                                <input 
+                                                    type="text" 
+                                                    onChange={(e) => handleFieldChange('category', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Key</strong></td>
+                                            <td>
+                                                <input 
+                                                    type="text" 
+                                                    onChange={(e) => handleFieldChange('key', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Value</strong></td>
+                                            <td>
+                                                <textarea
+                                                    rows={3}
+                                                    onChange={(e) => handleFieldChange('value', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                    </>
+                                ) : (
+                                    <>
+                                        <tr>
+                                            <td><strong>Description</strong></td>
+                                            <td>
+                                                <textarea
+                                                    rows={3}
+                                                    onChange={(e) => handleFieldChange('description', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Record Type</strong></td>
+                                            <td>
+                                                <input 
+                                                    type="text" 
+                                                    onChange={(e) => handleFieldChange('record_type', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Diagnosis Date</strong></td>
+                                            <td>
+                                                <input 
+                                                    type="date" 
+                                                    onChange={(e) => handleFieldChange('diagnosis_date', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                    </>
+                                )}
+                            </tbody>
+                        </table>
 
                         {/* Status Messages */}
                         {error && <div className="error-message">{error}</div>}
@@ -263,9 +304,98 @@ const ElderlyEdit: React.FC = () => {
                     </div>
                 )}
 
-                {currentRecords.length === 0 && (
-                    <div className="no-records">
-                        No {selectedSection === 'ltm' ? 'LTM' : 'healthcare'} records found.
+                {/* Edit Form in Table Format */}
+                {selectedRecord && (
+                    <div className="edit-form">
+                        <h3>Edit {selectedSection === 'ltm' ? 'LTM' : 'Healthcare'} Record</h3>
+                        <table className="edit-table">
+                            <tbody>
+                                {selectedSection === 'ltm' ? (
+                                    <>
+                                        <tr>
+                                            <td><strong>Category</strong></td>
+                                            <td>
+                                                <input 
+                                                    type="text" 
+                                                    value={(selectedRecord as LTMInfo).category}
+                                                    onChange={(e) => handleFieldChange('category', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Key</strong></td>
+                                            <td>
+                                                <input 
+                                                    type="text" 
+                                                    value={(selectedRecord as LTMInfo).key}
+                                                    onChange={(e) => handleFieldChange('key', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Value</strong></td>
+                                            <td>
+                                                <textarea
+                                                    rows={3}
+                                                    value={(selectedRecord as LTMInfo).value}
+                                                    onChange={(e) => handleFieldChange('value', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                    </>
+                                ) : (
+                                    <>
+                                        <tr>
+                                            <td><strong>Description</strong></td>
+                                            <td>
+                                                <textarea
+                                                    rows={3}
+                                                    value={(selectedRecord as HealthcareInfo).description}
+                                                    onChange={(e) => handleFieldChange('description', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Record Type</strong></td>
+                                            <td>
+                                                <input 
+                                                    type="text" 
+                                                    value={(selectedRecord as HealthcareInfo).record_type}
+                                                    onChange={(e) => handleFieldChange('record_type', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td><strong>Diagnosis Date</strong></td>
+                                            <td>
+                                                <input 
+                                                    type="date" 
+                                                    value={(selectedRecord as HealthcareInfo).diagnosis_date 
+                                                        ? new Date((selectedRecord as HealthcareInfo).diagnosis_date).toISOString().split('T')[0] 
+                                                        : ''}
+                                                    onChange={(e) => handleFieldChange('diagnosis_date', e.target.value)}
+                                                />
+                                            </td>
+                                        </tr>
+                                    </>
+                                )}
+                            </tbody>
+                        </table>
+
+                        {/* Status Messages */}
+                        {error && <div className="error-message">{error}</div>}
+                        {success && <div className="success-message">{success}</div>}
+
+                        {/* Action Buttons */}
+                        <div className="form-actions">
+                            <button 
+                                onClick={handleSave} 
+                                disabled={saving}
+                                className="save-button"
+                            >
+                                {saving ? 'Saving...' : 'Save Changes'}
+                            </button>
+                        </div>
                     </div>
                 )}
             </div>
