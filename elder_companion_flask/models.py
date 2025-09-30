@@ -47,11 +47,7 @@ class User(Base):
     role = Column(Enum(RoleEnum))
     created_at = Column(TIMESTAMP, server_default=text("CURRENT_TIMESTAMP"))
     updated_at = Column(TIMESTAMP, server_default=text("CURRENT_TIMESTAMP"))
-    elderly = relationship(
-        "ElderlyProfile",
-        secondary="user_elderly",
-        back_populates="caregivers"
-    )
+    elderly = relationship("ElderlyProfile", secondary="user_elderly", back_populates="caregivers")
 
 # This table join user to elderly 
 user_elderly = Table(
@@ -76,6 +72,7 @@ class ElderlyProfile(Base):
     stm = relationship("ShortTermMemory", back_populates="elderly", cascade="all, delete-orphan")
     ltm = relationship("LongTermMemory", back_populates="elderly", cascade="all, delete-orphan")
     healthcare = relationship("HealthcareRecord", back_populates="elderly", cascade="all, delete-orphan")
+    caregivers = relationship("User", secondary="user_elderly",back_populates="elderly")
 
 class ShortTermMemory(Base):
     __tablename__ = "short_term_memory"

@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import { AUTH_TOKEN } from '../config';
 
 interface DashboardStats {
     totalElderly: number;
@@ -68,7 +69,7 @@ const Dashboard: React.FC = () => {
             <div className="header">
                 <h1>ElderComp Caregiver Dashboard</h1>
                 <div className="user-info">
-                    <span>Welcome, {user?.full_name}</span>
+                    <span>Welcome, {user?.username}</span>
                     <button onClick={logout} className="logout-button">
                         Logout
                     </button>

@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import { AUTH_TOKEN, BASE_URL } from '../config';
 
 interface ElderlyProfile {
     id: string;
@@ -40,15 +41,15 @@ const ElderlyDetail: React.FC = () => {
     const [healthcareInfo, setHealthcareInfo] = useState<HealthcareInfo[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const db_auth = { headers: { Authorization: `Bearer TOKEN` }}
+    // const db_auth = { headers: { Authorization: `Bearer ${AUTH_TOKEN}` }}
 
     useEffect(() => {
         const fetchProfile = async () => {
             try {
                 const [elderlyRes, ltmRes, healthcareRes] = await Promise.all([
-                    axios.get(`http://127.0.0.1:5000/api/elderly?elderly_id=${id}`, db_auth),
-                    axios.get(`http://127.0.0.1:5000/api/ltm?elderly_id=${id}`, db_auth),
-                    axios.get(`http://127.0.0.1:5000/api/healthcare?elderly_id=${id}`, db_auth)
+                    axios.get(`${BASE_URL}/elderly?elderly_id=${id}`),
+                    axios.get(`${BASE_URL}/ltm?elderly_id=${id}`),
+                    axios.get(`${BASE_URL}/healthcare?elderly_id=${id}`)
                 ]);
                 setElderly(elderlyRes.data);
                 setLtmInfo(ltmRes.data);
@@ -78,7 +79,7 @@ const ElderlyDetail: React.FC = () => {
                 <div className="header">
                     <h1>Elderly Profiles</h1>
                     <div className="user-info">
-                        <span>Welcome, {user?.full_name}</span>
+                        <span>Welcome, {user?.username}</span>
                         <button onClick={logout} className="logout-button">
                             Logout
                         </button>

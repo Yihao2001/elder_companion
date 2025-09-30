@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import { AUTH_TOKEN, BASE_URL } from '../config';
 
 interface LTMInfo {
     id?: string;
@@ -34,14 +35,14 @@ const ElderlyEdit: React.FC = () => {
     const [error, setError] = useState('');
     const [success, setSuccess] = useState('');
 
-    const db_auth = { headers: { Authorization: `Bearer 3cb6ec9cca42a2924cc3a592418006afa6b3487eeff92e3b714a5a004de3f033` }};
+    // const db_auth = { headers: { Authorization: `Bearer ${AUTH_TOKEN}` }};
 
     useEffect(() => {
         const fetchData = async () => {
             try {
                 const [ltmRes, healthcareRes] = await Promise.all([
-                    axios.get(`http://127.0.0.1:5000/api/ltm?elderly_id=${id}`, db_auth),
-                    axios.get(`http://127.0.0.1:5000/api/healthcare?elderly_id=${id}`, db_auth)
+                    axios.get(`${BASE_URL}/ltm?elderly_id=${id}`),
+                    axios.get(`${BASE_URL}/healthcare?elderly_id=${id}`)
                 ]);
                 setLtmInfo(ltmRes.data);
                 setHealthcareInfo(healthcareRes.data);
@@ -88,12 +89,12 @@ const ElderlyEdit: React.FC = () => {
         try {
             if (selectedSection === 'ltm') {
                 const ltmRecord = selectedRecord as LTMInfo;
-                await axios.post('http://127.0.0.1:5000/api/ltm', {
+                await axios.post(`${BASE_URL}/api/ltm`, {
                     elderly_id: id,
                     category: ltmRecord.category,
                     key: ltmRecord.key,
                     value: ltmRecord.value
-                }, db_auth);
+                });
                 
                 // Update local state
                 setLtmInfo(prev => prev.map(item => 
@@ -103,12 +104,12 @@ const ElderlyEdit: React.FC = () => {
                 ));
             } else {
                 const healthRecord = selectedRecord as HealthcareInfo;
-                await axios.post('http://127.0.0.1:5000/api/healthcare', {
+                await axios.post(`${BASE_URL}/api/healthcare`, {
                     elderly_id: id,
                     description: healthRecord.description,
                     diagnosis_date: healthRecord.diagnosis_date,
                     record_type: healthRecord.record_type
-                }, db_auth);
+                });
                 
                 // Update local state
                 setHealthcareInfo(prev => prev.map(item => 
@@ -137,7 +138,7 @@ const ElderlyEdit: React.FC = () => {
                 <div className="header">
                     <h1>Edit Elderly Records</h1>
                     <div className="user-info">
-                        <span>Welcome, {user?.full_name}</span>
+                        <span>Welcome, {user?.username}</span>
                         <button onClick={logout} className="logout-button">
                             Logout
                         </button>
