@@ -19,9 +19,11 @@ def login():
     # Find user
     db: Session = next(get_db())
     user = db.query(User).filter(User.username == username).first()
-    if not user or not check_password(password, user.password):
+    hashed_password = user.password_hash
+    if not user or not check_password(plain_password=password, hashed_password=hashed_password):
         return jsonify({"error": "Invalid username or password"}), 401
 
     # Create JWT token
-    jwt_token = create_access_token(identity={"user_id": str(user.id), "user_role": user.role})
+    # NOTE: Flask-jwt-extended will encode identity param as 'sub' inside the jwt returned
+    jwt_token = create_access_token(identity = str(user.id), additional_claims = {"user_role": user.role.value})
     return jsonify({"jwt_token": jwt_token})

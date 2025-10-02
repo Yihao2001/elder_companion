@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
-import * as jwt_decode from 'jwt-decode';
+import { jwtDecode } from 'jwt-decode';
 import { BASE_URL } from '../config';
 
 interface User {
@@ -16,6 +16,14 @@ interface AuthContextType {
     logout: () => void;
     loading: boolean;
 }
+
+interface JwtPayload {
+    sub: string; // user_id
+    user_role: string;
+    iat: number;
+    exp: number;
+  }
+  
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -95,13 +103,12 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${jwt_token}`;
 
             // Decode JWT token
-            const decoded = (jwt_decode as any)(jwt_token);
-            const identity = decoded.identity;
+            const decoded = jwtDecode<JwtPayload>(jwt_token);
 
             // Update user state
             setUser({
-                user_id: identity.user_id,
-                user_role: identity.user_role,
+                user_id: decoded.sub,
+                user_role: decoded.user_role,
                 username,
             });
 
