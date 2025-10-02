@@ -71,8 +71,7 @@ const Login: React.FC = () => {
 
                 <div style={{ marginTop: '1rem', fontSize: '0.9rem', color: '#666' }}>
                     <p><strong>Demo Credentials:</strong></p>
-                    <p>Username: <code>caregiver1</code> | Password: <code>password123</code></p>
-                    <p>Username: <code>admin</code> | Password: <code>admin123</code></p>
+                    <p>Username: <code>super_admin</code> | Password: <code>1234567890</code></p>
                 </div>
             </form>
         </div>

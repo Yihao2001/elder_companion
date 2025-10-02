@@ -1,11 +1,12 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import { BASE_URL } from '../config';
 
 interface User {
-    id: string;
+    user_id: string;
     username: string;
-    full_name: string;
-    role: string;
+    user_role: string;
 }
 
 interface AuthContextType {
@@ -15,6 +16,14 @@ interface AuthContextType {
     logout: () => void;
     loading: boolean;
 }
+
+interface JwtPayload {
+    sub: string; // user_id
+    user_role: string;
+    iat: number;
+    exp: number;
+  }
+  
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
@@ -60,51 +69,55 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
         }
     };
 
-    const login = async (username: string, password: string): Promise<boolean> => {
-        // Local (no backend)
-        if (
-            (username === "caregiver1" && password === "password123") ||
-            (username === "admin" && password === "admin123")
-        ) {
-            const fakeUser: User = {
-                id: "1",
-                username,
-                full_name: username === "admin" ? "System Admin" : "Caregiver One",
-                role: username === "admin" ? "admin" : "caregiver",
-            };
-
-            setUser(fakeUser);
-            localStorage.setItem("token", "fake-demo-token"); // optional
-            return true;
-        }
-        return false;
-    };
-
-
-    // TO UNCOMMENT WHEN WE CONNECT TO THE BACKEND
     // const login = async (username: string, password: string): Promise<boolean> => {
-    //     try {
-    //         const response = await axios.post('/auth/login', {
+    //     // Local (no backend)
+    //     if (
+    //         (username === "caregiver1" && password === "password123") ||
+    //         (username === "admin" && password === "admin123")
+    //     ) {
+    //         const fakeUser: User = {
+    //             id: "1",
     //             username,
-    //             password,
-    //         });
+    //             full_name: username === "admin" ? "System Admin" : "Caregiver One",
+    //             role: username === "admin" ? "admin" : "caregiver",
+    //         };
 
-    //         const { access_token } = response.data;
-
-    //         // Store token
-    //         localStorage.setItem('token', access_token);
-    //         axios.defaults.headers.common['Authorization'] = `Bearer ${access_token}`;
-
-    //         // Get user info
-    //         const userResponse = await axios.get('/auth/me');
-    //         setUser(userResponse.data);
-
+    //         setUser(fakeUser);
+    //         localStorage.setItem("token", "fake-demo-token"); // optional
     //         return true;
-    //     } catch (error) {
-    //         console.error('Login failed:', error);
-    //         return false;
     //     }
+    //     return false;
     // };
+
+    const login = async (username: string, password: string): Promise<boolean> => {
+        try {
+            const response = await axios.post(`${BASE_URL}/login`, {
+                username,
+                password,
+            });
+
+            const { jwt_token } = response.data;
+
+            // Store token
+            localStorage.setItem('token', jwt_token);
+            axios.defaults.headers.common['Authorization'] = `Bearer ${jwt_token}`;
+
+            // Decode JWT token
+            const decoded = jwtDecode<JwtPayload>(jwt_token);
+
+            // Update user state
+            setUser({
+                user_id: decoded.sub,
+                user_role: decoded.user_role,
+                username,
+            });
+
+            return true;
+        } catch (error) {
+            console.error('Login failed:', error);
+            return false;
+        }
+    };
 
     const logout = () => {
         localStorage.removeItem('token');

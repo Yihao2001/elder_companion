@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/AuthContext';
 import axios from 'axios';
+import { useAuth } from '../context/AuthContext';
+import { AUTH_TOKEN, BASE_URL } from '../config';
 
 interface ElderlyProfile {
     id: string;
@@ -22,7 +23,7 @@ const ElderlyList: React.FC = () => {
     const [elderly, setElderly] = useState<ElderlyProfile[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState('');
-    const db_auth = { headers: { Authorization: `Bearer TOKEN` }}
+    // const db_auth = { headers: { Authorization: `Bearer ${AUTH_TOKEN}` }}
 
     useEffect(() => {
     // Temporary hardcoded list of elderly IDs you want to fetch
@@ -32,7 +33,7 @@ const ElderlyList: React.FC = () => {
         try {
             const results = await Promise.all(
                 elderlyIds.map(id =>
-                    axios.get(`http://127.0.0.1:5000/api/elderly?elderly_id=${id}`, db_auth).then(res => res.data)
+                    axios.get(`${BASE_URL}/elderly?elderly_id=${id}`).then(res => res.data)
                 )
             );
             setElderly(results);
@@ -44,7 +45,7 @@ const ElderlyList: React.FC = () => {
         }};
 
         fetchProfiles();
-    });
+    }, []);
 
     const handleElderlyClick = (elderlyId: string) => {
         navigate(`/elderly/${elderlyId}`);
@@ -59,7 +60,7 @@ const ElderlyList: React.FC = () => {
             <div className="header">
                 <h1>Elderly Profiles</h1>
                 <div className="user-info">
-                    <span>Welcome, {user?.full_name}</span>
+                    <span>Welcome, {user?.username}</span>
                     <button onClick={logout} className="logout-button">
                         Logout
                     </button>

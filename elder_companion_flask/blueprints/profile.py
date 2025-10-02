@@ -14,6 +14,7 @@ def get_elderly():
     # return None if elderly_id not present
     elderly_id = request.args.get("elderly_id")
     if not elderly_id:
+        # TODO: Return a list of all elderly that the user has access to
         return jsonify({"error": "Missing elderly_id"}), 400
 
     db: Session = next(get_db())
@@ -47,10 +48,11 @@ def get_elderly():
         "marital_status": row["marital_status"],
         "address": row["address"]
     }
+
     return jsonify(result), 200
 
 @elderly_bp.route("/elderly", methods=["POST"])
-def add_elderly():
+def post_elderly():
     data = request.json
     required_fields = ["name", "date_of_birth", "gender", "nationality",
                        "dialect_group", "marital_status", "address"]
