@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { useAuth } from '../context/AuthContext';
-import { AUTH_TOKEN, BASE_URL } from '../config';
+import { BASE_URL } from '../config';
 
 interface ElderlyProfile {
     id: string;

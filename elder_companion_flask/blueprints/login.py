@@ -25,5 +25,5 @@ def login():
 
     # Create JWT token
     # NOTE: Flask-jwt-extended will encode identity param as 'sub' inside the jwt returned
-    jwt_token = create_access_token(identity = str(user.id), additional_claims = {"user_role": user.role.value})
+    jwt_token = create_access_token(identity = str(user.id), additional_claims = {"user_role": user.role.value, "username": username})
     return jsonify({"jwt_token": jwt_token})

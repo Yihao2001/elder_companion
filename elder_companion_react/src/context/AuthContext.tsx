@@ -12,6 +12,7 @@ interface User {
 interface AuthContextType {
     user: User | null;
     isAuthenticated: boolean;
+    isHydrated: boolean;
     login: (username: string, password: string) => Promise<boolean>;
     logout: () => void;
     loading: boolean;
@@ -20,6 +21,7 @@ interface AuthContextType {
 interface JwtPayload {
     sub: string; // user_id
     user_role: string;
+    username: string;
     iat: number;
     exp: number;
   }
@@ -42,32 +44,40 @@ interface AuthProviderProps {
 export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const [user, setUser] = useState<User | null>(null);
     const [loading, setLoading] = useState(true);
+    // for each reload, we need to decode jwt and hydrate user state
+    const [isHydrated, setIsHydrated] = useState(false);
 
     // Configure axios defaults
     useEffect(() => {
         const token = localStorage.getItem('token');
-        if (token) {
+    
+        if (!token) {
+            setIsHydrated(true);
+            return;
+        }
+    
+        try {
             axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-            // Verify token is still valid
-            checkAuthStatus();
-        } else {
-            setLoading(false);
+            const decoded = jwtDecode<JwtPayload>(token);
+            const isJwtExpired = decoded.exp <= Date.now() / 1000;
+    
+            if (isJwtExpired) {
+                logout();
+            } else {
+                setUser({
+                    user_id: decoded.sub,
+                    user_role: decoded.user_role,
+                    username: decoded.username,
+                });
+            }
+        } catch (e) {
+            console.error("Failed to decode JWT", e);
+            logout();
+        } finally {
+            setIsHydrated(true);
         }
     }, []);
-
-    const checkAuthStatus = async () => {
-        try {
-            const response = await axios.get('/auth/me');
-            setUser(response.data);
-        } catch (error) {
-            // Token is invalid, remove it
-            localStorage.removeItem('token');
-            delete axios.defaults.headers.common['Authorization'];
-            setUser(null);
-        } finally {
-            setLoading(false);
-        }
-    };
+    
 
     // const login = async (username: string, password: string): Promise<boolean> => {
     //     // Local (no backend)
@@ -128,6 +138,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     const value: AuthContextType = {
         user,
         isAuthenticated: !!user,
+        isHydrated,
         login,
         logout,
         loading,
