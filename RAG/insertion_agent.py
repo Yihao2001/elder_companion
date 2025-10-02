@@ -171,6 +171,34 @@ class InsertionAgent:
             max_output_tokens=1000
         )
 
+    def insert_elderly_profile(self, profile_data:dict, elderly_id:str=None):
+        """Insert a new elderly profile into the database"""
+        if elderly_id is None:
+            elderly_id = self.elderly_id
+
+        try:
+            with psycopg2.connect(self.connection_string) as conn:
+                with conn.cursor() as cur:
+                    cur.execute("""
+                                INSERT INTO elderly_profile
+                                (id, name, date_of_birth, gender, nationality, dialect_group, marital_status, address)
+                                VALUES (%s, pgp_sym_encrypt(%s, %s), pgp_sym_encrypt(%s, %s), %s,
+                                        pgp_sym_encrypt(%s, %s), pgp_sym_encrypt(%s, %s), %s,
+                                        pgp_sym_encrypt(%s, %s)) ON CONFLICT (id) DO NOTHING;
+                                """, (
+                                    elderly_id,
+                                    profile_data["name"], self.secret_key,
+                                    profile_data["date_of_birth"], self.secret_key,
+                                    profile_data["gender"],
+                                    profile_data["nationality"], self.secret_key,
+                                    profile_data["dialect_group"], self.secret_key,
+                                    profile_data["marital_status"],
+                                    profile_data["address"], self.secret_key
+                                ))
+        except Exception as e:
+            logging.warning(f"Could not ensure elderly profile: {e}")
+
+
     def _ensure_elderly_profile(self):
         default_elderly_id = "12345678-1234-1234-1234-012345678910"
         """Ensure the elderly profile exists in the database"""

@@ -1,540 +1,143 @@
-{
-  "test_cases": [
-    {
-      "id": "LTM_01",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "What is my favorite type of music again?"
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "category": "music_preference",
-          "value": "jazz"
-        }
-      },
-      "expected_response": "You’ve told me before that jazz is your favorite type of music."
+[
+  {
+    "id": "LTM_1",
+    "conversation": [
+      { "user_query": "Who is your daughter-in-law?", "time": "2025-09-20T10:00:00Z" }
+    ],
+    "expected_retrieval": {
+      "ltm": { "key": "Daughter-in-law", "value": "Meena Singh" }
     },
-    {
-      "id": "LTM_02",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Who is my emergency contact?"
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "contact_name": "Alice Tan",
-          "relationship_type": "daughter",
-          "is_emergency_contact": true
-        }
-      },
-      "expected_response": "Your emergency contact is your daughter, Alice Tan."
+    "expected_response": "Your daughter-in-law is Meena Singh."
+  },
+  {
+    "id": "LTM_2",
+    "conversation": [
+      { "user_query": "Who usually joins you for birthday celebrations?", "time": "2025-09-21T09:30:00Z" }
+    ],
+    "expected_retrieval": {
+      "ltm": { "key": "family_relationship", "value": "Children and grandchildren usually join birthday celebrations" }
     },
-    {
-      "id": "HCM_01",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "What medications am I taking in the morning?"
-        }
-      ],
-      "expected_retrieval": {
-        "hcm": [
-          {
-            "medication_name": "Metformin",
-            "dosage": "500mg",
-            "frequency": "every morning"
-          },
-          {
-            "medication_name": "Amlodipine",
-            "dosage": "10mg",
-            "frequency": "every morning"
-          }
-        ]
-      },
-      "expected_response": "You take Metformin 500mg and Amlodipine 10mg every morning."
+    "expected_response": "Your children and grandchildren usually join your birthday celebrations."
+  },
+  {
+    "id": "HCM_1",
+    "conversation": [
+      { "user_query": "What medications do I take every morning?", "time": "2025-09-22T08:00:00Z" }
+    ],
+    "expected_retrieval": {
+      "hcm": [
+        { "medication_name": "Metformin", "dosage": "500mg" },
+        { "medication_name": "Amlodipine", "dosage": "10mg" }
+      ]
     },
-    {
-      "id": "HCM_02",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Do I have any allergies?"
-        }
-      ],
-      "expected_retrieval": {
-        "hcm": [
-          {
-            "allergen": "penicillin",
-            "reaction_type": "rash"
-          }
-        ]
-      },
-      "expected_response": "Yes, you’re allergic to penicillin, which causes a rash."
+    "expected_response": "You take Metformin 500mg and Amlodipine 10mg every morning."
+  },
+  {
+    "id": "HCM_2",
+    "conversation": [
+      { "user_query": "What am I allergic to?", "time": "2025-09-23T11:00:00Z" }
+    ],
+    "expected_retrieval": {
+      "hcm": { "allergen": "penicillin", "reaction_type": "rash" }
     },
-    {
-      "id": "STM_01",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Please remind me to call my grandson tonight."
-        },
-        {
-          "role": "system",
-          "content": "Okay, I’ll remind you."
-        },
-        {
-          "role": "user",
-          "content": "Who do I need to call tonight?"
-        }
-      ],
-      "expected_retrieval": {
-        "stm": {
-          "context_summary": "Reminder to call grandson tonight"
-        }
-      },
-      "expected_response": "You asked me to remind you to call your grandson tonight."
+    "expected_response": "You are allergic to penicillin, which causes a rash."
+  },
+  {
+    "id": "STM_1",
+    "conversation": [
+      { "user_query": "I want to eat fish head curry tonight.", "time": "2025-09-24T12:00:00Z" },
+      { "user_query": "What should I have for dinner later?", "time": "2025-09-24T18:00:00Z" }
+    ],
+    "expected_retrieval": { "stm": { "food_preference": "fish head curry" } },
+    "expected_response": "You mentioned fish head curry earlier, that could be a good choice for dinner."
+  },
+  {
+    "id": "STM_2",
+    "conversation": [
+      { "user_query": "Remind me to water the plants tomorrow morning.", "time": "2025-09-25T21:00:00Z" },
+      { "user_query": "What was I supposed to do in the morning?", "time": "2025-09-26T08:00:00Z" }
+    ],
+    "expected_retrieval": { "stm": { "task": "water the plants" } },
+    "expected_response": "You asked to be reminded to water the plants in the morning."
+  },
+  {
+    "id": "Temporal_1",
+    "conversation": [
+      { "user_query": "I want to eat chicken last week.", "time": "2025-09-20T12:00:00Z" },
+      { "user_query": "I want to eat salad today.", "time": "2025-09-27T12:00:00Z" },
+      { "user_query": "What should I eat now?", "time": "2025-09-27T12:30:00Z" }
+    ],
+    "expected_retrieval": { "stm": { "food_preference": "salad" } },
+    "expected_response": "Since you said you wanted salad today, a salad bowl would be good now."
+  },
+  {
+    "id": "Temporal_2",
+    "conversation": [
+      { "user_query": "I enjoyed listening to jazz yesterday evening.", "time": "2025-09-29T20:00:00Z" },
+      { "user_query": "What music should I play tonight?", "time": "2025-09-30T19:00:00Z" }
+    ],
+    "expected_retrieval": { "stm": { "music_preference": "jazz" } },
+    "expected_response": "You enjoyed jazz yesterday evening, would you like to listen to more jazz tonight?"
+  },
+  {
+    "id": "MultiMem_1",
+    "conversation": [
+      { "user_query": "Should I bring someone for my morning walk tomorrow?", "time": "2025-09-26T20:00:00Z" }
+    ],
+    "expected_retrieval": {
+      "ltm": { "routine": "Morning walks with Mr Lim at 7.30am every day" }
     },
-    {
-      "id": "STM_02",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "I’d like chicken for dinner today."
-        },
-        {
-          "role": "user",
-          "content": "What did I say I wanted for dinner?"
-        }
-      ],
-      "expected_retrieval": {
-        "stm": {
-          "context_summary": "Preference for chicken at dinner today"
-        }
-      },
-      "expected_response": "You mentioned that you’d like chicken for dinner today."
+    "expected_response": "You usually go with your friend Mr Lim at 7.30am. You could invite him tomorrow too."
+  },
+  {
+    "id": "MultiMem_2",
+    "conversation": [
+      { "user_query": "Can I still play badminton?", "time": "2025-09-28T15:00:00Z" }
+    ],
+    "expected_retrieval": {
+      "ltm": { "hobby": "used to play badminton in school days" },
+      "hcm": { "procedure_name": "Knee Replacement Surgery", "date": "2023-09-18" }
     },
-    {
-      "id": "MIXED_01",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "When is my cardiology appointment?"
-        },
-        {
-          "role": "user",
-          "content": "Also, remind me to buy oranges after that."
-        },
-        {
-          "role": "user",
-          "content": "What do I need to do after my cardiology appointment?"
-        }
-      ],
-      "expected_retrieval": {
-        "hcm": {
-          "event": "cardiology appointment",
-          "time": "2025-09-30T10:00:00Z",
-          "facility": "Yishun Polyclinic"
-        },
-        "stm": {
-          "context_summary": "Reminder to buy oranges after cardiology appointment"
-        }
-      },
-      "expected_response": "Your cardiology appointment is on 30th September at Yishun Polyclinic. After that, you asked me to remind you to buy oranges."
+    "expected_response": "You used to play badminton, but since your knee replacement surgery in 2023, you should consult your doctor before trying."
+  },
+  {
+    "id": "MultiMem_3",
+    "conversation": [
+      { "user_query": "What’s my usual breakfast?", "time": "2025-09-25T08:30:00Z" }
+    ],
+    "expected_retrieval": {
+      "ltm": { "routine": "soft boiled eggs and coffee everyday for breakfast" }
     },
-    {
-      "id": "MIXED_02",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Who usually joins me for walks?"
-        },
-        {
-          "role": "user",
-          "content": "Can you remind me to ask them tomorrow morning?"
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "activity": "morning walks",
-          "partner": "Mr. Lim, neighbor"
-        },
-        "stm": {
-          "context_summary": "Reminder to ask Mr. Lim tomorrow morning"
-        }
-      },
-      "expected_response": "You usually go for morning walks with your neighbor, Mr. Lim. I’ll also remind you tomorrow morning to ask him."
+    "expected_response": "You usually have soft boiled eggs and coffee for breakfast."
+  },
+  {
+    "id": "MultiMem_4",
+    "conversation": [
+      { "user_query": "Can I drink coffee with my medicines?", "time": "2025-09-27T08:00:00Z" }
+    ],
+    "expected_retrieval": {
+      "ltm": { "routine": "soft boiled eggs and coffee everyday for breakfast" },
+      "hcm": [
+        { "medication_name": "Metformin", "dosage": "500mg" },
+        { "medication_name": "Amlodipine", "dosage": "10mg" }
+      ]
     },
-    {
-      "id": "LTM_03",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "What’s my full name?"
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "preferred_name": "Mr. Tan Wei Ming"
-        }
-      },
-      "expected_response": "Your full name is Tan Wei Ming."
-    },
-    {
-      "id": "LTM_04",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "When is my birthday?"
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "date_of_birth": "1947-06-12"
-        }
-      },
-      "expected_response": "Your birthday is on June 12, 1947."
-    },
-    {
-      "id": "LTM_05",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Do I enjoy gardening?"
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "hobby": "gardening",
-          "preference": "yes"
-        }
-      },
-      "expected_response": "Yes, gardening is one of your favorite hobbies."
-    },
-    {
-      "id": "LTM_06",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Who is my best friend?"
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "contact_name": "Ah Seng",
-          "relationship_type": "friend"
-        }
-      },
-      "expected_response": "Your best friend is Ah Seng."
-    },
-    {
-      "id": "LTM_07",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Where do I live?"
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "address": "123 Ang Mo Kio Ave 5, Singapore"
-        }
-      },
-      "expected_response": "You live at 123 Ang Mo Kio Ave 5, Singapore."
-    },
-    {
-      "id": "LTM_08",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "What is my usual breakfast?"
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "routine_name": "breakfast",
-          "food_preference": "soft boiled eggs and coffee"
-        }
-      },
-      "expected_response": "You usually have soft boiled eggs and coffee for breakfast."
-    },
-    {
-      "id": "HCM_03",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "What condition was I diagnosed with last year?"
-        }
-      ],
-      "expected_retrieval": {
-        "hcm": {
-          "condition_name": "Type 2 Diabetes",
-          "diagnosis_date": "2024-05-10"
-        }
-      },
-      "expected_response": "You were diagnosed with Type 2 Diabetes in May 2024."
-    },
-    {
-      "id": "HCM_04",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "What’s my blood pressure reading from last week?"
-        }
-      ],
-      "expected_retrieval": {
-        "hcm": {
-          "vital_sign": "blood pressure",
-          "value": "128/82",
-          "date": "2025-09-18"
-        }
-      },
-      "expected_response": "Your blood pressure reading last week was 128 over 82."
-    },
-    {
-      "id": "HCM_05",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Which hospital do I go to for check-ups?"
-        }
-      ],
-      "expected_retrieval": {
-        "hcm": {
-          "facility": "Tan Tock Seng Hospital"
-        }
-      },
-      "expected_response": "You usually go to Tan Tock Seng Hospital for your check-ups."
-    },
-    {
-      "id": "HCM_06",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Do I have any heart-related issues?"
-        }
-      ],
-      "expected_retrieval": {
-        "hcm": {
-          "condition_name": "Hypertension",
-          "status": "active"
-        }
-      },
-      "expected_response": "Yes, you have hypertension, which is a heart-related condition."
-    },
-    {
-      "id": "STM_03",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "I feel like going to the park later this evening."
-        },
-        {
-          "role": "user",
-          "content": "What did I say I wanted to do later?"
-        }
-      ],
-      "expected_retrieval": {
-        "stm": {
-          "context_summary": "Go to the park this evening"
-        }
-      },
-      "expected_response": "You mentioned that you’d like to go to the park this evening."
-    },
-    {
-      "id": "STM_04",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Please remind me to water the plants after lunch."
-        },
-        {
-          "role": "user",
-          "content": "What do I need to do after lunch?"
-        }
-      ],
-      "expected_retrieval": {
-        "stm": {
-          "context_summary": "Reminder to water plants after lunch"
-        }
-      },
-      "expected_response": "You asked me to remind you to water the plants after lunch."
-    },
-    {
-      "id": "STM_05",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "I’ll be meeting my friend Ah Seng tomorrow afternoon."
-        },
-        {
-          "role": "user",
-          "content": "Who am I meeting tomorrow?"
-        }
-      ],
-      "expected_retrieval": {
-        "stm": {
-          "context_summary": "Meeting friend Ah Seng tomorrow afternoon"
-        }
-      },
-      "expected_response": "You’ll be meeting your friend Ah Seng tomorrow afternoon."
-    },
-    {
-      "id": "STM_06",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Let’s listen to Teresa Teng songs later."
-        },
-        {
-          "role": "user",
-          "content": "What did I say I want to listen to later?"
-        }
-      ],
-      "expected_retrieval": {
-        "stm": {
-          "context_summary": "Listen to Teresa Teng songs later"
-        }
-      },
-      "expected_response": "You said you’d like to listen to Teresa Teng songs later."
-    },
-    {
-      "id": "MIXED_03",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "When is my next polyclinic visit?"
-        },
-        {
-          "role": "user",
-          "content": "Also, can you remind me to buy fish after that?"
-        }
-      ],
-      "expected_retrieval": {
-        "hcm": {
-          "event": "next polyclinic appointment",
-          "time": "2025-10-05T09:00:00Z"
-        },
-        "stm": {
-          "context_summary": "Reminder to buy fish after polyclinic visit"
-        }
-      },
-      "expected_response": "Your next polyclinic visit is on 5th October at 9am. After that, you wanted me to remind you to buy fish."
-    },
-    {
-      "id": "MIXED_04",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Who is my eldest son?"
-        },
-        {
-          "role": "user",
-          "content": "Remind me to call him on Sunday."
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "contact_name": "David Tan",
-          "relationship_type": "eldest son"
-        },
-        "stm": {
-          "context_summary": "Reminder to call David Tan on Sunday"
-        }
-      },
-      "expected_response": "Your eldest son is David Tan. I’ll remind you to call him on Sunday."
-    },
-    {
-      "id": "MIXED_05",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "What’s my usual morning routine?"
-        },
-        {
-          "role": "user",
-          "content": "Please remind me to skip my walk if it rains tomorrow."
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "routine": "morning walk at 7am"
-        },
-        "stm": {
-          "context_summary": "Skip morning walk if it rains tomorrow"
-        }
-      },
-      "expected_response": "Your usual morning routine is a walk at 7am. I’ll also remind you to skip it if it rains tomorrow."
-    },
-    {
-      "id": "MIXED_06",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "What did the doctor say about my diabetes?"
-        },
-        {
-          "role": "user",
-          "content": "Also, can you remind me to bring my glucose monitor for my next check-up?"
-        }
-      ],
-      "expected_retrieval": {
-        "hcm": {
-          "condition_name": "Type 2 Diabetes",
-          "status": "stable"
-        },
-        "stm": {
-          "context_summary": "Reminder to bring glucose monitor for next check-up"
-        }
-      },
-      "expected_response": "The doctor said your Type 2 Diabetes is stable. I’ll remind you to bring your glucose monitor for your next check-up."
-    },
-    {
-      "id": "MIXED_07",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "Who usually celebrates birthdays with me?"
-        },
-        {
-          "role": "user",
-          "content": "Remind me to get a cake for this year’s celebration."
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "family": "children and grandchildren usually join birthday celebrations"
-        },
-        "stm": {
-          "context_summary": "Reminder to get a cake for birthday celebration"
-        }
-      },
-      "expected_response": "Your children and grandchildren usually celebrate your birthday with you. I’ll remind you to get a cake this year."
-    },
-    {
-      "id": "MIXED_08",
-      "conversation_snippet": [
-        {
-          "role": "user",
-          "content": "What sports did I use to play when I was young?"
-        },
-        {
-          "role": "user",
-          "content": "Can you remind me to tell my grandson that story later?"
-        }
-      ],
-      "expected_retrieval": {
-        "ltm": {
-          "life_memory": "used to play badminton in school days"
-        },
-        "stm": {
-          "context_summary": "Reminder to tell grandson about badminton story later"
-        }
-      },
-      "expected_response": "You used to play badminton when you were young. I’ll remind you to share that story with your grandson later."
-    }
-  ]
-}
+    "expected_response": "You usually have coffee with breakfast, but since you’re on Metformin and Amlodipine, you should confirm with your doctor if coffee is safe."
+  },
+  {
+    "id": "Profile_1",
+    "conversation": [
+      { "user_query": "What’s my nationality?", "time": "2025-09-23T10:00:00Z" }
+    ],
+    "expected_retrieval": { "ltm": {}, "hcm": {}, "profile": { "nationality": "Singaporean" } },
+    "expected_response": "You are Singaporean."
+  },
+  {
+    "id": "Profile_2",
+    "conversation": [
+      { "user_query": "Where do I live?", "time": "2025-09-24T09:30:00Z" }
+    ],
+    "expected_retrieval": { "profile": { "address": "38 Dhoby Ghaut Road, Singapore 123456" } },
+    "expected_response": "You live at 38 Dhoby Ghaut Road, Singapore."
+  }
+]
