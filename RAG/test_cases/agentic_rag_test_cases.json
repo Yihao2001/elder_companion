@@ -5,9 +5,8 @@
       { "user_query": "Who is your daughter-in-law?", "time": "2025-09-20T10:00:00Z" }
     ],
     "expected_retrieval": {
-      "ltm": { "key": "Daughter-in-law", "value": "Meena Singh" }
-    },
-    "expected_response": "Your daughter-in-law is Meena Singh."
+      "ltm": {"document_id":"LTM001", "key": "Daughter-in-law", "value": "Meena Singh" }
+    }
   },
   {
     "id": "LTM_2",
@@ -15,9 +14,8 @@
       { "user_query": "Who usually joins you for birthday celebrations?", "time": "2025-09-21T09:30:00Z" }
     ],
     "expected_retrieval": {
-      "ltm": { "key": "family_relationship", "value": "Children and grandchildren usually join birthday celebrations" }
-    },
-    "expected_response": "Your children and grandchildren usually join your birthday celebrations."
+      "ltm": [{ "document_id":"LTM005","key": "family_relationship", "value": "Children and grandchildren usually join birthday celebrations" }]
+    }
   },
   {
     "id": "HCM_1",
@@ -26,58 +24,38 @@
     ],
     "expected_retrieval": {
       "hcm": [
-        { "medication_name": "Metformin", "dosage": "500mg" },
-        { "medication_name": "Amlodipine", "dosage": "10mg" }
+        { "document_id": "HCM001", "medication_name": "Metformin", "dosage": "500mg" },
+        { "document_id": "HCM002","medication_name": "Amlodipine", "dosage": "10mg" }
       ]
     },
     "expected_response": "You take Metformin 500mg and Amlodipine 10mg every morning."
   },
   {
-    "id": "HCM_2",
-    "conversation": [
-      { "user_query": "What am I allergic to?", "time": "2025-09-23T11:00:00Z" }
-    ],
-    "expected_retrieval": {
-      "hcm": { "allergen": "penicillin", "reaction_type": "rash" }
-    },
-    "expected_response": "You are allergic to penicillin, which causes a rash."
-  },
-  {
     "id": "STM_1",
     "conversation": [
-      { "user_query": "I want to eat fish head curry tonight.", "time": "2025-09-24T12:00:00Z" },
       { "user_query": "What should I have for dinner later?", "time": "2025-09-24T18:00:00Z" }
     ],
-    "expected_retrieval": { "stm": { "food_preference": "fish head curry" } },
-    "expected_response": "You mentioned fish head curry earlier, that could be a good choice for dinner."
+    "expected_retrieval": { "stm": [{ "document_id": "STM014","content": "I feel like eating fish head curry tonight." }] }
   },
   {
     "id": "STM_2",
     "conversation": [
-      { "user_query": "Remind me to water the plants tomorrow morning.", "time": "2025-09-25T21:00:00Z" },
-      { "user_query": "What was I supposed to do in the morning?", "time": "2025-09-26T08:00:00Z" }
+      { "user_query": "What was I supposed to do in the morning?", "time": "2025-09-29T08:00:00Z" }
     ],
-    "expected_retrieval": { "stm": { "task": "water the plants" } },
-    "expected_response": "You asked to be reminded to water the plants in the morning."
+    "expected_retrieval": { "stm": [{"document_id": "STM_011", "timestamp": "2025-09-28T20:00:00Z", "content": "I’d like to call my daughter Meena tomorrow morning."}] }
   },
   {
     "id": "Temporal_1",
     "conversation": [
-      { "user_query": "I want to eat chicken last week.", "time": "2025-09-20T12:00:00Z" },
-      { "user_query": "I want to eat salad today.", "time": "2025-09-27T12:00:00Z" },
       { "user_query": "What should I eat now?", "time": "2025-09-27T12:30:00Z" }
     ],
-    "expected_retrieval": { "stm": { "food_preference": "salad" } },
-    "expected_response": "Since you said you wanted salad today, a salad bowl would be good now."
-  },
-  {
-    "id": "Temporal_2",
-    "conversation": [
-      { "user_query": "I enjoyed listening to jazz yesterday evening.", "time": "2025-09-29T20:00:00Z" },
-      { "user_query": "What music should I play tonight?", "time": "2025-09-30T19:00:00Z" }
-    ],
-    "expected_retrieval": { "stm": { "music_preference": "jazz" } },
-    "expected_response": "You enjoyed jazz yesterday evening, would you like to listen to more jazz tonight?"
+    "expected_retrieval": {
+      "stm":[
+        {"document_id": "STM_010", "timestamp": "2025-09-27T12:00:00Z", "content": "I want to eat salad for lunch today."},
+        {"document_id": "STM_014", "timestamp": "2025-10-01 18:30:00Z", "content": "I feel like eating fish head curry tonight."},
+        {"document_id": "STM_003", "timestamp": "2025-09-20T12:30:00Z", "content": "I feel like eating chicken rice later."}
+    ]
+    }
   },
   {
     "id": "MultiMem_1",
@@ -85,9 +63,11 @@
       { "user_query": "Should I bring someone for my morning walk tomorrow?", "time": "2025-09-26T20:00:00Z" }
     ],
     "expected_retrieval": {
-      "ltm": { "routine": "Morning walks with Mr Lim at 7.30am every day" }
-    },
-    "expected_response": "You usually go with your friend Mr Lim at 7.30am. You could invite him tomorrow too."
+      "ltm":[
+        {"document_id": "LTM_004", "category": "lifestyle", "key": "routine", "value": "Morning walks with Mr Lim at 7.30am every day"},
+        {"document_id": "LTM_003", "category": "lifestyle", "key": "friend", "value": "Mr Lim"}
+      ]
+    }
   },
   {
     "id": "MultiMem_2",
@@ -95,10 +75,9 @@
       { "user_query": "Can I still play badminton?", "time": "2025-09-28T15:00:00Z" }
     ],
     "expected_retrieval": {
-      "ltm": { "hobby": "used to play badminton in school days" },
-      "hcm": { "procedure_name": "Knee Replacement Surgery", "date": "2023-09-18" }
-    },
-    "expected_response": "You used to play badminton, but since your knee replacement surgery in 2023, you should consult your doctor before trying."
+      "ltm": [{"document_id": "LTM_010", "category": "lifestyle", "key": "hobby", "value": "used to play badminton in school days"}],
+      "hcm": [{"document_id": "HCM_005", "type": "procedure", "procedure_name": "Knee Replacement Surgery", "date": "2023-09-18", "description": "Patient has undergone Knee Replacement Surgery on 2023-09-18."}]
+    }
   },
   {
     "id": "MultiMem_3",
@@ -106,9 +85,8 @@
       { "user_query": "What’s my usual breakfast?", "time": "2025-09-25T08:30:00Z" }
     ],
     "expected_retrieval": {
-      "ltm": { "routine": "soft boiled eggs and coffee everyday for breakfast" }
-    },
-    "expected_response": "You usually have soft boiled eggs and coffee for breakfast."
+      "ltm": [{"document_id": "LTM_008", "category": "lifestyle", "key": "routine", "value": "soft boiled eggs and coffee everyday for breakfast"}]
+    }
   },
   {
     "id": "MultiMem_4",
@@ -116,28 +94,14 @@
       { "user_query": "Can I drink coffee with my medicines?", "time": "2025-09-27T08:00:00Z" }
     ],
     "expected_retrieval": {
-      "ltm": { "routine": "soft boiled eggs and coffee everyday for breakfast" },
+      "ltm":[
+        {"document_id": "LTM_008", "category": "lifestyle", "key": "routine", "value": "soft boiled eggs and coffee everyday for breakfast"}
+      ],
       "hcm": [
-        { "medication_name": "Metformin", "dosage": "500mg" },
-        { "medication_name": "Amlodipine", "dosage": "10mg" }
+        { "document_id": "HCM001", "medication_name": "Metformin", "dosage": "500mg" },
+        { "document_id": "HCM002","medication_name": "Amlodipine", "dosage": "10mg" }
       ]
     },
     "expected_response": "You usually have coffee with breakfast, but since you’re on Metformin and Amlodipine, you should confirm with your doctor if coffee is safe."
-  },
-  {
-    "id": "Profile_1",
-    "conversation": [
-      { "user_query": "What’s my nationality?", "time": "2025-09-23T10:00:00Z" }
-    ],
-    "expected_retrieval": { "ltm": {}, "hcm": {}, "profile": { "nationality": "Singaporean" } },
-    "expected_response": "You are Singaporean."
-  },
-  {
-    "id": "Profile_2",
-    "conversation": [
-      { "user_query": "Where do I live?", "time": "2025-09-24T09:30:00Z" }
-    ],
-    "expected_retrieval": { "profile": { "address": "38 Dhoby Ghaut Road, Singapore 123456" } },
-    "expected_response": "You live at 38 Dhoby Ghaut Road, Singapore."
   }
 ]
