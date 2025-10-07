@@ -46,14 +46,20 @@
     "expected_retrieval": {
       "hcm": [
         {
-          "document_id": "HCM001",
-          "medication_name": "Metformin",
-          "dosage": "500mg"
+            "document_id": "HCM_001",
+            "type": "medication",
+            "medication_name": "Metformin",
+            "dosage": "500mg",
+            "frequency": "every morning",
+            "description": "Patient has to take Metformin 500mg every morning to manage blood sugar levels."
         },
         {
-          "document_id": "HCM002",
-          "medication_name": "Amlodipine",
-          "dosage": "10mg"
+            "document_id": "HCM_002",
+            "type": "medication",
+            "medication_name": "Amlodipine",
+            "dosage": "10mg",
+            "frequency": "every morning",
+            "description": "Patient has to take Amlodipine 10mg every morning to manage blood pressure."
         }
       ]
     },
@@ -293,19 +299,19 @@
     "expected_retrieval": {
       "hcm": [
         {
-          "document_id": "HCM_003",
-          "type": "condition",
-          "condition_name": "Type 2 Diabetes",
-          "date": "2024-05-10",
-          "status": "stable",
-          "description": "Patient was diagnosed with Type 2 Diabetes on 2024-05-10 and is currently stable."
+            "document_id": "HCM_003",
+            "type": "condition",
+            "condition_name": "Type 2 Diabetes",
+            "date": "2024-05-10",
+            "status": "stable",
+            "description": "Patient was diagnosed with Type 2 Diabetes on 2024-05-10 and is currently stable."
         },
         {
-          "document_id": "HCM_004",
-          "type": "condition",
-          "condition_name": "Hypertension",
-          "status": "active",
-          "description": "Patient has an active condition of Hypertension."
+            "document_id": "HCM_004",
+            "type": "condition",
+            "condition_name": "Hypertension",
+            "status": "active",
+            "description": "Patient has an active condition of Hypertension."
         }
       ]
     }
