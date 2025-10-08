@@ -107,6 +107,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             });
 
             const { jwt_token } = response.data;
+            console.log(jwt_token)
 
             // Store token
             localStorage.setItem('token', jwt_token);

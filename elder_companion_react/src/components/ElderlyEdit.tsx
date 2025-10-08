@@ -89,7 +89,7 @@ const ElderlyEdit: React.FC = () => {
         try {
             if (selectedSection === 'ltm') {
                 const ltmRecord = selectedRecord as LTMInfo;
-                await axios.post(`${BASE_URL}/api/ltm`, {
+                await axios.post(`${BASE_URL}/ltm`, {
                     elderly_id: id,
                     category: ltmRecord.category,
                     key: ltmRecord.key,
@@ -104,7 +104,7 @@ const ElderlyEdit: React.FC = () => {
                 ));
             } else {
                 const healthRecord = selectedRecord as HealthcareInfo;
-                await axios.post(`${BASE_URL}/api/healthcare`, {
+                await axios.post(`${BASE_URL}/healthcare`, {
                     elderly_id: id,
                     description: healthRecord.description,
                     diagnosis_date: healthRecord.diagnosis_date,
@@ -168,8 +168,14 @@ const ElderlyEdit: React.FC = () => {
                         onChange={(e) => {
                         const newMode = e.target.value as 'edit' | 'create';
                         setMode(newMode);
-                        setSelectedRecord(null); // reset record
-                        }}
+                        if (newMode === 'create') {
+                            const newRecord = selectedSection === 'ltm'
+                                ? { category: '', key: '', value: '', last_updated: '' }
+                                : { description: '', diagnosis_date: '', record_type: '', last_updated: '' };
+                            setSelectedRecord(newRecord as LTMInfo | HealthcareInfo);
+                        } else {
+                            setSelectedRecord(null);
+                        }                        }}
                         className="mode-dropdown"
                     >
                         <option value="edit">Edit Existing Record</option>
@@ -306,7 +312,7 @@ const ElderlyEdit: React.FC = () => {
                 )}
 
                 {/* Edit Form in Table Format */}
-                {selectedRecord && (
+                {mode === 'edit' && selectedRecord && (
                     <div className="edit-form">
                         <h3>Edit {selectedSection === 'ltm' ? 'LTM' : 'Healthcare'} Record</h3>
                         <table className="edit-table">
