@@ -35,7 +35,7 @@ from langgraph.prebuilt import ToolNode, create_react_agent
 from langgraph.graph.message import add_messages
 
 # Import embedder
-from RAG.embedder import Embedder
+from elder_companion.RAG.utils.embedder import Embedder
 
 from RAG.shared.schemas.schema_stm import InsertShortTermSchema
 from RAG.shared.schemas.schema_ltm import InsertLongTermSchema, LTMCategories

@@ -33,7 +33,7 @@ from langgraph.prebuilt import ToolNode, create_react_agent
 from langgraph.graph.message import add_messages
 
 # Import embedder
-from RAG.embedder import Embedder
+from RAG.utils.embedder import Embedder
 
 
 class AgentState(TypedDict):
