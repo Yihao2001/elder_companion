@@ -53,6 +53,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     
         if (!token) {
             setIsHydrated(true);
+            setLoading(false);
             return;
         }
     
@@ -75,6 +76,7 @@ export const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
             logout();
         } finally {
             setIsHydrated(true);
+            setLoading(false);
         }
     }, []);
     

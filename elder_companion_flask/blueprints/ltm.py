@@ -27,6 +27,7 @@ def get_ltm():
 
     result = [
         {
+            "ltm_id": r.id,
             "category": r.category.value if r.category else None,
             "key": r.key,
             "value": r.value,
@@ -67,3 +68,37 @@ def post_ltm():
     db.close()
 
     return jsonify({"id": str(record.id), "message": "Inserted into LTM"}), 201
+
+@ltm_bp.route("/ltm/<int:ltm_id>", methods=["PUT"])
+def update_ltm(ltm_id):
+    db: Session = next(get_db())
+    record = db.query(LongTermMemory).filter(LongTermMemory.id == ltm_id).first()
+
+    if not record:
+        db.close()
+        return jsonify({"error": "LTM record not found"}), 404
+
+    data = request.json
+    category = data.get("category")
+    key = data.get("key")
+    value = data.get("value")
+
+    if not category or not key or not value:
+        db.close()
+        return jsonify({"error": "At least one of category, key or value is required"}), 400
+
+    try:
+        category_enum = LTMCategoryEnum(category)
+        record.category = category_enum
+    except ValueError:
+        db.close()
+        return jsonify({"error": f"Invalid category: {category}"}), 400
+
+    record.key = key
+    record.value = value
+    record.embedding = get_embedding(value) # Re-generate embedding for the new value
+
+    db.commit()
+    db.close()
+
+    return jsonify({"message": f"LTM record {ltm_id} updated successfully"}), 200
