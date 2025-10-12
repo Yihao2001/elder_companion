@@ -1,4 +1,4 @@
-from flask import Flask, jsonify, request
+from flask import Flask, jsonify, request, g
 from flask_jwt_extended import JWTManager,verify_jwt_in_request, get_jwt_identity, get_jwt
 from flask_cors import CORS
 from sqlalchemy.orm import Session
@@ -85,6 +85,12 @@ def verify_jwt():
     # Check if user_id from the jwt exists in db
     if not user:
         return jsonify({"error": "user_id does not exist"}), 400
+    
+    # Save user_id in flask context
+    g.user_id = user_id
+    
+    # For DEBUG:
+    # print(f"user_id in g: {g.get('user_id')}")
 
     # Check if elderly_id is provided in query param or body
     elderly_id = request.view_args.get("elderly_id") or request.args.get("elderly_id")
