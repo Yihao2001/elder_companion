@@ -89,7 +89,7 @@ const ElderlyEdit: React.FC = () => {
         try {
             if (selectedSection === 'ltm') {
                 const ltmRecord = selectedRecord as LTMInfo;
-                await axios.post(`${BASE_URL}/api/ltm`, {
+                await axios.post(`${BASE_URL}/ltm`, {
                     elderly_id: id,
                     category: ltmRecord.category,
                     key: ltmRecord.key,
@@ -104,7 +104,7 @@ const ElderlyEdit: React.FC = () => {
                 ));
             } else {
                 const healthRecord = selectedRecord as HealthcareInfo;
-                await axios.post(`${BASE_URL}/api/healthcare`, {
+                await axios.post(`${BASE_URL}/healthcare`, {
                     elderly_id: id,
                     description: healthRecord.description,
                     diagnosis_date: healthRecord.diagnosis_date,

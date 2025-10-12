@@ -1,4 +1,6 @@
-# scripts/db_setup.py
+"""
+To run this file, go to root folder (elder_companion) and run python -m scripts.db_migration
+"""
 from elder_companion_flask.db import engine, Base, get_db
 
 # Import all models so SQLAlchemy knows about them
@@ -9,6 +11,7 @@ from elder_companion_flask.models import (
     HealthcareRecord,
     User,
     user_elderly,
+    AuditLog,
 )
 
 def create_tables():

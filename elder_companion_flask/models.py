@@ -2,7 +2,7 @@ import enum
 import uuid
 from pgvector.sqlalchemy import Vector
 from sqlalchemy import Table, Column, String, Date, Enum, ForeignKey, TIMESTAMP, Text, text
-from sqlalchemy.dialects.postgresql import UUID, BYTEA
+from sqlalchemy.dialects.postgresql import UUID, BYTEA, JSON
 from sqlalchemy.orm import relationship
 from .db import Base
 
@@ -36,6 +36,18 @@ class RecordTypeEnum(enum.Enum):
     procedure = "procedure"
     appointment = "appointment"
     medication = "medication"
+
+class TableNameEnum(enum.Enum):
+    users = "users"
+    elderly_profile = "elderly_profile"
+    short_term_memory = "short_term_memory"
+    long_term_memory = "long_term_memory"
+    healthcare_records = "healthcare_records"
+    audit_logs = "audit_logs"
+
+class ActionEnum(enum.Enum):
+    add = "Add"
+    update = "Update"
 
 # Tables
 class User(Base):
@@ -110,3 +122,17 @@ class HealthcareRecord(Base):
     last_updated = Column(TIMESTAMP, server_default=text("CURRENT_TIMESTAMP"))
 
     elderly = relationship("ElderlyProfile", back_populates="healthcare")
+
+class AuditLog(Base):
+    __tablename__ = "audit_logs"
+
+    id = Column(UUID(as_uuid=True), primary_key=True, default=uuid.uuid4)
+    user_id = Column(UUID(as_uuid=True), ForeignKey("users.id"))
+    elderly_id = Column(UUID(as_uuid=True), ForeignKey("elderly_profile.id"))
+    table_name = Column(Enum(TableNameEnum))
+    action = Column(Enum(ActionEnum))
+    changes = Column(JSON)
+    timestamp = Column(TIMESTAMP, server_default=text("CURRENT_TIMESTAMP"))
+
+    user = relationship("User", backref="audit_logs")
+    elderly = relationship("ElderlyProfile", backref="audit_logs")
