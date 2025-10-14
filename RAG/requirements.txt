@@ -20,3 +20,4 @@ huggingface_hub
 # Notebook & visualization
 ipython
 graphviz
+streamlit

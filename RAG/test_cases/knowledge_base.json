@@ -13,7 +13,7 @@
         {
             "document_id": "STM_003",
             "timestamp": "2025-09-19T13:42:51Z",
-            "content": "I want to try painting this weekend; it\u2019s been a while."
+            "content": "I want to try painting this weekend; it's been a while."
         },
         {
             "document_id": "STM_004",
@@ -291,8 +291,8 @@
         {
             "document_id": "LTM_002",
             "category": "family",
-            "key": "Ganesh Menon Dhoby",
-            "value": "eldest son"
+            "key": "Eldest son",
+            "value": "Ganesh Menon Dhoby"
         },
         {
             "document_id": "LTM_003",
@@ -383,45 +383,36 @@
         {
             "document_id": "HCM_001",
             "type": "medication",
-            "medication_name": "Metformin",
-            "dosage": "500mg",
-            "frequency": "every morning",
+            "date": "None",
             "description": "Patient has to take Metformin 500mg every morning to manage blood sugar levels."
         },
         {
             "document_id": "HCM_002",
             "type": "medication",
-            "medication_name": "Amlodipine",
-            "dosage": "10mg",
-            "frequency": "every morning",
+            "date": "None",
             "description": "Patient has to take Amlodipine 10mg every morning to manage blood pressure."
         },
         {
             "document_id": "HCM_003",
             "type": "condition",
-            "condition_name": "Type 2 Diabetes",
             "date": "2024-05-10",
-            "status": "stable",
             "description": "Patient was diagnosed with Type 2 Diabetes on 2024-05-10 and is currently stable."
         },
         {
             "document_id": "HCM_004",
             "type": "condition",
-            "condition_name": "Hypertension",
-            "status": "active",
+            "date": "None",
             "description": "Patient has an active condition of Hypertension."
         },
         {
             "document_id": "HCM_005",
             "type": "procedure",
-            "procedure_name": "Knee Replacement Surgery",
             "date": "2023-09-18",
             "description": "Patient has undergone Knee Replacement Surgery on 2023-09-18."
         },
         {
             "document_id": "HCM_006",
             "type": "procedure",
-            "procedure_name": "Cataract Surgery",
             "date": "2022-11-05",
             "description": "Patient has undergone Cataract Surgery on 2022-11-05."
         }

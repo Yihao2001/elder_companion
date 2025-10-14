@@ -1,0 +1,1835 @@
+{
+    "LTM_data": [
+        {
+            "document_id": "LTM_001",
+            "category": "family",
+            "key": "Husband",
+            "value": "Rajinder Singh"
+        },
+        {
+            "document_id": "LTM_002",
+            "category": "family",
+            "key": "Eldest son",
+            "value": "Harjit Singh"
+        },
+        {
+            "document_id": "LTM_003",
+            "category": "family",
+            "key": "Youngest daughter",
+            "value": "Simran Kaur"
+        },
+        {
+            "document_id": "LTM_004",
+            "category": "family",
+            "key": "Grandchildren",
+            "value": "Two grandchildren, loves to babysit on weekends"
+        },
+        {
+            "document_id": "LTM_005",
+            "category": "lifestyle",
+            "key": "Morning routine",
+            "value": "Enjoys morning walks at Dhoby Ghaut Park with neighbours at 7 am"
+        },
+        {
+            "document_id": "LTM_006",
+            "category": "lifestyle",
+            "key": "Hobby",
+            "value": "Practices Tai Chi at the community centre every Tuesday and Thursday"
+        },
+        {
+            "document_id": "LTM_007",
+            "category": "lifestyle",
+            "key": "Cooking preference",
+            "value": "Prefers cooking traditional Sikh vegetarian dishes"
+        },
+        {
+            "document_id": "LTM_008",
+            "category": "personal",
+            "key": "Close friend",
+            "value": "Mrs. Tan from Block 12, often meets for tea"
+        },
+        {
+            "document_id": "LTM_009",
+            "category": "lifestyle",
+            "key": "Shopping routine",
+            "value": "Goes to Tekka Centre wet market every Saturday morning to buy fresh vegetables and spices"
+        },
+        {
+            "document_id": "LTM_010",
+            "category": "lifestyle",
+            "key": "Public transport usage",
+            "value": "Uses MRT daily to visit the market and friends, prefers to travel off-peak hours"
+        },
+        {
+            "document_id": "LTM_011",
+            "category": "lifestyle",
+            "key": "Social activity",
+            "value": "Attends senior activity centre\u2019s weekly knitting club"
+        },
+        {
+            "document_id": "LTM_012",
+            "category": "personal",
+            "key": "Neighbour",
+            "value": "Mr. Lim, often chats about news and local happenings"
+        },
+        {
+            "document_id": "LTM_013",
+            "category": "lifestyle",
+            "key": "Dietary preference",
+            "value": "Avoids oily and spicy food due to mild acid reflux"
+        },
+        {
+            "document_id": "LTM_014",
+            "category": "lifestyle",
+            "key": "Favourite hawker food",
+            "value": "Loves to eat prata and teh tarik at nearby hawker centre"
+        },
+        {
+            "document_id": "LTM_015",
+            "category": "lifestyle",
+            "key": "Community involvement",
+            "value": "Volunteers at the local temple festival during major Sikh celebrations"
+        },
+        {
+            "document_id": "LTM_016",
+            "category": "personal",
+            "key": "Relationship with children",
+            "value": "Keeps in touch daily via WhatsApp messages and calls"
+        },
+        {
+            "document_id": "LTM_017",
+            "category": "lifestyle",
+            "key": "Evening relaxation",
+            "value": "Likes to listen to classical Indian music before bedtime"
+        },
+        {
+            "document_id": "LTM_018",
+            "category": "Finance",
+            "key": "monthly pension",
+            "value": "Receives a monthly pension from CPF payouts on the 15th of each month"
+        },
+        {
+            "document_id": "LTM_019",
+            "category": "lifestyle",
+            "key": "Exercise",
+            "value": "Regularly practices gentle stretching exercises recommended by physiotherapist"
+        },
+        {
+            "document_id": "LTM_020",
+            "category": "lifestyle",
+            "key": "Mindfulness practice",
+            "value": "Practices daily meditation for 15 minutes to reduce stress"
+        },
+        {
+            "document_id": "LTM_021",
+            "category": "family",
+            "key": "Family gatherings",
+            "value": "Hosts family dinners during festive occasions like Diwali and Vaisakhi"
+        },
+        {
+            "document_id": "LTM_022",
+            "category": "finance",
+            "key": "Insurance policy",
+            "value": "Holds a Prudential health insurance policy renewed annually in March."
+        },
+        {
+            "document_id": "LTM_023",
+            "category": "lifestyle",
+            "key": "Weekend routine",
+            "value": "Visits the library to borrow books on Sikh history and culture"
+        },
+        {
+            "document_id": "LTM_024",
+            "category": "finance",
+            "key": "utility payments",
+            "value": "Pays SP Services bill via GIRO on the 5th of every month."
+        },
+        {
+            "document_id": "LTM_025",
+            "category": "lifestyle",
+            "key": "Shopping interaction",
+            "value": "Once bargained with a vegetable seller to get a better price during Ramadan"
+        },
+        {
+            "document_id": "LTM_026",
+            "category": "legal",
+            "key": "legal_contact",
+            "value": "Family lawyer is Ms. Clara Tan from Tan & Partners LLP."
+        },
+        {
+            "document_id": "LTM_027",
+            "category": "lifestyle",
+            "key": "Public transport tip",
+            "value": "Always taps her EZ-Link card carefully to avoid double charges"
+        },
+        {
+            "document_id": "LTM_028",
+            "category": "legal",
+            "key": "power of attorney",
+            "value": "Granted Lasting Power of Attorney (LPA) to eldest Harjit Singh for financial and healthcare matters."
+        },
+        {
+            "document_id": "LTM_029",
+            "category": "lifestyle",
+            "key": "Community events",
+            "value": "Participates in annual Hari Raya and Deepavali bazaars nearby"
+        },
+        {
+            "document_id": "LTM_030",
+            "category": "lifestyle",
+            "key": "Preferred market",
+            "value": "Prefers wet markets over supermarkets for fresh produce"
+        },
+        {
+            "document_id": "LTM_031",
+            "category": "lifestyle",
+            "key": "likes",
+            "value": "Bollywood movies"
+        },
+        {
+            "document_id": "LTM_032",
+            "category": "lifestyle",
+            "key": "routine",
+            "value": "soft boiled eggs and coffee everyday for breakfast"
+        },
+        {
+            "document_id": "LTM_033",
+            "category": "family",
+            "key": "family_relationship",
+            "value": "Children and grandchildren usually join birthday celebrations"
+        }
+    ],
+    "HCM_data": [
+        {
+            "document_id": "HCM_001",
+            "type": "condition",
+            "date": "2019-03-15",
+            "description": "Diagnosed with hypertension, currently controlled with medication."
+        },
+        {
+            "document_id": "HCM_002",
+            "type": "medication",
+            "date": "None",
+            "description": "Takes Amlodipine 5mg once daily for blood pressure management."
+        },
+        {
+            "document_id": "HCM_003",
+            "type": "condition",
+            "date": "2021-07-20",
+            "description": "Mild osteoarthritis diagnosed in knees, advised light exercise."
+        },
+        {
+            "document_id": "HCM_004",
+            "type": "procedure",
+            "date": "2022-11-05",
+            "description": "Underwent cataract surgery on right eye, successful recovery."
+        },
+        {
+            "document_id": "HCM_005",
+            "type": "medication",
+            "date": "None",
+            "description": "Prescribed Glucosamine supplements for joint health."
+        },
+        {
+            "document_id": "HCM_006",
+            "type": "condition",
+            "date": "2023-01-12",
+            "description": "Diagnosed with type 2 diabetes, currently managed with diet and medication."
+        },
+        {
+            "document_id": "HCM_007",
+            "type": "medication",
+            "date": "None",
+            "description": "Metformin 500mg twice daily for blood sugar control."
+        },
+        {
+            "document_id": "HCM_008",
+            "type": "appointment",
+            "date": "2024-06-10",
+            "description": "Scheduled follow-up with endocrinologist for diabetes management."
+        },
+        {
+            "document_id": "HCM_009",
+            "type": "condition",
+            "date": "2023-04-15",
+            "description": "Mild acid reflux diagnosed, advised dietary adjustments."
+        },
+        {
+            "document_id": "HCM_010",
+            "type": "medication",
+            "date": "None",
+            "description": "Takes Omeprazole 20mg before breakfast for acid reflux."
+        },
+        {
+            "document_id": "HCM_011",
+            "type": "procedure",
+            "date": "2022-05-18",
+            "description": "Received flu vaccination annually, last vaccination on 2023-10-01."
+        },
+        {
+            "document_id": "HCM_012",
+            "type": "appointment",
+            "date": "2024-05-22",
+            "description": "Routine blood test for cholesterol and blood sugar levels."
+        },
+        {
+            "document_id": "HCM_013",
+            "type": "condition",
+            "date": "2018-09-30",
+            "description": "Mild hearing loss, uses hearing aids occasionally."
+        },
+        {
+            "document_id": "HCM_014",
+            "type": "medication",
+            "date": "None",
+            "description": "Vitamin D supplements daily for bone health."
+        },
+        {
+            "document_id": "HCM_015",
+            "type": "appointment",
+            "date": "2024-04-10",
+            "description": "Physiotherapy sessions biweekly for knee osteoarthritis."
+        },
+        {
+            "document_id": "HCM_016",
+            "type": "condition",
+            "date": "2023-06-30",
+            "description": "Diagnosed with mild anemia, advised iron-rich diet."
+        },
+        {
+            "document_id": "HCM_017",
+            "type": "medication",
+            "date": "None",
+            "description": "Iron tablets prescribed to be taken once daily."
+        },
+        {
+            "document_id": "HCM_018",
+            "type": "procedure",
+            "date": "2023-12-01",
+            "description": "Dental cleaning and checkup every 6 months."
+        },
+        {
+            "document_id": "HCM_019",
+            "type": "condition",
+            "date": "2024-02-14",
+            "description": "Seasonal allergies with mild symptoms, uses antihistamines as needed."
+        },
+        {
+            "document_id": "HCM_020",
+            "type": "medication",
+            "date": "None",
+            "description": "Occasional use of Loratadine 10mg for allergy relief."
+        }
+    ],
+    "STM_data": [
+        {
+            "document_id": "STM_001",
+            "timestamp": "2024-05-23T08:15:00Z",
+            "content": "I bought fresh fish from the wet market today; the seller was very friendly and offered a small discount."
+        },
+        {
+            "document_id": "STM_002",
+            "timestamp": "2024-05-23T10:30:00Z",
+            "content": "I took the MRT to Orchard Road and asked a young man about the best route to get there."
+        },
+        {
+            "document_id": "STM_003",
+            "timestamp": "2024-05-23T16:00:00Z",
+            "content": "I joined the tai chi session at the community centre; it felt relaxing to move gently with others."
+        },
+        {
+            "document_id": "STM_004",
+            "timestamp": "2024-05-24T10:00:00Z",
+            "content": "Walked to the nearby park and enjoyed some sunshine while chatting with a fellow walker."
+        },
+        {
+            "document_id": "STM_005",
+            "timestamp": "2024-05-24T07:45:00Z",
+            "content": "Had kopi and soft-boiled eggs at the coffee shop; the kopi was just the way I like it, strong and sweet."
+        },
+        {
+            "document_id": "STM_006",
+            "timestamp": "2024-05-24T12:30:00Z",
+            "content": "I asked the vegetable seller if the spinach was fresh and he assured me it was picked this morning."
+        },
+        {
+            "document_id": "STM_007",
+            "timestamp": "2024-05-25T09:00:00Z",
+            "content": "I remembered to take my heart medicine after breakfast today; feeling better each day."
+        },
+        {
+            "document_id": "STM_008",
+            "timestamp": "2024-05-25T11:15:00Z",
+            "content": "Asked the bus driver about the fare to get to Ang Mo Kio; he was very patient explaining."
+        },
+        {
+            "document_id": "STM_009",
+            "timestamp": "2024-05-25T13:45:00Z",
+            "content": "Met a neighbor at the market who shared a recipe for homemade chapati."
+        },
+        {
+            "document_id": "STM_010",
+            "timestamp": "2024-05-25T18:00:00Z",
+            "content": "Cooked dal with extra garlic today; my family said it tasted comforting and warm."
+        },
+        {
+            "document_id": "STM_011",
+            "timestamp": "2024-05-26T08:30:00Z",
+            "content": "Took the bus to the library and asked the librarian for books on gardening."
+        },
+        {
+            "document_id": "STM_012",
+            "timestamp": "2024-05-26T10:00:00Z",
+            "content": "Participated in a sing-along session at the senior activity centre; it brought back many memories."
+        },
+        {
+            "document_id": "STM_013",
+            "timestamp": "2024-05-26T15:20:00Z",
+            "content": "Bought some fresh mangoes at the market; they were sweet and juicy."
+        },
+        {
+            "document_id": "STM_014",
+            "timestamp": "2024-05-26T18:45:00Z",
+            "content": "Had dinner with my husband; we talked about our grandchildren\u2019s school activities."
+        },
+        {
+            "document_id": "STM_015",
+            "timestamp": "2024-05-27T07:00:00Z",
+            "content": "Did my morning stretches by the window; the weather was pleasantly cool."
+        },
+        {
+            "document_id": "STM_016",
+            "timestamp": "2024-05-27T09:30:00Z",
+            "content": "Asked the fruit seller if the papayas were ripe enough; she nodded and smiled."
+        },
+        {
+            "document_id": "STM_017",
+            "timestamp": "2024-05-27T13:00:00Z",
+            "content": "Visited the mall at Dhoby Ghaut; it reminded me of my younger days."
+        },
+        {
+            "document_id": "STM_018",
+            "timestamp": "2024-05-27T16:45:00Z",
+            "content": "Enjoyed a gentle walk at the Botanic Gardens; saw many families having picnics."
+        },
+        {
+            "document_id": "STM_019",
+            "timestamp": "2024-05-28T08:50:00Z",
+            "content": "I remembered to drink more water today and felt less tired in the afternoon."
+        },
+        {
+            "document_id": "STM_020",
+            "timestamp": "2024-05-28T11:10:00Z",
+            "content": "Met a volunteer at the community centre who invited me to join a knitting group."
+        },
+        {
+            "document_id": "STM_021",
+            "timestamp": "2024-05-28T13:30:00Z",
+            "content": "Asked a fellow commuter about the bus timing for the next stop; she was kind to help."
+        },
+        {
+            "document_id": "STM_022",
+            "timestamp": "2024-05-28T17:00:00Z",
+            "content": "Prepared chapati with my daughter; she said I have the best rolling technique."
+        },
+        {
+            "document_id": "STM_023",
+            "timestamp": "2024-05-29T07:30:00Z",
+            "content": "Did some light gardening; watered my potted plants and plucked some fresh coriander."
+        },
+        {
+            "document_id": "STM_024",
+            "timestamp": "2024-05-29T10:00:00Z",
+            "content": "Today the lawyer office called me to remind me about the some documents that I need to review"
+        },
+        {
+            "document_id": "STM_025",
+            "timestamp": "2024-05-29T12:45:00Z",
+            "content": "Asked about the bus pass renewal process at the bus interchange, the staff was patient explaining how to use the machine."
+        },
+        {
+            "document_id": "STM_026",
+            "timestamp": "2024-05-29T15:15:00Z",
+            "content": "Watched a nature documentary on TV about Singapore\u2019s wildlife; it was fascinating."
+        },
+        {
+            "document_id": "STM_027",
+            "timestamp": "2024-05-29T19:00:00Z",
+            "content": "Had dinner of vegetable curry and rice; felt satisfied and not too full."
+        },
+        {
+            "document_id": "STM_028",
+            "timestamp": "2024-05-30T08:40:00Z",
+            "content": "Attended a mindfulness session at the community centre that helped me relax. It is important to stay stress-free"
+        },
+        {
+            "document_id": "STM_029",
+            "timestamp": "2024-05-30T11:20:00Z",
+            "content": "I bought some red onions; the seller told me they were from Malaysia."
+        },
+        {
+            "document_id": "STM_030",
+            "timestamp": "2024-05-30T14:00:00Z",
+            "content": "I chatted with a young lady on the MRT about the new shopping mall opening soon."
+        },
+        {
+            "document_id": "STM_031",
+            "timestamp": "2024-05-30T17:30:00Z",
+            "content": "Cooked dal tadka with my usual spices; my husband complimented the taste and said it was the best I have made so far."
+        },
+        {
+            "document_id": "STM_032",
+            "timestamp": "2024-05-31T07:10:00Z",
+            "content": "Did some morning stretches to music; it made me feel energized."
+        },
+        {
+            "document_id": "STM_033",
+            "timestamp": "2024-05-31T09:00:00Z",
+            "content": "Asked a shopkeeper if they had fresh turmeric and he showed me a bright batch."
+        },
+        {
+            "document_id": "STM_034",
+            "timestamp": "2024-05-31T12:30:00Z",
+            "content": "Went to the hawker centre and ate chicken rice; I told the seller it was very fragrant."
+        },
+        {
+            "document_id": "STM_035",
+            "timestamp": "2024-05-31T15:00:00Z",
+            "content": "Had a pleasant chat with my granddaughter on the phone about her school project."
+        },
+        {
+            "document_id": "STM_036",
+            "timestamp": "2024-06-01T08:00:00Z",
+            "content": "Joined a gentle yoga class at the senior centre; the instructor was very encouraging."
+        },
+        {
+            "document_id": "STM_037",
+            "timestamp": "2024-06-01T10:45:00Z",
+            "content": "Bought some fresh pandan leaves at the market to make tea."
+        },
+        {
+            "document_id": "STM_038",
+            "timestamp": "2024-06-01T13:00:00Z",
+            "content": "Asked a bus driver about the best bus to get to Marina Bay Sands; he gave me clear directions."
+        },
+        {
+            "document_id": "STM_039",
+            "timestamp": "2024-06-01T18:00:00Z",
+            "content": "Cooked aloo gobi with fresh vegetables; my husband said it reminded him of home."
+        },
+        {
+            "document_id": "STM_040",
+            "timestamp": "2024-06-02T07:20:00Z",
+            "content": "Did some gardening and trimmed my basil plants; they smell so nice."
+        },
+        {
+            "document_id": "STM_041",
+            "timestamp": "2024-06-02T09:30:00Z",
+            "content": "Visited the wet market and saw many familiar faces; it felt like a small community."
+        },
+        {
+            "document_id": "STM_042",
+            "timestamp": "2024-06-02T12:00:00Z",
+            "content": "Shared a cup of teh tarik with a friend at the coffee shop and chatted about family."
+        },
+        {
+            "document_id": "STM_043",
+            "timestamp": "2024-06-02T16:00:00Z",
+            "content": "Walked around Dhoby Ghaut and admired the new plants in the park."
+        },
+        {
+            "document_id": "STM_044",
+            "timestamp": "2024-06-02T19:30:00Z",
+            "content": "Made some carrot halwa as a treat for my grandchildren coming over tomorrow."
+        },
+        {
+            "document_id": "STM_045",
+            "timestamp": "2024-06-03T08:00:00Z",
+            "content": "Did morning tai chi in the garden; the fresh air was invigorating."
+        },
+        {
+            "document_id": "STM_046",
+            "timestamp": "2024-06-03T11:15:00Z",
+            "content": "Asked a fellow commuter about the bus schedule for the Bukit Timah route."
+        },
+        {
+            "document_id": "STM_047",
+            "timestamp": "2024-06-03T13:45:00Z",
+            "content": "Bought some fresh curry leaves at the market; the seller said they were very fragrant today."
+        },
+        {
+            "document_id": "STM_048",
+            "timestamp": "2024-06-03T17:00:00Z",
+            "content": "Had dinner with my husband and we talked about the upcoming family reunion."
+        },
+        {
+            "document_id": "STM_049",
+            "timestamp": "2024-06-04T07:10:00Z",
+            "content": "Did some light stretches and breathing exercises to start the day calmly."
+        },
+        {
+            "document_id": "STM_050",
+            "timestamp": "2024-06-04T10:00:00Z",
+            "content": "Visited the flower stall and bought some jasmine, the scent was lovely"
+        },
+        {
+            "document_id": "STM_051",
+            "timestamp": "2024-06-04T13:30:00Z",
+            "content": "Asked a store owners about the ingredients in her famous mee goreng. She say it is her secret recipe."
+        },
+        {
+            "document_id": "STM_052",
+            "timestamp": "2024-06-04T15:45:00Z",
+            "content": "Had a long phone call with my daughter discussing her new job. She is a teacher at a local school."
+        },
+        {
+            "document_id": "STM_053",
+            "timestamp": "2024-06-05T08:00:00Z",
+            "content": "Joined a public speaking group at the community centre; everyone was welcoming and kind."
+        },
+        {
+            "document_id": "STM_054",
+            "timestamp": "2024-06-05T11:20:00Z",
+            "content": "I took the bus to the supermarket and asked a staff member where the herbal teas were."
+        },
+        {
+            "document_id": "STM_055",
+            "timestamp": "2024-06-05T14:00:00Z",
+            "content": "Prepared a simple vegetable stew; I added some fresh turmeric and it smelled wonderful."
+        },
+        {
+            "document_id": "STM_056",
+            "timestamp": "2024-06-05T18:30:00Z",
+            "content": "Enjoyed watching a Bollywood movie with my husband after dinner."
+        },
+        {
+            "document_id": "STM_057",
+            "timestamp": "2024-06-06T07:30:00Z",
+            "content": "Did some morning meditation to calm my mind before starting the day."
+        },
+        {
+            "document_id": "STM_058",
+            "timestamp": "2024-06-06T10:15:00Z",
+            "content": "Asked a auntie selling mixed rice if she had any low-sodium options; she suggested steamed fish so I got some."
+        },
+        {
+            "document_id": "STM_059",
+            "timestamp": "2024-06-06T13:00:00Z",
+            "content": "Visited the senior centre and joined a storytelling session"
+        },
+        {
+            "document_id": "STM_060",
+            "timestamp": "2024-06-06T16:45:00Z",
+            "content": "Bought some fresh coconut from the market; it was very sweet and refreshing."
+        },
+        {
+            "document_id": "STM_061",
+            "timestamp": "2024-06-07T08:00:00Z",
+            "content": "Did a light jog at the park today. It was too tiring for me but I felt good afterward."
+        },
+        {
+            "document_id": "STM_062",
+            "timestamp": "2024-06-07T11:10:00Z",
+            "content": "Asked a bus driver about the route to Sentosa; he gave me clear instructions."
+        },
+        {
+            "document_id": "STM_063",
+            "timestamp": "2024-06-07T14:30:00Z",
+            "content": "I need to remember to check that my utility bills are paid on time this month. I think they should have been billed already."
+        },
+        {
+            "document_id": "STM_064",
+            "timestamp": "2024-06-07T17:00:00Z",
+            "content": "Today the lawyer office called but I cannot remember what they said. I need to call them back tomorrow."
+        },
+        {
+            "document_id": "STM_065",
+            "timestamp": "2024-06-08T07:25:00Z",
+            "content": "Did some light gardening; noticed a new bud on my hibiscus plant."
+        },
+        {
+            "document_id": "STM_066",
+            "timestamp": "2024-06-08T09:45:00Z",
+            "content": "Asked a young man at the market where I could find fresh ginger; he showed me the stall nearby."
+        },
+        {
+            "document_id": "STM_067",
+            "timestamp": "2024-06-08T12:00:00Z",
+            "content": "Visited the hawker centre and tried the new roti prata stall; it was crispy and delicious."
+        },
+        {
+            "document_id": "STM_068",
+            "timestamp": "2024-06-08T15:30:00Z",
+            "content": "Spoke with a volunteer at the community centre about upcoming social events."
+        },
+        {
+            "document_id": "STM_069",
+            "timestamp": "2024-06-08T18:15:00Z",
+            "content": "Made some mint tea and enjoyed it while reading a book."
+        },
+        {
+            "document_id": "STM_070",
+            "timestamp": "2024-06-09T07:40:00Z",
+            "content": "Joined a gentle stretching class; it helped ease my shoulder stiffness."
+        },
+        {
+            "document_id": "STM_071",
+            "timestamp": "2024-06-09T10:50:00Z",
+            "content": "I dont know how the transfer fare works on the bus, I need to ask my son to explain it to me again"
+        },
+        {
+            "document_id": "STM_072",
+            "timestamp": "2024-06-09T13:30:00Z",
+            "content": "Visited the wet market and bought some fresh okra; the seller told me it was from a new supplier."
+        },
+        {
+            "document_id": "STM_073",
+            "timestamp": "2024-06-09T17:00:00Z",
+            "content": "Had a video call with my son; he shared photos of his new house."
+        },
+        {
+            "document_id": "STM_074",
+            "timestamp": "2024-06-10T08:00:00Z",
+            "content": "Did morning tai chi in the park; enjoyed the fresh morning breeze."
+        },
+        {
+            "document_id": "STM_075",
+            "timestamp": "2024-06-10T11:20:00Z",
+            "content": "Had to replenish my groceries; asked a shop assistant for help finding whole wheat flour."
+        },
+        {
+            "document_id": "STM_076",
+            "timestamp": "2024-06-10T14:00:00Z",
+            "content": "One of my friends at the senior centre told me about gluten-free options to manage blood sugar; she recommended steamed fish with vegetables."
+        },
+        {
+            "document_id": "STM_077",
+            "timestamp": "2024-06-10T18:30:00Z",
+            "content": "Cooked my famous vegetable biryani for dinner the aroma filled the house."
+        },
+        {
+            "document_id": "STM_078",
+            "timestamp": "2024-06-11T07:15:00Z",
+            "content": "Did gentle yoga at home this morning. I love starting the day with calm movements."
+        },
+        {
+            "document_id": "STM_079",
+            "timestamp": "2024-06-11T10:00:00Z",
+            "content": "Visited the fruit stall and bought some ripe bananas; had them as snack later."
+        },
+        {
+            "document_id": "STM_080",
+            "timestamp": "2024-06-11T12:45:00Z",
+            "content": "Today I tried nasi lemak and talked with the stall owner, he said he has been working here for over 30 years."
+        },
+        {
+            "document_id": "STM_081",
+            "timestamp": "2024-06-11T15:30:00Z",
+            "content": "Chatted with my daughter about her plans to visit next month. I think she is busy with wedding planning."
+        },
+        {
+            "document_id": "STM_082",
+            "timestamp": "2024-06-12T08:00:00Z",
+            "content": "Did some light stretches after waking up; felt less stiff today."
+        },
+        {
+            "document_id": "STM_083",
+            "timestamp": "2024-06-12T11:10:00Z",
+            "content": "Asked a bus driver for advice on the fastest way to get to Gardens by the Bay."
+        },
+        {
+            "document_id": "STM_084",
+            "timestamp": "2024-06-12T13:45:00Z",
+            "content": "Bought fresh coriander and mint at the market; planned to make chutney."
+        },
+        {
+            "document_id": "STM_085",
+            "timestamp": "2024-06-12T17:00:00Z",
+            "content": "I want to learn dancing but I am afraid I will forget the steps easily"
+        },
+        {
+            "document_id": "STM_086",
+            "timestamp": "2024-06-13T07:20:00Z",
+            "content": "Visited the community centre for a painting class; enjoyed expressing myself through colors."
+        },
+        {
+            "document_id": "STM_087",
+            "timestamp": "2024-06-13T10:30:00Z",
+            "content": "Asked a hawker about the availability of vegetarian options; she said she could make it without egg."
+        },
+        {
+            "document_id": "STM_088",
+            "timestamp": "2024-06-13T13:00:00Z",
+            "content": "Went for a short walk near Dhoby Ghaut; saw many people enjoying the weekend."
+        },
+        {
+            "document_id": "STM_089",
+            "timestamp": "2024-06-13T19:00:00Z",
+            "content": "Made some masala chai and enjoyed it while listening to old songs."
+        },
+        {
+            "document_id": "STM_090",
+            "timestamp": "2024-06-14T08:10:00Z",
+            "content": "Why is the bus always so crowded in the morning, I can never find a seat"
+        },
+        {
+            "document_id": "STM_091",
+            "timestamp": "2024-06-14T11:40:00Z",
+            "content": "Today the bus driver waited for me to board the bus, I was very grateful for his kindness, if not I would have to wait for the next bus"
+        },
+        {
+            "document_id": "STM_092",
+            "timestamp": "2024-06-14T14:30:00Z",
+            "content": "Visited the market and bought fresh jackfruit; it smelled sweet and ripe."
+        },
+        {
+            "document_id": "STM_093",
+            "timestamp": "2024-06-14T17:15:00Z",
+            "content": "Had dinner of chapati and mixed vegetable curry; my husband enjoyed the meal."
+        },
+        {
+            "document_id": "STM_094",
+            "timestamp": "2024-06-15T07:00:00Z",
+            "content": "Did gentle stretches before breakfast; it helps with my arthritis."
+        },
+        {
+            "document_id": "STM_095",
+            "timestamp": "2024-06-15T10:15:00Z",
+            "content": "Talked to a shopkeeper about the best place to buy fresh spices."
+        },
+        {
+            "document_id": "STM_096",
+            "timestamp": "2024-06-15T12:30:00Z",
+            "content": "Had lunch at the hawker centre, had my usual murgh masala with rice."
+        },
+        {
+            "document_id": "STM_097",
+            "timestamp": "2024-06-15T16:00:00Z",
+            "content": "Had a long conversation with my neighbor about gardening tips. She was so kind to share her knowledge."
+        },
+        {
+            "document_id": "STM_098",
+            "timestamp": "2024-06-15T19:45:00Z",
+            "content": "Brewed ginger tea to help with my digestion; felt much better afterward."
+        },
+        {
+            "document_id": "STM_099",
+            "timestamp": "2024-06-16T08:20:00Z",
+            "content": "Did a short walk at the park and enjoyed watching the birds."
+        },
+        {
+            "document_id": "STM_100",
+            "timestamp": "2024-06-16T11:00:00Z",
+            "content": "Asked a fellow commuter about the best time to avoid crowds on the MRT."
+        },
+        {
+            "document_id": "STM_101",
+            "timestamp": "2024-06-16T14:45:00Z",
+            "content": "Bought some fresh tomatoes at the market; the vendor said they were just picked."
+        },
+        {
+            "document_id": "STM_102",
+            "timestamp": "2024-06-16T17:30:00Z",
+            "content": "Enjoyed a quiet evening with my husband; we watched a classic movie together."
+        },
+        {
+            "document_id": "STM_103",
+            "timestamp": "2024-06-17T07:30:00Z",
+            "content": "Participated in a tai chi class at the community centre; the instructor reminded us about posture."
+        },
+        {
+            "document_id": "STM_104",
+            "timestamp": "2024-06-17T10:20:00Z",
+            "content": "Asked a bus conductor about bus numbers for a friend\u2019s address."
+        },
+        {
+            "document_id": "STM_105",
+            "timestamp": "2024-06-17T13:00:00Z",
+            "content": "Had lunch at the hawker centre; enjoyed mee siam and chatted with the stall owner who was my primary school friend"
+        },
+        {
+            "document_id": "STM_106",
+            "timestamp": "2024-06-17T15:30:00Z",
+            "content": "Called my daughter to check on her health; she said she was doing well."
+        },
+        {
+            "document_id": "STM_107",
+            "timestamp": "2024-06-18T07:15:00Z",
+            "content": "Did morning stretches with a few friends online; it felt good to stay connected."
+        },
+        {
+            "document_id": "STM_108",
+            "timestamp": "2024-06-18T10:50:00Z",
+            "content": "Visited the fruit market and bought some ripe mangoes; they were sweet and juicy."
+        },
+        {
+            "document_id": "STM_109",
+            "timestamp": "2024-06-18T13:45:00Z",
+            "content": "Someone at the community centre tried to sell me another insurance plan, I told him I am not interested."
+        },
+        {
+            "document_id": "STM_110",
+            "timestamp": "2024-06-18T18:00:00Z",
+            "content": "Cooked a vegetable pulao for dinner; it turned out fragrant and tasty."
+        },
+        {
+            "document_id": "STM_111",
+            "timestamp": "2024-06-19T08:00:00Z",
+            "content": "Where can i find a good place for dinner tonight, I want to try something new"
+        },
+        {
+            "document_id": "STM_112",
+            "timestamp": "2024-06-19T11:15:00Z",
+            "content": "I need to remember to buy tofu next time, my son say it is good for my protein intake"
+        },
+        {
+            "document_id": "STM_113",
+            "timestamp": "2024-06-19T14:30:00Z",
+            "content": "Visited the wet market and bought fresh okra; the vendor gave me a few extra."
+        },
+        {
+            "document_id": "STM_114",
+            "timestamp": "2024-06-19T17:00:00Z",
+            "content": "Had dinner with my husband and shared stories of our youth."
+        },
+        {
+            "document_id": "STM_115",
+            "timestamp": "2024-06-20T07:10:00Z",
+            "content": "Did light stretches to ease my back pain; it worked well."
+        },
+        {
+            "document_id": "STM_116",
+            "timestamp": "2024-06-20T10:30:00Z",
+            "content": "Today I argues with the stall owner. He tried to give me old vegetables and I was not happy about it."
+        },
+        {
+            "document_id": "STM_117",
+            "timestamp": "2024-06-20T13:00:00Z",
+            "content": "Had lunch at the hawker centre; tried a new dish called laksa lemak. I think it not very healthy but it taste good."
+        },
+        {
+            "document_id": "STM_118",
+            "timestamp": "2024-06-20T15:15:00Z",
+            "content": "Chatted with a volunteer about upcoming community events."
+        },
+        {
+            "document_id": "STM_119",
+            "timestamp": "2024-06-20T18:45:00Z",
+            "content": "The TV is showing a drama series that I used to watch when I was younger; it brings back memories."
+        },
+        {
+            "document_id": "STM_120",
+            "timestamp": "2024-06-21T08:00:00Z",
+            "content": "I think i want to try Zumba classes at the community centre, it looks fun"
+        },
+        {
+            "document_id": "STM_121",
+            "timestamp": "2024-06-21T11:00:00Z",
+            "content": "Visited the fruit market and bought some sweet pineapples."
+        },
+        {
+            "document_id": "STM_122",
+            "timestamp": "2024-06-21T13:30:00Z",
+            "content": "Today i felt like having vegetarian food, I asked one of the store owners and she recommended vegetable noodles."
+        },
+        {
+            "document_id": "STM_123",
+            "timestamp": "2024-06-21T16:00:00Z",
+            "content": "The dance practice at the community centre was fun; I enjoyed moving to the music."
+        },
+        {
+            "document_id": "STM_124",
+            "timestamp": "2024-06-22T07:20:00Z",
+            "content": "There was a power outage in the morning; had to use a flashlight to find my way around."
+        },
+        {
+            "document_id": "STM_125",
+            "timestamp": "2024-06-22T10:45:00Z",
+            "content": "I asked the bus driver why the bus was so late today; he said there was heavy traffic due to an accident."
+        },
+        {
+            "document_id": "STM_126",
+            "timestamp": "2024-06-22T13:00:00Z",
+            "content": "Had lunch at the hawker centre and enjoyed fish soup."
+        },
+        {
+            "document_id": "STM_127",
+            "timestamp": "2024-06-22T15:30:00Z",
+            "content": "My neighbour helped me carry my groceries home; I am grateful for her kindness."
+        },
+        {
+            "document_id": "STM_128",
+            "timestamp": "2024-06-22T18:00:00Z",
+            "content": "I had the same thing for dinner again, I think I am getting bored of my cooking."
+        },
+        {
+            "document_id": "STM_129",
+            "timestamp": "2024-06-23T07:00:00Z",
+            "content": "Enjoyed a peaceful morning walk in the park; the birds were singing."
+        },
+        {
+            "document_id": "STM_130",
+            "timestamp": "2024-06-23T10:15:00Z",
+            "content": "How can they start the construction work so early in the morning, it is too noisy!"
+        },
+        {
+            "document_id": "STM_131",
+            "timestamp": "2024-06-23T12:45:00Z",
+            "content": "I am waiting for my granddaughter to arrive; she is coming over for lunch."
+        },
+        {
+            "document_id": "STM_132",
+            "timestamp": "2024-06-23T16:15:00Z",
+            "content": "My granddaughter visited me today; we baked cookies together and had a lovely time."
+        },
+        {
+            "document_id": "STM_133",
+            "timestamp": "2024-06-23T19:30:00Z",
+            "content": "Some tea at night always helps me to relax before bed."
+        },
+        {
+            "document_id": "STM_134",
+            "timestamp": "2024-06-24T08:30:00Z",
+            "content": "Today was a bad morning, I forgot my shopping list at home and had to go back to get it."
+        },
+        {
+            "document_id": "STM_135",
+            "timestamp": "2024-06-24T11:00:00Z",
+            "content": "I am going to visit my friend at the senior centre this afternoon; we usually play cards together."
+        },
+        {
+            "document_id": "STM_136",
+            "timestamp": "2024-06-24T14:15:00Z",
+            "content": "Bought some cheese tarts at the bakery; they were freshly baked and delicious."
+        },
+        {
+            "document_id": "STM_137",
+            "timestamp": "2024-06-24T17:00:00Z",
+            "content": "How do i use this app to pay my bills, I need to ask my son again for help"
+        },
+        {
+            "document_id": "STM_138",
+            "timestamp": "2024-06-25T07:10:00Z",
+            "content": "I think i want to go to the library today to borrow some new books to read"
+        },
+        {
+            "document_id": "STM_139",
+            "timestamp": "2024-06-25T10:20:00Z",
+            "content": "Found a new fruit stall at the market; bought some rambutans and they were very sweet."
+        },
+        {
+            "document_id": "STM_140",
+            "timestamp": "2024-06-25T13:45:00Z",
+            "content": "Asked a shopkeeper for advice on buying the freshest vegetables. I think she was bluffing me."
+        },
+        {
+            "document_id": "STM_141",
+            "timestamp": "2024-06-25T16:30:00Z",
+            "content": "Had a video call with my grandchildren; they told me about their school projects."
+        },
+        {
+            "document_id": "STM_142",
+            "timestamp": "2024-06-25T19:00:00Z",
+            "content": "Made some warm ginger tea to help with a slight cold."
+        },
+        {
+            "document_id": "STM_143",
+            "timestamp": "2024-06-26T08:00:00Z",
+            "content": "The weather was nice for exercising outdoors; I did some tai chi in the park."
+        },
+        {
+            "document_id": "STM_144",
+            "timestamp": "2024-06-26T11:30:00Z",
+            "content": "I forgot what was the bus number to go to the library; had to ask a passerby for help."
+        },
+        {
+            "document_id": "STM_145",
+            "timestamp": "2024-06-26T14:00:00Z",
+            "content": "Visited the wet market and bought long beans and tomatoes."
+        },
+        {
+            "document_id": "STM_146",
+            "timestamp": "2024-06-26T17:15:00Z",
+            "content": "Had dinner with my husband; we reminisced about our wedding day."
+        },
+        {
+            "document_id": "STM_147",
+            "timestamp": "2024-06-27T07:25:00Z",
+            "content": "Did light stretches to ease my shoulder pain; it helped."
+        },
+        {
+            "document_id": "STM_148",
+            "timestamp": "2024-06-27T10:10:00Z",
+            "content": "Asked a shopkeeper for tips on cooking with fresh galangal."
+        },
+        {
+            "document_id": "STM_149",
+            "timestamp": "2024-06-27T13:30:00Z",
+            "content": "Today I had mee soto at lunch, it was quite flavorful."
+        },
+        {
+            "document_id": "STM_150",
+            "timestamp": "2024-06-27T15:45:00Z",
+            "content": "There is a cooking class at the community centre next week; I am thinking of joining to learn new recipes."
+        },
+        {
+            "document_id": "STM_151",
+            "timestamp": "2024-06-27T18:30:00Z",
+            "content": "I heard that there will be some construction work near my house next week; I hope it won't be too disruptive."
+        },
+        {
+            "document_id": "STM_152",
+            "timestamp": "2024-06-28T08:00:00Z",
+            "content": "The construction seemed to start quite early today; I hope it won't be too noisy."
+        },
+        {
+            "document_id": "STM_153",
+            "timestamp": "2024-06-28T11:15:00Z",
+            "content": "Bought some ripe mangoes at the market; they were very sweet."
+        },
+        {
+            "document_id": "STM_154",
+            "timestamp": "2024-06-28T13:30:00Z",
+            "content": "The hawker centre was crowded today; I waited a while to get my favourite laksa."
+        },
+        {
+            "document_id": "STM_155",
+            "timestamp": "2024-06-28T16:00:00Z",
+            "content": "My granddaughter called to tell me that she has a math exam next week. I wished her good luck."
+        },
+        {
+            "document_id": "STM_156",
+            "timestamp": "2024-06-29T07:10:00Z",
+            "content": "I want to try some new exercises to help with my arthritis; maybe some gentle yoga."
+        },
+        {
+            "document_id": "STM_157",
+            "timestamp": "2024-06-29T10:30:00Z",
+            "content": "Asked a bus driver about the best bus to go to the hospital."
+        },
+        {
+            "document_id": "STM_158",
+            "timestamp": "2024-06-29T13:00:00Z",
+            "content": "The weather was very hot today; I stayed indoors and drank plenty of water."
+        },
+        {
+            "document_id": "STM_159",
+            "timestamp": "2024-06-29T15:30:00Z",
+            "content": "Mr Lim, my neighbor, came over to chat about his garden; he has some beautiful orchids."
+        },
+        {
+            "document_id": "STM_160",
+            "timestamp": "2024-06-29T18:00:00Z",
+            "content": "I made yellow curry with squid and vegetables for dinner; it was delicious."
+        },
+        {
+            "document_id": "STM_161",
+            "timestamp": "2024-06-30T07:00:00Z",
+            "content": "I think my parcel is coming today, I hope it arrives before noon."
+        },
+        {
+            "document_id": "STM_162",
+            "timestamp": "2024-06-30T10:15:00Z",
+            "content": "My delivery package from Lazada arrived today; I ordered some herbal teas and a new book."
+        },
+        {
+            "document_id": "STM_163",
+            "timestamp": "2024-06-30T12:45:00Z",
+            "content": "I feel like eating thosai today, I will go to the hawker centre to buy some."
+        },
+        {
+            "document_id": "STM_164",
+            "timestamp": "2024-06-30T16:15:00Z",
+            "content": "The thosai I bought today was too oily, I should have asked the hawker to make it less oily."
+        },
+        {
+            "document_id": "STM_165",
+            "timestamp": "2024-06-30T19:30:00Z",
+            "content": "Today was quite a boring day, nothing much happened."
+        },
+        {
+            "document_id": "STM_166",
+            "timestamp": "2024-07-01T08:30:00Z",
+            "content": "Today I woke up and my feet were so cold, I did not feel well when i got out of bed."
+        },
+        {
+            "document_id": "STM_167",
+            "timestamp": "2024-07-01T11:00:00Z",
+            "content": "When it was my turn to board the bus, a young man cut my queue and got on before me. These young people nowadays have no manners."
+        },
+        {
+            "document_id": "STM_168",
+            "timestamp": "2024-07-01T14:15:00Z",
+            "content": "Today I went to the market and bought fresh jackfruit; it smelled sweet and ripe."
+        },
+        {
+            "document_id": "STM_169",
+            "timestamp": "2024-07-01T17:00:00Z",
+            "content": "Its so hot tonight, I want a refreshing cold coconut water."
+        },
+        {
+            "document_id": "STM_170",
+            "timestamp": "2024-07-02T07:10:00Z",
+            "content": "My granddaughter wanted to have muffins, but when I went to the shop they were closed for renovation."
+        },
+        {
+            "document_id": "STM_171",
+            "timestamp": "2024-07-02T10:20:00Z",
+            "content": "I went to Alexandra food centre and tried a avocado smoothie, it was nice but I think it was too expensive."
+        },
+        {
+            "document_id": "STM_172",
+            "timestamp": "2024-07-02T13:45:00Z",
+            "content": "Asked a shopkeeper for advice on buying the freshest vegetables."
+        },
+        {
+            "document_id": "STM_173",
+            "timestamp": "2024-07-02T16:30:00Z",
+            "content": "Had a video call with my grandchildren; they shared their school projects."
+        },
+        {
+            "document_id": "STM_174",
+            "timestamp": "2024-07-02T19:00:00Z",
+            "content": "Made warm ginger tea to help with a mild cold."
+        },
+        {
+            "document_id": "STM_175",
+            "timestamp": "2024-07-03T08:00:00Z",
+            "content": "This morning I read an article about health eating for seniors, it had some useful tips that I will try to follow."
+        },
+        {
+            "document_id": "STM_176",
+            "timestamp": "2024-07-03T11:30:00Z",
+            "content": "Asked a bus conductor about the nearest stop to the community centre."
+        },
+        {
+            "document_id": "STM_177",
+            "timestamp": "2024-07-03T14:00:00Z",
+            "content": "Visited the wet market and bought fresh okra and eggplants."
+        },
+        {
+            "document_id": "STM_178",
+            "timestamp": "2024-07-03T17:15:00Z",
+            "content": "Today the bus was very crowded; Nobody gave up their seat for me."
+        },
+        {
+            "document_id": "STM_179",
+            "timestamp": "2024-07-04T07:25:00Z",
+            "content": "I almost fell down on the bus today, the bus driver was driving too fast."
+        },
+        {
+            "document_id": "STM_180",
+            "timestamp": "2024-07-04T10:10:00Z",
+            "content": "Someone dropped by to sell cookies for a charity; I bought a box."
+        },
+        {
+            "document_id": "STM_181",
+            "timestamp": "2024-07-04T13:30:00Z",
+            "content": "Tried a new dish at the hawker centre called mee soto; it was flavorful."
+        },
+        {
+            "document_id": "STM_182",
+            "timestamp": "2024-07-04T15:45:00Z",
+            "content": "Talked with a volunteer about joining a weekly knitting group."
+        },
+        {
+            "document_id": "STM_183",
+            "timestamp": "2024-07-04T18:30:00Z",
+            "content": "The doctor told me to reduce my salt intake, but the food is always so bland"
+        },
+        {
+            "document_id": "STM_184",
+            "timestamp": "2024-07-05T08:00:00Z",
+            "content": "My knee felt slightly sore after my walk today."
+        },
+        {
+            "document_id": "STM_185",
+            "timestamp": "2024-07-05T11:15:00Z",
+            "content": "The bananas I bought yesterday were overripe; I should check them more carefully next time."
+        },
+        {
+            "document_id": "STM_186",
+            "timestamp": "2024-07-05T13:30:00Z",
+            "content": "Asked a hawker about ingredients in her laksa; she shared happily."
+        },
+        {
+            "document_id": "STM_187",
+            "timestamp": "2024-07-05T16:00:00Z",
+            "content": "Called my granddaughter to hear about her dance class."
+        },
+        {
+            "document_id": "STM_188",
+            "timestamp": "2024-07-06T07:10:00Z",
+            "content": "Mr Lim was late for our tai chi class today; we waited for him"
+        },
+        {
+            "document_id": "STM_189",
+            "timestamp": "2024-07-06T10:30:00Z",
+            "content": "This is the second time I lost my bus pass this month; I need to be more careful."
+        },
+        {
+            "document_id": "STM_190",
+            "timestamp": "2024-07-06T13:00:00Z",
+            "content": "I need to go and buy saffron and cardamom for my biryani recipe."
+        },
+        {
+            "document_id": "STM_191",
+            "timestamp": "2024-07-06T15:30:00Z",
+            "content": "Today my children are coming over for dinner; I am excited to see them."
+        },
+        {
+            "document_id": "STM_192",
+            "timestamp": "2024-07-06T18:00:00Z",
+            "content": "My kids still enjoy my biryani, they said it reminds them of home. I am glad."
+        },
+        {
+            "document_id": "STM_193",
+            "timestamp": "2024-07-07T07:00:00Z",
+            "content": "I think I should go for a long walk in the park today."
+        },
+        {
+            "document_id": "STM_194",
+            "timestamp": "2024-07-07T10:15:00Z",
+            "content": "Why is my neighbour so noisy early in the morning? Disturbing my rest."
+        },
+        {
+            "document_id": "STM_195",
+            "timestamp": "2024-07-07T12:45:00Z",
+            "content": "I watched a old Tamil Movie on TV today, it reminded me of my youth, I wonder if there are any new tamil movies at the cinema now"
+        },
+        {
+            "document_id": "STM_196",
+            "timestamp": "2024-07-07T16:15:00Z",
+            "content": "Chatted with daughter about wedding plans."
+        },
+        {
+            "document_id": "STM_197",
+            "timestamp": "2024-07-07T19:30:00Z",
+            "content": "I misplaced my cholesterol medication again; need to be more careful."
+        },
+        {
+            "document_id": "STM_198",
+            "timestamp": "2024-07-08T08:30:00Z",
+            "content": "Mrs Tan, my neighbour gave me some homemade cookies today."
+        },
+        {
+            "document_id": "STM_199",
+            "timestamp": "2024-07-08T11:00:00Z",
+            "content": "Asked bus driver best stop for friend\u2019s house."
+        },
+        {
+            "document_id": "STM_200",
+            "timestamp": "2024-07-08T14:15:00Z",
+            "content": "I want to watch TV after dinner, there is a new show I heard about that will play tonight"
+        },
+        {
+            "document_id": "STM_201",
+            "timestamp": "2024-07-08T17:00:00Z",
+            "content": "Where did I put my glasses? I misplaced them again"
+        },
+        {
+            "document_id": "STM_202",
+            "timestamp": "2024-07-09T07:10:00Z",
+            "content": "Woke up and did some yoga today. My back felt a bit stiff but after the stretches it felt better."
+        },
+        {
+            "document_id": "STM_203",
+            "timestamp": "2024-07-09T10:20:00Z",
+            "content": "Today the char kway teow was quite bad. I think I will not eat it again, so oily"
+        },
+        {
+            "document_id": "STM_204",
+            "timestamp": "2024-07-09T13:45:00Z",
+            "content": "Today the grocer's vegetables did not look very fresh, so I bought from the stall next to his."
+        },
+        {
+            "document_id": "STM_205",
+            "timestamp": "2024-07-09T16:30:00Z",
+            "content": "Had a video call with my grandchildren, they update me about their school projects, but I can hardly hear them."
+        },
+        {
+            "document_id": "STM_206",
+            "timestamp": "2024-07-09T19:00:00Z",
+            "content": "I think I am coming down with a cold, maybe I should make some ginger tea to soothe my throat."
+        },
+        {
+            "document_id": "STM_207",
+            "timestamp": "2024-07-10T08:00:00Z",
+            "content": "This morning I went for a walk in the park, I met Mrs Tan and we did tai chi together. Its so good to see her"
+        },
+        {
+            "document_id": "STM_208",
+            "timestamp": "2024-07-10T11:30:00Z",
+            "content": "Today the MRT broke down, I had to take the bus instead, so disappointing."
+        },
+        {
+            "document_id": "STM_209",
+            "timestamp": "2024-07-10T14:00:00Z",
+            "content": "After I went to the wet market, I realised I forgot to buy eggs. I had to go back again to buy them. So troublesome."
+        },
+        {
+            "document_id": "STM_210",
+            "timestamp": "2024-07-10T17:15:00Z",
+            "content": "Today I cooked a new recipe for dinner, chicken curry with potatoes. My husband said it was delicious."
+        },
+        {
+            "document_id": "STM_211",
+            "timestamp": "2024-07-11T07:25:00Z",
+            "content": "Today when I woke up my shoulder was aching. I did some stretches like the physio taught me and it felt better."
+        },
+        {
+            "document_id": "STM_212",
+            "timestamp": "2024-07-11T10:10:00Z",
+            "content": "The shopkeeper shared some tips on how I could use the young turmeric in my cooking. Maybe I will try it later."
+        },
+        {
+            "document_id": "STM_213",
+            "timestamp": "2024-07-11T13:30:00Z",
+            "content": "Today the mee soto from the Malay stall tasted abit different, I think they added more coconut milk."
+        },
+        {
+            "document_id": "STM_214",
+            "timestamp": "2024-07-11T15:45:00Z",
+            "content": "Today one of the volunteers invited me to  join their knitting group. I was so happy that I got invited."
+        },
+        {
+            "document_id": "STM_215",
+            "timestamp": "2024-07-11T18:30:00Z",
+            "content": "I took a nap in the afternoon so I am not very sleepy tonight."
+        },
+        {
+            "document_id": "STM_216",
+            "timestamp": "2024-07-12T08:00:00Z",
+            "content": "I need to remember to water the plants, the weather has been hot and dry lately"
+        },
+        {
+            "document_id": "STM_217",
+            "timestamp": "2024-07-12T11:15:00Z",
+            "content": "Bought sweet mangoes at market. Maybe I will share them with my neighbors."
+        },
+        {
+            "document_id": "STM_218",
+            "timestamp": "2024-07-12T13:30:00Z",
+            "content": "Today I asked the spice seller about the ingredients in her laksa. She was kind to share with me"
+        },
+        {
+            "document_id": "STM_219",
+            "timestamp": "2024-07-12T16:00:00Z",
+            "content": "I remembered to call my granddaughter today, she told me about her dance class."
+        },
+        {
+            "document_id": "STM_220",
+            "timestamp": "2024-07-13T07:10:00Z",
+            "content": "Tried to play with my smartphone, but I am not very good with technology."
+        },
+        {
+            "document_id": "STM_221",
+            "timestamp": "2024-07-13T10:30:00Z",
+            "content": "I am craving palak paneer today, I will ask my daughter to buy some for me when she comes to visit next week."
+        },
+        {
+            "document_id": "STM_222",
+            "timestamp": "2024-07-13T13:00:00Z",
+            "content": "On the way to lunch I saw a brightly colored bird. It looked like a kingfisher."
+        },
+        {
+            "document_id": "STM_223",
+            "timestamp": "2024-07-13T15:30:00Z",
+            "content": "Today i told my neighbour about how he is making too much noise with his music. He apologized and said he will lower the volume."
+        },
+        {
+            "document_id": "STM_224",
+            "timestamp": "2024-07-13T18:00:00Z",
+            "content": "I ordered a takeaway from this new stall today. The food was not good, I think I will not order from them again."
+        },
+        {
+            "document_id": "STM_225",
+            "timestamp": "2024-07-14T07:00:00Z",
+            "content": "My newspaper came late today, I think the delivery person must be new."
+        },
+        {
+            "document_id": "STM_226",
+            "timestamp": "2024-07-14T10:15:00Z",
+            "content": "I invited my son for lunch today but he said he was too busy with work."
+        },
+        {
+            "document_id": "STM_227",
+            "timestamp": "2024-07-14T12:45:00Z",
+            "content": "My doctor told me to stop eating so much sugar, but I really like to eat panipuri"
+        },
+        {
+            "document_id": "STM_228",
+            "timestamp": "2024-07-14T16:15:00Z",
+            "content": "I managed to use my smartphone to play some Tamil songs, its so amazing!"
+        },
+        {
+            "document_id": "STM_229",
+            "timestamp": "2024-07-14T19:30:00Z",
+            "content": "The episode of my drama tonight was so touching, I cried a little."
+        },
+        {
+            "document_id": "STM_230",
+            "timestamp": "2024-07-15T08:30:00Z",
+            "content": "My fingers always feel cold, my doctor said my circulation is not very good."
+        },
+        {
+            "document_id": "STM_231",
+            "timestamp": "2024-07-15T11:00:00Z",
+            "content": "Today someone gave up their seat for me on the bus. I felt so grateful and happy."
+        },
+        {
+            "document_id": "STM_232",
+            "timestamp": "2024-07-15T14:15:00Z",
+            "content": "I wanted to buy some saffron to make biryani but it was sold out."
+        },
+        {
+            "document_id": "STM_233",
+            "timestamp": "2024-07-15T17:00:00Z",
+            "content": "Todays dinner was a bit salty, I think I added too much soy sauce."
+        },
+        {
+            "document_id": "STM_234",
+            "timestamp": "2024-07-16T07:10:00Z",
+            "content": "I wanted to go for my morning walk but it was drizzling. So I stayed home and did some stretches instead."
+        },
+        {
+            "document_id": "STM_235",
+            "timestamp": "2024-07-16T10:20:00Z",
+            "content": "Today I saw they were having a sale for deepavali clothes at the mall. I think I will go take a look this weekend."
+        },
+        {
+            "document_id": "STM_236",
+            "timestamp": "2024-07-16T13:45:00Z",
+            "content": "I think i need to start preparing for deepavali soon. Maybe I will buy some new clothes for the occasion."
+        },
+        {
+            "document_id": "STM_237",
+            "timestamp": "2024-07-16T16:30:00Z",
+            "content": "My son has not called me for a long time, I hope he is doing well."
+        },
+        {
+            "document_id": "STM_238",
+            "timestamp": "2024-07-16T19:00:00Z",
+            "content": "Today the weather is so cold, I feel like having some soup"
+        },
+        {
+            "document_id": "STM_239",
+            "timestamp": "2024-07-17T08:00:00Z",
+            "content": "I was going to go for my morning workout but then it just started drizzling. So I stayed home and did some stretches instead."
+        },
+        {
+            "document_id": "STM_240",
+            "timestamp": "2024-07-17T11:30:00Z",
+            "content": "The bus driver didnt see me today and drove past my stop. I had to walk a long way in the heat to get home. So angry!"
+        },
+        {
+            "document_id": "STM_241",
+            "timestamp": "2024-07-17T14:00:00Z",
+            "content": "The wet market floor was so slippery today, I almost fell."
+        },
+        {
+            "document_id": "STM_242",
+            "timestamp": "2024-07-17T17:15:00Z",
+            "content": "I was so short of breath after climbing the stairs today. I think I need to exercise more."
+        },
+        {
+            "document_id": "STM_243",
+            "timestamp": "2024-07-18T07:25:00Z",
+            "content": "Nowadays when i wake up my joints feel so stiff and weak. I think I need to see a doctor."
+        },
+        {
+            "document_id": "STM_244",
+            "timestamp": "2024-07-18T10:10:00Z",
+            "content": "The doctor gave me so many medicines, my entire cabinet is full now."
+        },
+        {
+            "document_id": "STM_245",
+            "timestamp": "2024-07-18T13:30:00Z",
+            "content": "My shoulder hurts when I carry groceries, maybe my old injury is acting up."
+        },
+        {
+            "document_id": "STM_246",
+            "timestamp": "2024-07-18T15:45:00Z",
+            "content": "Today one of the volunteers invited me to join them for karaoke. I felt so happy to be included but I really dont know how to sing well."
+        },
+        {
+            "document_id": "STM_247",
+            "timestamp": "2024-07-18T18:30:00Z",
+            "content": "I think I caught a cold, my throat is a bit sore and I have a slight cough."
+        },
+        {
+            "document_id": "STM_248",
+            "timestamp": "2024-07-19T08:00:00Z",
+            "content": "The traffic was terrible this morning, the bus was stuck in a jam for almost an hour."
+        },
+        {
+            "document_id": "STM_249",
+            "timestamp": "2024-07-19T11:15:00Z",
+            "content": "I am thinkgin of making chapati for lunch today, I hope I have enough ingredients at home to make it"
+        },
+        {
+            "document_id": "STM_250",
+            "timestamp": "2024-07-19T13:30:00Z",
+            "content": "I saw a new hawker stall selling laksa, I think I will try it next time."
+        },
+        {
+            "document_id": "STM_251",
+            "timestamp": "2024-07-19T16:00:00Z",
+            "content": "I heard that there was a health talk at the community centre soon, but I forgot to ask the details."
+        },
+        {
+            "document_id": "STM_252",
+            "timestamp": "2024-07-20T07:10:00Z",
+            "content": "My basil plant wilted, I dont know what happened"
+        },
+        {
+            "document_id": "STM_253",
+            "timestamp": "2024-07-20T10:30:00Z",
+            "content": "I took the wrong bus to go to the hospital, then I ended up being late for my appointment."
+        },
+        {
+            "document_id": "STM_254",
+            "timestamp": "2024-07-20T13:00:00Z",
+            "content": "Today's lunch was quite bad. I will eat something nice for dinner"
+        },
+        {
+            "document_id": "STM_255",
+            "timestamp": "2024-07-20T15:30:00Z",
+            "content": "My neighbour shared tips on how she grew her own chili plant in a small pot outside her apartment."
+        },
+        {
+            "document_id": "STM_256",
+            "timestamp": "2024-07-20T18:00:00Z",
+            "content": "I had some leftover vegetable stew for dinner. I was a bit tired to cook today."
+        },
+        {
+            "document_id": "STM_257",
+            "timestamp": "2024-07-21T07:00:00Z",
+            "content": "My joints are fealing weak and stiff, maybe I should take some supplements;"
+        },
+        {
+            "document_id": "STM_258",
+            "timestamp": "2024-07-21T10:15:00Z",
+            "content": "When i asked the shopkeeper about storing fresh herbs, he told me to wrap them in a damp paper towel and put them in a plastic bag in the fridge. I will try that."
+        },
+        {
+            "document_id": "STM_259",
+            "timestamp": "2024-07-21T12:45:00Z",
+            "content": "The cucumber i bought today from the market was soft and mushy. I will complain to him next time."
+        },
+        {
+            "document_id": "STM_260",
+            "timestamp": "2024-07-21T16:15:00Z",
+            "content": "My daughter called to update me on her wedding plans. She seems very excited."
+        },
+        {
+            "document_id": "STM_261",
+            "timestamp": "2024-07-21T19:30:00Z",
+            "content": "I think I want to sleep early tonight, I have an appointment with the doctor tomorrow morning."
+        },
+        {
+            "document_id": "STM_262",
+            "timestamp": "2024-07-22T08:30:00Z",
+            "content": "The weather this morning was so good for a walk in the park."
+        },
+        {
+            "document_id": "STM_263",
+            "timestamp": "2024-07-22T11:00:00Z",
+            "content": "Today nobody gave up their seat for me on the bus, I felt quite sad."
+        },
+        {
+            "document_id": "STM_264",
+            "timestamp": "2024-07-22T14:15:00Z",
+            "content": "The shopkeeper said turmeric is very good for health, I should drink turmeric tea more often."
+        },
+        {
+            "document_id": "STM_265",
+            "timestamp": "2024-07-22T17:00:00Z",
+            "content": "I misplaced my glasses again, where did I put them?"
+        },
+        {
+            "document_id": "STM_266",
+            "timestamp": "2024-07-23T07:10:00Z",
+            "content": "The guys playing pickleball are too loud in the morning, I couldn't sleep well."
+        },
+        {
+            "document_id": "STM_267",
+            "timestamp": "2024-07-23T10:20:00Z",
+            "content": "I was walking and then the rubbish truck came by and the smell was really bad."
+        },
+        {
+            "document_id": "STM_268",
+            "timestamp": "2024-07-23T13:45:00Z",
+            "content": "Asked shopkeeper vegetables."
+        },
+        {
+            "document_id": "STM_269",
+            "timestamp": "2024-07-23T16:30:00Z",
+            "content": "Remind me to video call my grandchildren tomorrow, haven't spoken to them in a while."
+        },
+        {
+            "document_id": "STM_270",
+            "timestamp": "2024-07-23T19:00:00Z",
+            "content": "Today i made ginger tea and forgot about it. It was already cold when I remembered"
+        },
+        {
+            "document_id": "STM_271",
+            "timestamp": "2024-07-24T08:00:00Z",
+            "content": "Recently the weather has been too hot. I feel so tired in the afternoon when the sun is bright"
+        },
+        {
+            "document_id": "STM_272",
+            "timestamp": "2024-07-24T11:30:00Z",
+            "content": "Today the bus broke down, luckily it happened only on my way home from the market."
+        },
+        {
+            "document_id": "STM_273",
+            "timestamp": "2024-07-24T14:00:00Z",
+            "content": "They closed the wet market today because there is a scheduled cleaning. I cannot buy my normal fresh vegetables."
+        },
+        {
+            "document_id": "STM_274",
+            "timestamp": "2024-07-24T17:15:00Z",
+            "content": "There was a long queue at the hawker centre today, I had to wait for 30 minutes to get my food."
+        },
+        {
+            "document_id": "STM_275",
+            "timestamp": "2024-07-25T07:25:00Z",
+            "content": "Today my legs are quite sore. I think  I will skip my tai chi session today and rest more."
+        },
+        {
+            "document_id": "STM_276",
+            "timestamp": "2024-07-25T10:10:00Z",
+            "content": "The newlly renovated polyclinic is very nice, I feel comfortable going there for my checkups."
+        },
+        {
+            "document_id": "STM_277",
+            "timestamp": "2024-07-25T13:30:00Z",
+            "content": "I need to remember to bring my reusable bags when I go to the market next time. Today I had to pay 50 cents to buy plastic bags."
+        },
+        {
+            "document_id": "STM_278",
+            "timestamp": "2024-07-25T15:45:00Z",
+            "content": "The new knitting group is fun, I hope that that i can learn to knit a scarf soon."
+        },
+        {
+            "document_id": "STM_279",
+            "timestamp": "2024-07-25T18:30:00Z",
+            "content": "Chamomile tea makes me feel very relaxed before bed."
+        },
+        {
+            "document_id": "STM_280",
+            "timestamp": "2024-07-26T08:00:00Z",
+            "content": "I have been doing gentle yoga every morning, I feel good being able to exercise every day"
+        },
+        {
+            "document_id": "STM_281",
+            "timestamp": "2024-07-26T11:15:00Z",
+            "content": "The mangoes from the market were very sweet. Is it mango season now?"
+        },
+        {
+            "document_id": "STM_282",
+            "timestamp": "2024-07-26T13:30:00Z",
+            "content": "The laksa from the new hawker is stall is very nice, I will buy it for my daughter next time."
+        },
+        {
+            "document_id": "STM_283",
+            "timestamp": "2024-07-26T16:00:00Z",
+            "content": "My gradandaughter has a dance recital next week, I am so excited to see her perform."
+        },
+        {
+            "document_id": "STM_284",
+            "timestamp": "2024-07-27T07:10:00Z",
+            "content": "I am almost finishing up my medicine, need to get a new prescription from the doctor."
+        },
+        {
+            "document_id": "STM_285",
+            "timestamp": "2024-07-27T10:30:00Z",
+            "content": "I think they added a new bus service that goes to the hospital. This will be more convenient for me."
+        },
+        {
+            "document_id": "STM_286",
+            "timestamp": "2024-07-27T13:00:00Z",
+            "content": "Today I ate from the usual Indian store, but the food tasted abit off today."
+        },
+        {
+            "document_id": "STM_287",
+            "timestamp": "2024-07-27T15:30:00Z",
+            "content": "One of my neighbours pots is blocking the corridor."
+        },
+        {
+            "document_id": "STM_288",
+            "timestamp": "2024-07-27T18:00:00Z",
+            "content": "I want to meet my grandchildren soon, I miss them."
+        },
+        {
+            "document_id": "STM_289",
+            "timestamp": "2024-07-28T07:00:00Z",
+            "content": "Today I woke up with a stiff neck, need to be more careful next time."
+        },
+        {
+            "document_id": "STM_290",
+            "timestamp": "2024-07-28T10:15:00Z",
+            "content": "I wanted to buy fresh herbs but I dont like to keep them for too long, they wilt quickly."
+        },
+        {
+            "document_id": "STM_291",
+            "timestamp": "2024-07-28T12:45:00Z",
+            "content": "This chendol is too sweet, I think I will not order it again."
+        },
+        {
+            "document_id": "STM_292",
+            "timestamp": "2024-07-28T16:15:00Z",
+            "content": "Asked my daughter about wedding that is coming up in a few months, cannot wait to see her in her wedding dress."
+        },
+        {
+            "document_id": "STM_293",
+            "timestamp": "2024-07-28T19:30:00Z",
+            "content": "I just ran out of milk, need to buy some tomorrow."
+        },
+        {
+            "document_id": "STM_294",
+            "timestamp": "2024-07-29T08:30:00Z",
+            "content": "It was raining so heaviy today, I could not do my tai chi in the park."
+        },
+        {
+            "document_id": "STM_295",
+            "timestamp": "2024-07-29T11:00:00Z",
+            "content": "Saw my old friend on the bus today, it was very nice to see her, I thought she moved away."
+        },
+        {
+            "document_id": "STM_296",
+            "timestamp": "2024-07-29T14:15:00Z",
+            "content": "Today the some people approached to sell me insurance at the community centre, so annoying."
+        },
+        {
+            "document_id": "STM_297",
+            "timestamp": "2024-07-29T17:00:00Z",
+            "content": "I want to tell my grandchildren about my secret recipe for making curry, they will love it."
+        },
+        {
+            "document_id": "STM_298",
+            "timestamp": "2024-07-30T07:10:00Z",
+            "content": "I want to buy some flowers for my balcony garden."
+        },
+        {
+            "document_id": "STM_299",
+            "timestamp": "2024-07-30T10:20:00Z",
+            "content": "The neighboue downstairs is always making so much noise, I cannot stand it anymore."
+        },
+        {
+            "document_id": "STM_300",
+            "timestamp": "2024-07-30T13:45:00Z",
+            "content": "I asked the grocer about why his vegetable did not look fresh today. He got angry and said I was being rude."
+        }
+    ],
+    "test_elderly_profile": {
+        "name": "Dhoby Ghaut Shruti",
+        "date_of_birth": "1965-01-01",
+        "gender": "Female",
+        "nationality": "Singaporean",
+        "dialect_group": "Sikh",
+        "marital_status": "Married",
+        "address": "38 Dhoby Ghaut Road, Singapore 123456"
+    }
+}

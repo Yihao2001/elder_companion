@@ -1,0 +1,2205 @@
+[
+    {
+        "test_case_id": "HCM_TC_001",
+        "query": "Can you remind me what medication I take for my blood pressure?",
+        "expected_retrieval": {
+            "hcm": [
+                {
+                    "document_id": "HCM_002",
+                    "type": "medication",
+                    "date": "None",
+                    "description": "Takes Amlodipine 5mg once daily for blood pressure management."
+                }
+            ]
+        }
+    },
+    {
+        "test_case_id": "HCM_TC_002",
+        "query": "When was my last cataract surgery and how did it go?",
+        "expected_retrieval": {
+            "hcm": [
+                {
+                    "document_id": "HCM_004",
+                    "type": "procedure",
+                    "date": "2022-11-05",
+                    "description": "Underwent cataract surgery on right eye, successful recovery."
+                }
+            ]
+        }
+    },
+    {
+        "test_case_id": "HCM_TC_003",
+        "query": "What should I do to help with my knee osteoarthritis?",
+        "expected_retrieval": {
+            "hcm": [
+                {
+                    "document_id": "HCM_003",
+                    "type": "condition",
+                    "date": "2021-07-20",
+                    "description": "Mild osteoarthritis diagnosed in knees, advised light exercise."
+                },
+                {
+                    "document_id": "HCM_015",
+                    "type": "appointment",
+                    "date": "2024-04-10",
+                    "description": "Physiotherapy sessions biweekly for knee osteoarthritis."
+                }
+            ]
+        }
+    },
+    {
+        "test_case_id": "HCM_TC_004",
+        "query": "Do I have a scheduled appointment with my endocrinologist soon?",
+        "expected_retrieval": {
+            "hcm": [
+                {
+                    "document_id": "HCM_008",
+                    "type": "appointment",
+                    "date": "2024-06-10",
+                    "description": "Scheduled follow-up with endocrinologist for diabetes management."
+                }
+            ]
+        }
+    },
+    {
+        "test_case_id": "HCM_TC_005",
+        "query": "What medications do I take for my diabetes?",
+        "expected_retrieval": {
+            "hcm": [
+                {
+                    "document_id": "HCM_007",
+                    "type": "medication",
+                    "date": "None",
+                    "description": "Metformin 500mg twice daily for blood sugar control."
+                }
+            ]
+        }
+    },
+    {
+        "test_case_id": "HCM_TC_006",
+        "query": "Have I had my flu vaccination recently?",
+        "expected_retrieval": {
+            "hcm": [
+                {
+                    "document_id": "HCM_011",
+                    "type": "procedure",
+                    "date": "2022-05-18",
+                    "description": "Received flu vaccination annually, last vaccination on 2023-10-01."
+                }
+            ]
+        }
+    },
+    {
+        "test_case_id": "HCM_TC_007",
+        "query": "What can I take for my acid reflux and how should I take it?",
+        "expected_retrieval": {
+            "hcm": [
+                {
+                    "document_id": "HCM_010",
+                    "type": "medication",
+                    "date": "None",
+                    "description": "Takes Omeprazole 20mg before breakfast for acid reflux."
+                }
+            ]
+        }
+    },
+    {
+        "test_case_id": "HCM_TC_008",
+        "query": "Do I have any hearing issues and do I use any aids for it?",
+        "expected_retrieval": {
+            "hcm": [
+                {
+                    "document_id": "HCM_013",
+                    "type": "condition",
+                    "date": "2018-09-30",
+                    "description": "Mild hearing loss, uses hearing aids occasionally."
+                }
+            ]
+        }
+    },
+    {
+        "test_case_id": "HCM_TC_009",
+        "query": "What supplements do I take for my joints and bone health?",
+        "expected_retrieval": {
+            "hcm": [
+                {
+                    "document_id": "HCM_005",
+                    "type": "medication",
+                    "date": "None",
+                    "description": "Prescribed Glucosamine supplements for joint health."
+                },
+                {
+                    "document_id": "HCM_014",
+                    "type": "medication",
+                    "date": "None",
+                    "description": "Vitamin D supplements daily for bone health."
+                }
+            ]
+        }
+    },
+    {
+        "test_case_id": "HCM_TC_010",
+        "query": "What medications do I use for my seasonal allergies?",
+        "expected_retrieval": {
+            "hcm": [
+                {
+                    "document_id": "HCM_020",
+                    "type": "medication",
+                    "date": "None",
+                    "description": "Occasional use of Loratadine 10mg for allergy relief."
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_001",
+        "query": "Who is my husband and what can you tell me about him?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_001",
+                    "key": "Husband",
+                    "value": "Rajinder Singh"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_002",
+        "query": "Can you remind me about my children?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_002",
+                    "key": "Eldest son",
+                    "value": "Harjit Singh"
+                },
+                {
+                    "document_id": "LTM_003",
+                    "key": "Youngest daughter",
+                    "value": "Simran Kaur"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_003",
+        "query": "What do I like to do in the morning?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_005",
+                    "key": "Morning routine",
+                    "value": "Enjoys morning walks at Dhoby Ghaut Park with neighbours at 7 am"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_004",
+        "query": "Tell me about my hobby and when I do it.",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_006",
+                    "key": "Hobby",
+                    "value": "Practices Tai Chi at the community centre every Tuesday and Thursday"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_005",
+        "query": "What kind of food do I prefer to cook?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_007",
+                    "key": "Cooking preference",
+                    "value": "Prefers cooking traditional Sikh vegetarian dishes"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_006",
+        "query": "Who is my close friend that I often meet for tea?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_008",
+                    "key": "Close friend",
+                    "value": "Mrs. Tan from Block 12, often meets for tea"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_007",
+        "query": "Where do I usually go shopping for fresh vegetables and spices?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_009",
+                    "key": "Shopping routine",
+                    "value": "Goes to Tekka Centre wet market every Saturday morning to buy fresh vegetables and spices"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_008",
+        "query": "How do I usually travel around town and do I have any preferences?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_010",
+                    "key": "Public transport usage",
+                    "value": "Uses MRT daily to visit the market and friends, prefers to travel off-peak hours"
+                },
+                {
+                    "document_id": "LTM_027",
+                    "key": "Public transport tip",
+                    "value": "Always taps her EZ-Link card carefully to avoid double charges"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_009",
+        "query": "What kind of social activities do I participate in?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_011",
+                    "key": "Social activity",
+                    "value": "Attends senior activity centre\u2019s weekly knitting club"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_010",
+        "query": "Who is my neighbour I often chat with about local news?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_012",
+                    "key": "Neighbour",
+                    "value": "Mr. Lim, often chats about news and local happenings"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_011",
+        "query": "Are there any foods I avoid because of my health?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_013",
+                    "key": "Dietary preference",
+                    "value": "Avoids oily and spicy food due to mild acid reflux"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_012",
+        "query": "What hawker food do I enjoy eating nearby?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_014",
+                    "key": "Favourite hawker food",
+                    "value": "Loves to eat prata and teh tarik at nearby hawker centre"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_013",
+        "query": "Do I participate in any community events or festivals?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_015",
+                    "key": "Community involvement",
+                    "value": "Volunteers at the local temple festival during major Sikh celebrations"
+                },
+                {
+                    "document_id": "LTM_029",
+                    "key": "Community events",
+                    "value": "Participates in annual Hari Raya and Deepavali bazaars nearby"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_014",
+        "query": "How do I keep in touch with my children?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_016",
+                    "key": "Relationship with children",
+                    "value": "Keeps in touch daily via WhatsApp messages and calls"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_015",
+        "query": "What do I like to do to relax in the evening?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_017",
+                    "key": "Evening relaxation",
+                    "value": "Likes to listen to classical Indian music before bedtime"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_016",
+        "query": "When do I receive my monthly pension and from where?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_018",
+                    "key": "monthly pension",
+                    "value": "Receives a monthly pension from CPF payouts on the 15th of each month"
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_017",
+        "query": "Do I have any insurance policy I keep updated regularly?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_022",
+                    "key": "Insurance policy",
+                    "value": "Holds a Prudential health insurance policy renewed annually in March."
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_018",
+        "query": "Can you remind me about my utility bill payments?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_024",
+                    "key": "utility payments",
+                    "value": "Pays SP Services bill via GIRO on the 5th of every month."
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_019",
+        "query": "Who is my family lawyer if I need legal help?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_026",
+                    "key": "legal_contact",
+                    "value": "Family lawyer is Ms. Clara Tan from Tan & Partners LLP."
+                }
+            ]
+        }
+    },
+    {
+        "id": "LTM_TC_020",
+        "query": "Do I have any arrangements for legal power of attorney?",
+        "expected_retrieval": {
+            "ltm": [
+                {
+                    "document_id": "LTM_028",
+                    "key": "power of attorney",
+                    "value": "Granted Lasting Power of Attorney (LPA) to eldest Harjit Singh for financial and healthcare matters."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_001",
+        "timestamp": "2024-05-26T09:00:00Z",
+        "query": "Did I remember to take my heart medicine after breakfast the other day?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_007",
+                    "timestamp": "2024-05-25T09:00:00Z",
+                    "content": "I remembered to take my heart medicine after breakfast today; feeling better each day."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_002",
+        "timestamp": "2024-05-26T9:00:00Z",
+        "query": "What did I cook with extra garlic that my family liked?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_010",
+                    "timestamp": "2024-05-25T18:00:00Z",
+                    "content": "Cooked dal with extra garlic today; my family said it tasted comforting and warm."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_003",
+        "timestamp": "2024-05-26T09:00:00Z",
+        "query": "Who did I talk to about the bus fare to Ang Mo Kio?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_008",
+                    "timestamp": "2024-05-25T11:15:00Z",
+                    "content": "Asked the bus driver about the fare to get to Ang Mo Kio; he was very patient explaining."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_004",
+        "timestamp": "2024-05-27T09:00:00Z",
+        "query": "Did I get any fresh mangoes recently and how were they?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_013",
+                    "timestamp": "2024-05-26T15:20:00Z",
+                    "content": "Bought some fresh mangoes at the market; they were sweet and juicy."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_005",
+        "timestamp": "2024-05-30T16:00:00Z",
+        "query": "What did I do at the community centre that made me feel relaxed?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_003",
+                    "timestamp": "2024-05-23T16:00:00Z",
+                    "content": "I joined the tai chi session at the community centre; it felt relaxing to move gently with others."
+                },
+                {
+                    "document_id": "STM_028",
+                    "timestamp": "2024-05-30T08:40:00Z",
+                    "content": "Attended a mindfulness session at the community centre that helped me relax. It is important to stay stress-free"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_006",
+        "timestamp": "2024-05-29T19:00:00Z",
+        "query": "Can you remind me about the documents the lawyer's office wanted me to review?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_024",
+                    "timestamp": "2024-05-29T10:00:00Z",
+                    "content": "Today the lawyer office called me to remind me about the some documents that I need to review"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_007",
+        "timestamp": "2024-06-01T09:00:00Z",
+        "query": "When did I last buy fresh turmeric and from whom?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_033",
+                    "timestamp": "2024-05-31T09:00:00Z",
+                    "content": "Asked a shopkeeper if they had fresh turmeric and he showed me a bright batch."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_008",
+        "timestamp": "2024-06-02T09:00:00Z",
+        "query": "What did I cook that my husband said reminded him of home?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_039",
+                    "timestamp": "2024-06-01T18:00:00Z",
+                    "content": "Cooked aloo gobi with fresh vegetables; my husband said it reminded him of home."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_009",
+        "timestamp": "2024-05-28T09:00:00Z",
+        "query": "Did I meet anyone who shared a recipe for homemade chapati?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_009",
+                    "timestamp": "2024-05-25T13:45:00Z",
+                    "content": "Met a neighbor at the market who shared a recipe for homemade chapati."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_010",
+        "query": "What did I ask the vegetable seller about spinach?",
+        "timestamp": "2024-05-25T11:00:00Z",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_006",
+                    "timestamp": "2024-05-24T12:30:00Z",
+                    "content": "I asked the vegetable seller if the spinach was fresh and he assured me it was picked this morning."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_011",
+        "query": "Who invited me to join a knitting group at the community centre?",
+        "timestamp": "2024-05-29T19:00:00Z",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_020",
+                    "timestamp": "2024-05-28T11:10:00Z",
+                    "content": "Met a volunteer at the community centre who invited me to join a knitting group."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_012",
+        "timestamp": "2024-05-29T17:00:00Z",
+        "query": "Have I been drinking enough water recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_019",
+                    "timestamp": "2024-05-28T08:50:00Z",
+                    "content": "I remembered to drink more water today and felt less tired in the afternoon."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_013",
+        "timestamp": "2024-06-01T09:00:00Z",
+        "query": "What did I chat about with my granddaughter on the phone?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_035",
+                    "timestamp": "2024-05-31T15:00:00Z",
+                    "content": "Had a pleasant chat with my granddaughter on the phone about her school project."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_014",
+        "timestamp": "2024-05-24T20:00:00Z",
+        "query": "When did I have for breakfast recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_005",
+                    "timestamp": "2024-05-24T07:45:00Z",
+                    "content": "Had kopi and soft-boiled eggs at the coffee shop; the kopi was just the way I like it, strong and sweet."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_015",
+        "timestamp": "2024-05-31T09:00:00Z",
+        "query": "Where did i get my red onions from?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_029",
+                    "timestamp": "2024-05-30T11:20:00Z",
+                    "content": "I bought some red onions; the seller told me they were from Malaysia."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_016",
+        "timestamp": "2024-05-30T07:00:00Z",
+        "query": "What did I and my daughter do together recently. Did we make any food?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_022",
+                    "timestamp": "2024-05-28T17:00:00Z",
+                    "content": "Prepared chapati with my daughter; she said I have the best rolling technique."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_017",
+        "timestamp": "2024-05-28T09:00:00Z",
+        "query": "When did I visit the library and what books did I want to borrow?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_011",
+                    "timestamp": "2024-05-26T08:30:00Z",
+                    "content": "Took the bus to the library and asked the librarian for books on gardening."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_018",
+        "query": "Did I attend any singing events recently at the senior activity centre?",
+        "timestamp": "2024-05-30T09:00:00Z",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_012",
+                    "timestamp": "2024-05-26T10:00:00Z",
+                    "content": "Participated in a sing-along session at the senior activity centre; it brought back many memories."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_019",
+        "timestamp": "2024-06-05T09:00:00Z",
+        "query": "What should I do to start my morning calmly?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_049",
+                    "timestamp": "2024-06-04T07:10:00Z",
+                    "content": "Did some light stretches and breathing exercises to start the day calmly."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_020",
+        "timestamp": "2024-06-05T09:00:00Z",
+        "query": "What dessert did I make as a treat for my grandchildren coming over?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_044",
+                    "timestamp": "2024-06-02T19:30:00Z",
+                    "content": "Made some carrot halwa as a treat for my grandchildren coming over tomorrow."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_021",
+        "timestamp": "2024-06-07T09:00:00Z",
+        "query": "Did I ask someone about a mee goreng recipe?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_051",
+                    "timestamp": "2024-06-04T13:30:00Z",
+                    "content": "Asked a store owners about the ingredients in her famous mee goreng. She say it is her secret recipe."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_022",
+        "timestamp": "2024-06-07T09:00:00Z",
+        "query": "Can you remind me what my daughter told me about her new job during our phone call?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_052",
+                    "timestamp": "2024-06-04T15:45:00Z",
+                    "content": "Had a long phone call with my daughter discussing her new job. She is a teacher at a local school."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_023",
+        "timestamp": "2024-06-09T09:00:00Z",
+        "query": "How was the public speaking group at the community centre?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_053",
+                    "timestamp": "2024-06-05T08:00:00Z",
+                    "content": "Joined a public speaking group at the community centre; everyone was welcoming and kind."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_024",
+        "timestamp": "2024-06-06T09:00:00Z",
+        "query": "Where did I buy the herbal teas from?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_054",
+                    "timestamp": "2024-06-05T11:20:00Z",
+                    "content": "I took the bus to the supermarket and asked a staff member where the herbal teas were."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_025",
+        "timestamp": "2024-06-08T09:00:00Z",
+        "query": "What kind of stew did I prepare and what special ingredient did I add?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_055",
+                    "timestamp": "2024-06-05T14:00:00Z",
+                    "content": "Prepared a simple vegetable stew; I added some fresh turmeric and it smelled wonderful."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_026",
+        "timestamp": "2024-06-06T09:00:00Z",
+        "query": "What movie did I watch with my husband after dinner?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_056",
+                    "timestamp": "2024-06-05T18:30:00Z",
+                    "content": "Enjoyed watching a Bollywood movie with my husband after dinner."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_027",
+        "timestamp": "2024-06-08T09:00:00Z",
+        "query": "What is my morning routine to start the day peacefully?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_057",
+                    "timestamp": "2024-06-06T07:30:00Z",
+                    "content": "Did some morning meditation to calm my mind before starting the day."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_028",
+        "timestamp": "2024-06-07T10:15:00Z",
+        "query": "What low-sodium food did the auntie selling mixed rice recommend to me?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_058",
+                    "timestamp": "2024-06-06T10:15:00Z",
+                    "content": "Asked a auntie selling mixed rice if she had any low-sodium options; she suggested steamed fish so I got some."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_029",
+        "timestamp": "2024-06-106T10:15:00Z",
+        "query": "What did I do at the senior centre during the storytelling session?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_059",
+                    "timestamp": "2024-06-06T13:00:00Z",
+                    "content": "Visited the senior centre and joined a storytelling session"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_030",
+        "timestamp": "2024-06-07T10:15:00Z",
+        "query": "What kind of fresh fruit did I buy from the market recently",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_060",
+                    "timestamp": "2024-06-06T16:45:00Z",
+                    "content": "Bought some fresh coconut from the market; it was very sweet and refreshing."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_031",
+        "timestamp": "2024-06-09T10:15:00Z",
+        "query": "How did I feel after doing a light jog in the park?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_061",
+                    "timestamp": "2024-06-07T08:00:00Z",
+                    "content": "Did a light jog at the park today. It was too tiring for me but I felt good afterward."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_032",
+        "timestamp": "2024-06-10T11:10:00Z",
+        "query": "What instructions did the bus driver give me about going to Sentosa?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_062",
+                    "timestamp": "2024-06-07T11:10:00Z",
+                    "content": "Asked a bus driver about the route to Sentosa; he gave me clear instructions."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_033",
+        "timestamp": "2024-06-08T11:10:00Z",
+        "query": "Did I remember to call the lawyer back? What did the lawyer say on the phone?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_064",
+                    "timestamp": "2024-06-07T17:00:00Z",
+                    "content": "Today the lawyer office called but I cannot remember what they said. I need to call them back tomorrow."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_034",
+        "timestamp": "2024-06-10T09:45:00Z",
+        "query": "Where did the young man at the market direct me to find fresh ginger?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_066",
+                    "timestamp": "2024-06-08T09:45:00Z",
+                    "content": "Asked a young man at the market where I could find fresh ginger; he showed me the stall nearby."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_035",
+        "timestamp": "2024-06-09T12:00:00Z",
+        "query": "What new food stall did I try recently at the hawker centre?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_067",
+                    "timestamp": "2024-06-08T12:00:00Z",
+                    "content": "Visited the hawker centre and tried the new roti prata stall; it was crispy and delicious."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_036",
+        "timestamp": "2024-06-11T14:00:00Z",
+        "query": "What did my friend at the senior centre say about gluten-free food options?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_076",
+                    "timestamp": "2024-06-10T14:00:00Z",
+                    "content": "One of my friends at the senior centre told me about gluten-free options to manage blood sugar; she recommended steamed fish with vegetables."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_037",
+        "timestamp": "2024-06-12T14:00:00Z",
+        "query": "What did I cook for dinner that was very delicious?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_077",
+                    "timestamp": "2024-06-10T18:30:00Z",
+                    "content": "Cooked my famous vegetable biryani for dinner the aroma filled the house."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_038",
+        "timestamp": "2024-06-13T14:00:00Z",
+        "query": "What did I discuss with my daughter about her upcoming plans?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_081",
+                    "timestamp": "2024-06-11T15:30:00Z",
+                    "content": "Chatted with my daughter about her plans to visit next month. I think she is busy with wedding planning."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_039",
+        "timestamp": "2024-06-17T16:00:00Z",
+        "query": "Did I have a kind encounter on the public transport recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_091",
+                    "timestamp": "2024-06-14T11:40:00Z",
+                    "content": "Today the bus driver waited for me to board the bus, I was very grateful for his kindness, if not I would have to wait for the next bus"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_040",
+        "timestamp": "2024-06-17T14:00:00Z",
+        "query": "Does ginger tea help with digestion? I am not feeling well.",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_098",
+                    "timestamp": "2024-06-15T19:45:00Z",
+                    "content": "Brewed ginger tea to help with my digestion; felt much better afterward."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_041",
+        "timestamp": "2024-06-19T14:00:00Z",
+        "query": "Did i get any yummy fruit at the market recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_108",
+                    "timestamp": "2024-06-18T10:50:00Z",
+                    "content": "Visited the fruit market and bought some ripe mangoes; they were sweet and juicy."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_042",
+        "timestamp": "2024-06-23T18:00:00Z",
+        "query": "Did I have any dinner plans or something interesting to eat lately?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_110",
+                    "timestamp": "2024-06-18T18:00:00Z",
+                    "content": "Cooked a vegetable pulao for dinner; it turned out fragrant and tasty."
+                },
+                {
+                    "document_id": "STM_114",
+                    "timestamp": "2024-06-19T17:00:00Z",
+                    "content": "Had dinner with my husband and shared stories of our youth."
+                },
+                {
+                    "document_id": "STM_117",
+                    "timestamp": "2024-06-20T13:00:00Z",
+                    "content": "Had lunch at the hawker centre; tried a new dish called laksa lemak. I think it not very healthy but it taste good."
+                },
+                {
+                    "document_id": "STM_128",
+                    "timestamp": "2024-06-22T18:00:00Z",
+                    "content": "I had the same thing for dinner again, I think I am getting bored of my cooking."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_043",
+        "timestamp": "2024-06-22T18:00:00Z",
+        "query": "Are there any fun classes at the community centre that I can join?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_120",
+                    "timestamp": "2024-06-21T08:00:00Z",
+                    "content": "I think i want to try Zumba classes at the community centre, it looks fun"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_044",
+        "timestamp": "2024-06-24T18:00:00Z",
+        "query": "Did my grandchildren tell me anything recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_141",
+                    "timestamp": "2024-06-25T16:30:00Z",
+                    "content": "Had a video call with my grandchildren; they told me about their school projects."
+                },
+                {
+                    "document_id": "STM_131",
+                    "timestamp": "2024-06-23T12:45:00Z",
+                    "content": "I am waiting for my granddaughter to arrive; she is coming over for lunch."
+                },
+                {
+                    "document_id": "STM_132",
+                    "timestamp": "2024-06-23T16:15:00Z",
+                    "content": "My granddaughter visited me today; we baked cookies together and had a lovely time."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_045",
+        "timestamp": "2024-06-22T18:00:00Z",
+        "query": "What did I do to help with my back or shoulder pain recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_115",
+                    "timestamp": "2024-06-20T07:10:00Z",
+                    "content": "Did light stretches to ease my back pain; it worked well."
+                },
+                {
+                    "document_id": "STM_147",
+                    "timestamp": "2024-06-27T07:25:00Z",
+                    "content": "Did light stretches to ease my shoulder pain; it helped."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_046",
+        "timestamp": "2024-06-20T18:00:00Z",
+        "query": "I wanted to remember what to buy for protein in my diet, what was it?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_112",
+                    "timestamp": "2024-06-19T11:15:00Z",
+                    "content": "I need to remember to buy tofu next time, my son say it is good for my protein intake"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_047",
+        "timestamp": "2024-06-26T18:00:00Z",
+        "query": "Did I have any unpleasant experience at the market recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_116",
+                    "timestamp": "2024-06-20T10:30:00Z",
+                    "content": "Today I argues with the stall owner. He tried to give me old vegetables and I was not happy about it."
+                },
+                {
+                    "document_id": "STM_140",
+                    "timestamp": "2024-06-25T13:45:00Z",
+                    "content": "Asked a shopkeeper for advice on buying the freshest vegetables. I think she was bluffing me."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_048",
+        "timestamp": "2024-06-24T18:00:00Z",
+        "query": "Was there any disruption to my day recently, like a power outage?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_124",
+                    "timestamp": "2024-06-22T07:20:00Z",
+                    "content": "There was a power outage in the morning; had to use a flashlight to find my way around."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_049",
+        "timestamp": "2024-06-22T18:00:00Z",
+        "query": "Remind me if anyone told me anything interesting about community events?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_118",
+                    "timestamp": "2024-06-20T15:15:00Z",
+                    "content": "Chatted with a volunteer about upcoming community events."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_050",
+        "timestamp": "2024-06-17T18:00:00Z",
+        "query": "What did I enjoy for lunch today?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_105",
+                    "timestamp": "2024-06-17T13:00:00Z",
+                    "content": "Had lunch at the hawker centre; enjoyed mee siam and chatted with the stall owner who was my primary school friend"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_051",
+        "timestamp": "2024-06-17T18:00:00Z",
+        "query": "What did I do in the evening yesterday?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_102",
+                    "timestamp": "2024-06-16T17:30:00Z",
+                    "content": "Enjoyed a quiet evening with my husband; we watched a classic movie together."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_052",
+        "timestamp": "2024-06-28T18:00:00Z",
+        "query": "Did I have any new recipe or cooking class plans?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_150",
+                    "timestamp": "2024-06-27T15:45:00Z",
+                    "content": "There is a cooking class at the community centre next week; I am thinking of joining to learn new recipes."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_053",
+        "timestamp": "2024-06-25T18:00:00Z",
+        "query": "Used the app to pay my bills recently, how do I do it again?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_137",
+                    "timestamp": "2024-06-24T17:00:00Z",
+                    "content": "How do i use this app to pay my bills, I need to ask my son again for help"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_054",
+        "timestamp": "2024-06-20T18:00:00Z",
+        "query": "Did I buy any fresh vegetables from the market recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_113",
+                    "timestamp": "2024-06-19T14:30:00Z",
+                    "content": "Visited the wet market and bought fresh okra; the vendor gave me a few extra."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_055",
+        "timestamp": "2024-06-23T18:00:00Z",
+        "query": "How was my public transport experience recently",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_125",
+                    "timestamp": "2024-06-22T10:45:00Z",
+                    "content": "I asked the bus driver why the bus was so late today; he said there was heavy traffic due to an accident."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_056",
+        "timestamp": "2024-06-26T18:00:00Z",
+        "query": "Did I have any memorable moments with my husband related to our past?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_114",
+                    "timestamp": "2024-06-19T17:00:00Z",
+                    "content": "Had dinner with my husband and shared stories of our youth."
+                },
+                {
+                    "document_id": "STM_146",
+                    "timestamp": "2024-06-26T17:15:00Z",
+                    "content": "Had dinner with my husband; we reminisced about our wedding day."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_057",
+        "timestamp": "2024-06-27T18:00:00Z",
+        "query": "Do I like to exercise outdoors?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_143",
+                    "timestamp": "2024-06-26T08:00:00Z",
+                    "content": "The weather was nice for exercising outdoors; I did some tai chi in the park."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_058",
+        "timestamp": "2024-06-22T18:00:00Z",
+        "query": "What did I do with my daughter when I called her recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_106",
+                    "timestamp": "2024-06-17T15:30:00Z",
+                    "content": "Called my daughter to check on her health; she said she was doing well."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_059",
+        "timestamp": "2024-06-25T18:00:00Z",
+        "query": "Did I experience any noise disturbance at home or nearby?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_130",
+                    "timestamp": "2024-06-23T10:15:00Z",
+                    "content": "How can they start the construction work so early in the morning, it is too noisy!"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_060",
+        "timestamp": "2024-06-22T18:00:00Z",
+        "query": "Did I have any special food recommendation recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_122",
+                    "timestamp": "2024-06-21T13:30:00Z",
+                    "content": "Today i felt like having vegetarian food, I asked one of the store owners and she recommended vegetable noodles."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_061",
+        "timestamp": "2024-06-29T18:00:00Z",
+        "query": "Did the construction near my house start yet? Why is it so noisy?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_151",
+                    "timestamp": "2024-06-27T18:30:00Z",
+                    "content": "I heard that there will be some construction work near my house next week; I hope it won't be too disruptive."
+                },
+                {
+                    "document_id": "STM_152",
+                    "timestamp": "2024-06-28T08:00:00Z",
+                    "content": "The construction seemed to start quite early today; I hope it won't be too noisy."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_062",
+        "timestamp": "2024-06-29T18:00:00Z",
+        "query": "What fruit did I buy at the market recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_153",
+                    "timestamp": "2024-06-28T11:15:00Z",
+                    "content": "Bought some ripe mangoes at the market; they were very sweet."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_063",
+        "timestamp": "2024-06-29T18:00:00Z",
+        "query": "Why has the hawker centre been so crowded lately?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_154",
+                    "timestamp": "2024-06-28T13:30:00Z",
+                    "content": "The hawker centre was crowded today; I waited a while to get my favourite laksa."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_064",
+        "timestamp": "2024-06-30T18:00:00Z",
+        "query": "My granddaughter told me she has something on next week. What was it?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_155",
+                    "timestamp": "2024-06-28T16:00:00Z",
+                    "content": "My granddaughter called to tell me that she has a math exam next week. I wished her good luck."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_065",
+        "timestamp": "2024-06-30T18:00:00Z",
+        "query": "Do you know any new exercises that can help with arthritis?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_156",
+                    "timestamp": "2024-06-29T07:10:00Z",
+                    "content": "I want to try some new exercises to help with my arthritis; maybe some gentle yoga."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_066",
+        "timestamp": "2024-07-01T18:00:00Z",
+        "query": "How do i go to the hospital by public transport?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_157",
+                    "timestamp": "2024-06-29T10:30:00Z",
+                    "content": "Asked a bus driver about the best bus to go to the hospital."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_067",
+        "timestamp": "2024-07-01T18:00:00Z",
+        "query": "How was the weather last week? Was it hot or rainy?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_158",
+                    "timestamp": "2024-06-29T13:00:00Z",
+                    "content": "The weather was very hot today; I stayed indoors and drank plenty of water."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_068",
+        "timestamp": "2024-07-01T18:00:00Z",
+        "query": "I talked with Mr Lim about his garden. What kind of flowers does he have?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_159",
+                    "timestamp": "2024-06-29T15:30:00Z",
+                    "content": "Mr Lim, my neighbor, came over to chat about his garden; he has some beautiful orchids."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_069",
+        "timestamp": "2024-07-01T18:00:00Z",
+        "query": "What did I cook for dinner recently? Something with curry?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_160",
+                    "timestamp": "2024-06-29T18:00:00Z",
+                    "content": "I made yellow curry with squid and vegetables for dinner; it was delicious."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_070",
+        "timestamp": "2024-07-01T18:00:00Z",
+        "query": "Was my parcel delivered today? What did I order?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_161",
+                    "timestamp": "2024-06-30T07:00:00Z",
+                    "content": "I think my parcel is coming today, I hope it arrives before noon."
+                },
+                {
+                    "document_id": "STM_162",
+                    "timestamp": "2024-06-30T10:15:00Z",
+                    "content": "My delivery package from Lazada arrived today; I ordered some herbal teas and a new book."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_071",
+        "timestamp": "2024-07-01T18:00:00Z",
+        "query": "Did I eat thosai recently? Where did I buy it from?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_163",
+                    "timestamp": "2024-06-30T12:45:00Z",
+                    "content": "I feel like eating thosai today, I will go to the hawker centre to buy some."
+                },
+                {
+                    "document_id": "STM_164",
+                    "timestamp": "2024-06-30T16:15:00Z",
+                    "content": "The thosai I bought today was too oily, I should have asked the hawker to make it less oily."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_072",
+        "timestamp": "2024-07-01T18:00:00Z",
+        "query": "How did I feel when I woke up this morning? Was anything unusual?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_166",
+                    "timestamp": "2024-07-01T08:30:00Z",
+                    "content": "Today I woke up and my feet were so cold, I did not feel well when i got out of bed."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_073",
+        "timestamp": "2024-07-03T18:00:00Z",
+        "query": "Did I have any unpleasant experience on the bus recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_167",
+                    "timestamp": "2024-07-01T11:00:00Z",
+                    "content": "When it was my turn to board the bus, a young man cut my queue and got on before me. These young people nowadays have no manners."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_074",
+        "timestamp": "2024-07-03T18:00:00Z",
+        "query": "Did i buy any fresh fruit at the market recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_168",
+                    "timestamp": "2024-07-01T14:15:00Z",
+                    "content": "Today I went to the market and bought fresh jackfruit; it smelled sweet and ripe."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_075",
+        "timestamp": "2024-07-04T18:00:00Z",
+        "query": "Did my granddaughter want to eat anything recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_170",
+                    "timestamp": "2024-07-02T07:10:00Z",
+                    "content": "My granddaughter wanted to have muffins, but when I went to the shop they were closed for renovation."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_076",
+        "timestamp": "2024-07-04T18:00:00Z",
+        "query": "Do I like avocado smoothies?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_171",
+                    "timestamp": "2024-07-02T10:20:00Z",
+                    "content": "I went to Alexandra food centre and tried a avocado smoothie, it was nice but I think it was too expensive."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_077",
+        "timestamp": "2024-07-04T18:00:00Z",
+        "query": "Did I call my grandchildren recently? What did we talk about?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_173",
+                    "timestamp": "2024-07-02T16:30:00Z",
+                    "content": "Had a video call with my grandchildren; they shared their school projects."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_078",
+        "timestamp": "2024-07-07T18:00:00Z",
+        "query": "Did the doctor advise me about salt intake? How do I feel about the diet restrictions?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_183",
+                    "timestamp": "2024-07-04T18:30:00Z",
+                    "content": "The doctor told me to reduce my salt intake, but the food is always so bland"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_079",
+        "timestamp": "2024-07-09T18:00:00Z",
+        "query": "Did I have any problems with my bus pass recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_189",
+                    "timestamp": "2024-07-06T10:30:00Z",
+                    "content": "This is the second time I lost my bus pass this month; I need to be more careful."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_080",
+        "timestamp": "2024-07-07T18:00:00Z",
+        "query": "I cooked biryani for the family recently. Did everyone enjoy it?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_191",
+                    "timestamp": "2024-07-06T15:30:00Z",
+                    "content": "Today my children are coming over for dinner; I am excited to see them."
+                },
+                {
+                    "document_id": "STM_192",
+                    "timestamp": "2024-07-06T18:00:00Z",
+                    "content": "My kids still enjoy my biryani, they said it reminds them of home. I am glad."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_081",
+        "timestamp": "2024-07-11T18:00:00Z",
+        "query": "I can't seem to find my glasses again, where did I last mention putting them?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_201",
+                    "timestamp": "2024-07-08T17:00:00Z",
+                    "content": "Where did I put my glasses? I misplaced them again"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_082",
+        "timestamp": "2024-07-10T18:00:00Z",
+        "query": "I remember feeling stiff in my back, did some yoga and felt better. When was that?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_202",
+                    "timestamp": "2024-07-09T07:10:00Z",
+                    "content": "Woke up and did some yoga today. My back felt a bit stiff but after the stretches it felt better."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_083",
+        "timestamp": "2024-07-10T18:00:00Z",
+        "query": "Did i eat any oily food recently? I think it was not good.",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_203",
+                    "timestamp": "2024-07-09T10:20:00Z",
+                    "content": "Today the char kway teow was quite bad. I think I will not eat it again, so oily"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_084",
+        "timestamp": "2024-07-11T18:00:00Z",
+        "query": "I had to buy vegetables from a different stall because the usual grocer's veggies weren't fresh. When did I notice that?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_204",
+                    "timestamp": "2024-07-09T13:45:00Z",
+                    "content": "Today the grocer's vegetables did not look very fresh, so I bought from the stall next to his."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_085",
+        "timestamp": "2024-07-11T18:00:00Z",
+        "query": "I had a video call with my grandchildren but the sound was bad. When was that?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_205",
+                    "timestamp": "2024-07-09T16:30:00Z",
+                    "content": "Had a video call with my grandchildren, they update me about their school projects, but I can hardly hear them."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_086",
+        "timestamp": "2024-07-11T18:00:00Z",
+        "query": "I thought I was getting a cold and wanted to make ginger tea. When did I say that?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_206",
+                    "timestamp": "2024-07-09T19:00:00Z",
+                    "content": "I think I am coming down with a cold, maybe I should make some ginger tea to soothe my throat."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_087",
+        "timestamp": "2024-07-12T18:00:00Z",
+        "query": "I met Mrs Tan in the park and we did tai chi together. Can you remind me when that was?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_207",
+                    "timestamp": "2024-07-10T08:00:00Z",
+                    "content": "This morning I went for a walk in the park, I met Mrs Tan and we did tai chi together. Its so good to see her"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_088",
+        "timestamp": "2024-07-15T18:00:00Z",
+        "query": "Did I experience any transport disruption recently? I think the MRT broke down.",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_208",
+                    "timestamp": "2024-07-10T11:30:00Z",
+                    "content": "Today the MRT broke down, I had to take the bus instead, so disappointing."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_089",
+        "timestamp": "2024-07-14T18:00:00Z",
+        "query": "Was I forgetful lately, I cannot remember if I bought eggs at the market?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_209",
+                    "timestamp": "2024-07-10T14:00:00Z",
+                    "content": "After I went to the wet market, I realised I forgot to buy eggs. I had to go back again to buy them. So troublesome."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_090",
+        "timestamp": "2024-07-16T18:00:00Z",
+        "query": "My husband complimented my food, what did i make that he liked?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_210",
+                    "timestamp": "2024-07-10T17:15:00Z",
+                    "content": "Today I cooked a new recipe for dinner, chicken curry with potatoes. My husband said it was delicious."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_091",
+        "timestamp": "2024-07-13T18:00:00Z",
+        "query": "My shoulder was aching when I woke up but stretching helped. When did this happen?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_211",
+                    "timestamp": "2024-07-11T07:25:00Z",
+                    "content": "Today when I woke up my shoulder was aching. I did some stretches like the physio taught me and it felt better."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_092",
+        "timestamp": "2024-07-13T18:00:00Z",
+        "query": "The shopkeeper gave me tips about young turmeric for cooking. When did I get this advice?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_212",
+                    "timestamp": "2024-07-11T10:10:00Z",
+                    "content": "The shopkeeper shared some tips on how I could use the young turmeric in my cooking. Maybe I will try it later."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_093",
+        "timestamp": "2024-07-13T18:00:00Z",
+        "query": "The mee soto from the Malay stall tasted different; I think they added more coconut milk. When was that?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_213",
+                    "timestamp": "2024-07-11T13:30:00Z",
+                    "content": "Today the mee soto from the Malay stall tasted abit different, I think they added more coconut milk."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_094",
+        "timestamp": "2024-07-13T18:00:00Z",
+        "query": "I was invited to join a knitting group by a volunteer. Can you tell me when I was so happy about this invite?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_214",
+                    "timestamp": "2024-07-11T15:45:00Z",
+                    "content": "Today one of the volunteers invited me to  join their knitting group. I was so happy that I got invited."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_095",
+        "timestamp": "2024-07-13T18:00:00Z",
+        "query": "I took a nap in the afternoon and wasn\u2019t very sleepy at night. When did I say that?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_215",
+                    "timestamp": "2024-07-11T18:30:00Z",
+                    "content": "I took a nap in the afternoon so I am not very sleepy tonight."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_096",
+        "timestamp": "2024-07-13T18:00:00Z",
+        "query": "Do i need to take special care of my plants because of the hot weather?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_216",
+                    "timestamp": "2024-07-12T08:00:00Z",
+                    "content": "I need to remember to water the plants, the weather has been hot and dry lately"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_097",
+        "query": "I wanted to do something with the mangoes I bought at the market, what was it?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_217",
+                    "timestamp": "2024-07-12T11:15:00Z",
+                    "content": "Bought sweet mangoes at market. Maybe I will share them with my neighbors."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_098",
+        "query": "What were the ingredients in the laksa that the spice seller told me about?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_218",
+                    "timestamp": "2024-07-12T13:30:00Z",
+                    "content": "Today I asked the spice seller about the ingredients in her laksa. She was kind to share with me"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_099",
+        "query": "What did my granddaughter tell me about her class?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_219",
+                    "timestamp": "2024-07-12T16:00:00Z",
+                    "content": "I remembered to call my granddaughter today, she told me about her dance class."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_100",
+        "query": "What my experience with my smartphone recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_220",
+                    "timestamp": "2024-07-13T07:10:00Z",
+                    "content": "Tried to play with my smartphone, but I am not very good with technology."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_101",
+        "timestamp": "2024-07-22T10:15:00Z",
+        "query": "How do i store fresh herbs at home?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_258",
+                    "timestamp": "2024-07-21T10:15:00Z",
+                    "content": "When i asked the shopkeeper about storing fresh herbs, he told me to wrap them in a damp paper towel and put them in a plastic bag in the fridge. I will try that."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_102",
+        "timestamp": "2024-07-29T10:15:00Z",
+        "query": "What did I say about my daughter\u2019s wedding plans recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_260",
+                    "timestamp": "2024-07-21T16:15:00Z",
+                    "content": "My daughter called to update me on her wedding plans. She seems very excited."
+                },
+                {
+                    "document_id": "STM_292",
+                    "timestamp": "2024-07-28T16:15:00Z",
+                    "content": "Asked my daughter about wedding that is coming up in a few months, cannot wait to see her in her wedding dress."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_103",
+        "timestamp": "2024-07-24T11:30:00Z",
+        "query": "Can you remind me what happened with the bus on my way home from the market?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_272",
+                    "timestamp": "2024-07-24T11:30:00Z",
+                    "content": "Today the bus broke down, luckily it happened only on my way home from the market."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_104",
+        "timestamp": "2024-07-25T11:30:00Z",
+        "query": "What did I say about how the weather affects how I feel?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_271",
+                    "timestamp": "2024-07-24T08:00:00Z",
+                    "content": "Recently the weather has been too hot. I feel so tired in the afternoon when the sun is bright"
+                },
+                {
+                    "document_id": "STM_262",
+                    "timestamp": "2024-07-22T08:30:00Z",
+                    "content": "The weather this morning was so good for a walk in the park."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_105",
+        "timestamp": "2024-07-28T11:30:00Z",
+        "query": "Did I mention anything about my medicine supply?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_284",
+                    "timestamp": "2024-07-27T07:10:00Z",
+                    "content": "I am almost finishing up my medicine, need to get a new prescription from the doctor."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_106",
+        "timestamp": "2024-07-22T11:30:00Z",
+        "query": "What do I recall about my joints feeling lately?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_257",
+                    "timestamp": "2024-07-21T07:00:00Z",
+                    "content": "My joints are fealing weak and stiff, maybe I should take some supplements;"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_107",
+        "timestamp": "2024-07-21T11:30:00Z",
+        "query": "Did I say anything about my basil plant recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_252",
+                    "timestamp": "2024-07-20T07:10:00Z",
+                    "content": "My basil plant wilted, I dont know what happened"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_108",
+        "timestamp": "2024-07-21T11:30:00Z",
+        "query": "Tell me about what I said regarding the mangoes from the market.",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_281",
+                    "timestamp": "2024-07-26T11:15:00Z",
+                    "content": "The mangoes from the market were very sweet. Is it mango season now?"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_109",
+        "timestamp": "2024-07-30T11:30:00Z",
+        "query": "What did I mention about my tai chi sessions lately?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_275",
+                    "timestamp": "2024-07-25T07:25:00Z",
+                    "content": "Today my legs are quite sore. I think  I will skip my tai chi session today and rest more."
+                },
+                {
+                    "document_id": "STM_294",
+                    "timestamp": "2024-07-29T08:30:00Z",
+                    "content": "It was raining so heaviy today, I could not do my tai chi in the park."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_110",
+        "timestamp": "2024-07-23T11:30:00Z",
+        "query": "Did I talk about any problems with my glasses?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_265",
+                    "timestamp": "2024-07-22T17:00:00Z",
+                    "content": "I misplaced my glasses again, where did I put them?"
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_111",
+        "timestamp": "2024-07-27T11:30:00Z",
+        "query": "What do I remember about the food at the hawker centre?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_274",
+                    "timestamp": "2024-07-24T17:15:00Z",
+                    "content": "There was a long queue at the hawker centre today, I had to wait for 30 minutes to get my food."
+                },
+                {
+                    "document_id": "STM_282",
+                    "timestamp": "2024-07-26T13:30:00Z",
+                    "content": "The laksa from the new hawker is stall is very nice, I will buy it for my daughter next time."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_112",
+        "timestamp": "2024-07-31T11:30:00Z",
+        "query": "What did I say about my neighbor\u2019s noisy behavior?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_299",
+                    "timestamp": "2024-07-30T10:20:00Z",
+                    "content": "The neighboue downstairs is always making so much noise, I cannot stand it anymore."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_113",
+        "timestamp": "2024-07-30T11:30:00Z",
+        "query": "Do you recall anything about my plans to call my grandchildren?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_269",
+                    "timestamp": "2024-07-23T16:30:00Z",
+                    "content": "Remind me to video call my grandchildren tomorrow, haven't spoken to them in a while."
+                },
+                {
+                    "document_id": "STM_288",
+                    "timestamp": "2024-07-27T18:00:00Z",
+                    "content": "I want to meet my grandchildren soon, I miss them."
+                },
+                {
+                    "document_id": "STM_297",
+                    "timestamp": "2024-07-29T17:00:00Z",
+                    "content": "I want to tell my grandchildren about my secret recipe for making curry, they will love it."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_114",
+        "timestamp": "2024-07-24T11:30:00Z",
+        "query": "What did I say about the turmeric tea?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_264",
+                    "timestamp": "2024-07-22T14:15:00Z",
+                    "content": "The shopkeeper said turmeric is very good for health, I should drink turmeric tea more often."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_115",
+        "timestamp": "2024-07-20T11:30:00Z",
+        "query": "Did I mention anything about the health talk at the community centre?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_251",
+                    "timestamp": "2024-07-19T16:00:00Z",
+                    "content": "I heard that there was a health talk at the community centre soon, but I forgot to ask the details."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_116",
+        "timestamp": "2024-08-01T11:30:00Z",
+        "query": "What did I say about the condition of vegetables I bought recently?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_259",
+                    "timestamp": "2024-07-21T12:45:00Z",
+                    "content": "The cucumber i bought today from the market was soft and mushy. I will complain to him next time."
+                },
+                {
+                    "document_id": "STM_300",
+                    "timestamp": "2024-07-30T13:45:00Z",
+                    "content": "I asked the grocer about why his vegetable did not look fresh today. He got angry and said I was being rude."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_117",
+        "timestamp": "2024-07-24T11:30:00Z",
+        "query": "Do you remember what I said about the pickleball players in the morning?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_266",
+                    "timestamp": "2024-07-23T07:10:00Z",
+                    "content": "The guys playing pickleball are too loud in the morning, I couldn't sleep well."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_118",
+        "timestamp": "2024-07-25T11:30:00Z",
+        "query": "What did I mention about the long queue at the hawker centre?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_274",
+                    "timestamp": "2024-07-24T17:15:00Z",
+                    "content": "There was a long queue at the hawker centre today, I had to wait for 30 minutes to get my food."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_119",
+        "timestamp": "2024-07-31T11:30:00Z",
+        "query": "Did I talk about anything related to my balcony garden and flowers?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_298",
+                    "timestamp": "2024-07-30T07:10:00Z",
+                    "content": "I want to buy some flowers for my balcony garden."
+                }
+            ]
+        }
+    },
+    {
+        "id": "STM_TC_120",
+        "timestamp": "2024-07-27T11:30:00Z",
+        "query": "What did I say about my experience with the newly renovated polyclinic?",
+        "expected_retrieval": {
+            "stm": [
+                {
+                    "document_id": "STM_276",
+                    "timestamp": "2024-07-25T10:10:00Z",
+                    "content": "The newlly renovated polyclinic is very nice, I feel comfortable going there for my checkups."
+                }
+            ]
+        }
+    }
+]

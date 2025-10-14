@@ -1,0 +1,306 @@
+{
+    "LTM_data": [
+        {
+            "document_id": "LTM_001",
+            "category": "family",
+            "key": "Husband",
+            "value": "Rajinder Singh"
+        },
+        {
+            "document_id": "LTM_002",
+            "category": "family",
+            "key": "Eldest son",
+            "value": "Harjit Singh"
+        },
+        {
+            "document_id": "LTM_003",
+            "category": "family",
+            "key": "Youngest daughter",
+            "value": "Simran Kaur"
+        },
+        {
+            "document_id": "LTM_004",
+            "category": "family",
+            "key": "Grandchildren",
+            "value": "Two grandchildren, loves to babysit on weekends"
+        },
+        {
+            "document_id": "LTM_005",
+            "category": "lifestyle",
+            "key": "Morning routine",
+            "value": "Enjoys morning walks at Dhoby Ghaut Park with neighbours at 7 am"
+        },
+        {
+            "document_id": "LTM_006",
+            "category": "lifestyle",
+            "key": "Hobby",
+            "value": "Practices Tai Chi at the community centre every Tuesday and Thursday"
+        },
+        {
+            "document_id": "LTM_007",
+            "category": "lifestyle",
+            "key": "Cooking preference",
+            "value": "Prefers cooking traditional Sikh vegetarian dishes"
+        },
+        {
+            "document_id": "LTM_008",
+            "category": "personal",
+            "key": "Close friend",
+            "value": "Mrs. Tan from Block 12, often meets for tea"
+        },
+        {
+            "document_id": "LTM_009",
+            "category": "lifestyle",
+            "key": "Shopping routine",
+            "value": "Goes to Tekka Centre wet market every Saturday morning to buy fresh vegetables and spices"
+        },
+        {
+            "document_id": "LTM_010",
+            "category": "lifestyle",
+            "key": "Public transport usage",
+            "value": "Uses MRT daily to visit the market and friends, prefers to travel off-peak hours"
+        },
+        {
+            "document_id": "LTM_011",
+            "category": "lifestyle",
+            "key": "Social activity",
+            "value": "Attends senior activity centre\u2019s weekly knitting club"
+        },
+        {
+            "document_id": "LTM_012",
+            "category": "personal",
+            "key": "Neighbour",
+            "value": "Mr. Lim, often chats about news and local happenings"
+        },
+        {
+            "document_id": "LTM_013",
+            "category": "lifestyle",
+            "key": "Dietary preference",
+            "value": "Avoids oily and spicy food due to mild acid reflux"
+        },
+        {
+            "document_id": "LTM_014",
+            "category": "lifestyle",
+            "key": "Favourite hawker food",
+            "value": "Loves to eat prata and teh tarik at nearby hawker centre"
+        },
+        {
+            "document_id": "LTM_015",
+            "category": "lifestyle",
+            "key": "Community involvement",
+            "value": "Volunteers at the local temple festival during major Sikh celebrations"
+        },
+        {
+            "document_id": "LTM_016",
+            "category": "personal",
+            "key": "Relationship with children",
+            "value": "Keeps in touch daily via WhatsApp messages and calls"
+        },
+        {
+            "document_id": "LTM_017",
+            "category": "lifestyle",
+            "key": "Evening relaxation",
+            "value": "Likes to listen to classical Indian music before bedtime"
+        },
+        {
+            "document_id": "LTM_018",
+            "category": "personal",
+            "key": "Interaction at market",
+            "value": "Often asks hawkers about the freshest fish and shares cooking tips"
+        },
+        {
+            "document_id": "LTM_019",
+            "category": "lifestyle",
+            "key": "Exercise",
+            "value": "Regularly practices gentle stretching exercises recommended by physiotherapist"
+        },
+        {
+            "document_id": "LTM_020",
+            "category": "lifestyle",
+            "key": "Mindfulness practice",
+            "value": "Practices daily meditation for 15 minutes to reduce stress"
+        },
+        {
+            "document_id": "LTM_021",
+            "category": "family",
+            "key": "Family gatherings",
+            "value": "Hosts family dinners during festive occasions like Diwali and Vaisakhi"
+        },
+        {
+            "document_id": "LTM_022",
+            "category": "lifestyle",
+            "key": "Favourite park",
+            "value": "Likes to visit Fort Canning Park for nature walks and bird watching"
+        },
+        {
+            "document_id": "LTM_023",
+            "category": "lifestyle",
+            "key": "Weekend routine",
+            "value": "Visits the library to borrow books on Sikh history and culture"
+        },
+        {
+            "document_id": "LTM_024",
+            "category": "personal",
+            "key": "Social circle",
+            "value": "Regularly meets other Sikh community members for religious discussions"
+        },
+        {
+            "document_id": "LTM_025",
+            "category": "lifestyle",
+            "key": "Shopping interaction",
+            "value": "Once bargained with a vegetable seller to get a better price during Ramadan"
+        },
+        {
+            "document_id": "LTM_026",
+            "category": "personal",
+            "key": "Neighbourly care",
+            "value": "Helps elderly neighbour collect groceries once a week"
+        },
+        {
+            "document_id": "LTM_027",
+            "category": "lifestyle",
+            "key": "Public transport tip",
+            "value": "Always taps her EZ-Link card carefully to avoid double charges"
+        },
+        {
+            "document_id": "LTM_028",
+            "category": "lifestyle",
+            "key": "Favourite recipe",
+            "value": "Loves to cook sarson da saag with makki di roti for family"
+        },
+        {
+            "document_id": "LTM_029",
+            "category": "lifestyle",
+            "key": "Community events",
+            "value": "Participates in annual Hari Raya and Deepavali bazaars nearby"
+        },
+        {
+            "document_id": "LTM_030",
+            "category": "lifestyle",
+            "key": "Preferred market",
+            "value": "Prefers wet markets over supermarkets for fresh produce"
+        }
+    ],
+    "HCM_data": [
+        {
+            "document_id": "HCM_001",
+            "type": "condition",
+            "date": "2019-03-15",
+            "description": "Diagnosed with hypertension, currently controlled with medication."
+        },
+        {
+            "document_id": "HCM_002",
+            "type": "medication",
+            "date": "None",
+            "description": "Takes Amlodipine 5mg once daily for blood pressure management."
+        },
+        {
+            "document_id": "HCM_003",
+            "type": "condition",
+            "date": "2021-07-20",
+            "description": "Mild osteoarthritis diagnosed in knees, advised light exercise."
+        },
+        {
+            "document_id": "HCM_004",
+            "type": "procedure",
+            "date": "2022-11-05",
+            "description": "Underwent cataract surgery on right eye, successful recovery."
+        },
+        {
+            "document_id": "HCM_005",
+            "type": "medication",
+            "date": "None",
+            "description": "Prescribed Glucosamine supplements for joint health."
+        },
+        {
+            "document_id": "HCM_006",
+            "type": "condition",
+            "date": "2023-01-12",
+            "description": "Diagnosed with type 2 diabetes, currently managed with diet and medication."
+        },
+        {
+            "document_id": "HCM_007",
+            "type": "medication",
+            "date": "None",
+            "description": "Metformin 500mg twice daily for blood sugar control."
+        },
+        {
+            "document_id": "HCM_008",
+            "type": "appointment",
+            "date": "2024-06-10",
+            "description": "Scheduled follow-up with endocrinologist for diabetes management."
+        },
+        {
+            "document_id": "HCM_009",
+            "type": "condition",
+            "date": "2023-04-15",
+            "description": "Mild acid reflux diagnosed, advised dietary adjustments."
+        },
+        {
+            "document_id": "HCM_010",
+            "type": "medication",
+            "date": "None",
+            "description": "Takes Omeprazole 20mg before breakfast for acid reflux."
+        },
+        {
+            "document_id": "HCM_011",
+            "type": "procedure",
+            "date": "2022-05-18",
+            "description": "Received flu vaccination annually, last vaccination on 2023-10-01."
+        },
+        {
+            "document_id": "HCM_012",
+            "type": "appointment",
+            "date": "2024-05-22",
+            "description": "Routine blood test for cholesterol and blood sugar levels."
+        },
+        {
+            "document_id": "HCM_013",
+            "type": "condition",
+            "date": "2018-09-30",
+            "description": "Mild hearing loss, uses hearing aids occasionally."
+        },
+        {
+            "document_id": "HCM_014",
+            "type": "medication",
+            "date": "None",
+            "description": "Vitamin D supplements daily for bone health."
+        },
+        {
+            "document_id": "HCM_015",
+            "type": "appointment",
+            "date": "2024-04-10",
+            "description": "Physiotherapy sessions biweekly for knee osteoarthritis."
+        },
+        {
+            "document_id": "HCM_016",
+            "type": "condition",
+            "date": "2023-06-30",
+            "description": "Diagnosed with mild anemia, advised iron-rich diet."
+        },
+        {
+            "document_id": "HCM_017",
+            "type": "medication",
+            "date": "None",
+            "description": "Iron tablets prescribed to be taken once daily."
+        },
+        {
+            "document_id": "HCM_018",
+            "type": "procedure",
+            "date": "2023-12-01",
+            "description": "Dental cleaning and checkup every 6 months."
+        },
+        {
+            "document_id": "HCM_019",
+            "type": "condition",
+            "date": "2024-02-14",
+            "description": "Seasonal allergies with mild symptoms, uses antihistamines as needed."
+        },
+        {
+            "document_id": "HCM_020",
+            "type": "medication",
+            "date": "None",
+            "description": "Occasional use of Loratadine 10mg for allergy relief."
+        }
+    ]
+}
