@@ -58,7 +58,7 @@ const ElderlyList: React.FC = () => {
     return (
         <div className="dashboard">
             <div className="header">
-                <h1>Elderly Profiles</h1>
+                <h1>Care Recipient Profiles</h1>
                 <div className="user-info">
                     <span>Welcome, {user?.username}</span>
                     <button onClick={logout} className="logout-button">
@@ -69,13 +69,13 @@ const ElderlyList: React.FC = () => {
 
             <div className="nav-links">
                 {/* <Link to="/dashboard" className="nav-link">Dashboard</Link> */}
-                <Link to="/elderly" className="nav-link">Elderly Profiles</Link>
+                <Link to="/elderly" className="nav-link">Care Recipient Profiles</Link>
             </div>
 
             {error && <div className="error">{error}</div>}
 
             <div className="card">
-                <h3>All Elderly Profiles ({elderly.length})</h3>
+                <h3>All Care Recipient Profiles ({elderly.length})</h3>
                 <p>Click on any profile to view detailed information and preferences.</p>
             </div>
 
@@ -113,8 +113,8 @@ const ElderlyList: React.FC = () => {
 
             {elderly.length === 0 && !loading && (
                 <div className="card">
-                    <h3>No Elderly Profiles Found</h3>
-                    <p>There are currently no elderly profiles in the system.</p>
+                    <h3>No Care Recipient Profiles Found</h3>
+                    <p>There are currently no care recipient profiles in the system.</p>
                 </div>
             )}
         </div>

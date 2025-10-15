@@ -77,7 +77,7 @@ const ElderlyDetail: React.FC = () => {
         <div className="elderly-detail">
             <div className="content-wrapper">
                 <div className="header">
-                    <h1>Elderly Profiles</h1>
+                    <h1>Care Recipient Profiles</h1>
                     <div className="user-info">
                         <span>Welcome, {user?.username}</span>
                         <button onClick={logout} className="logout-button">

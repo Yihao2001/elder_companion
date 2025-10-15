@@ -136,7 +136,7 @@ const ElderlyEdit: React.FC = () => {
         <div className="elderly-edit">
             <div className="edit-container">
                 <div className="header">
-                    <h1>Edit Elderly Records</h1>
+                    <h1>Edit Care Recipient Records</h1>
                     <div className="user-info">
                         <span>Welcome, {user?.username}</span>
                         <button onClick={logout} className="logout-button">
