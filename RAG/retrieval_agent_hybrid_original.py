@@ -2,7 +2,6 @@ import os
 import logging
 from typing import List, Dict, Optional, TypedDict, Annotated, Any
 from datetime import datetime
-import json
 
 # Core dependencies
 from dotenv import load_dotenv
@@ -31,13 +30,7 @@ class AgentState(TypedDict):
     messages: Annotated[List[AnyMessage], add_messages]
     has_context: bool
     final_answer: str
-    topic: str
-    retrieved_context: List[Dict[str, Any]]
     retrieval_agent_message: AnyMessage
-    retrieved_ltm: List[Dict[str, Any]]
-    retrieved_hcm: List[Dict[str, Any]]
-    retrieved_stm: List[Dict[str, Any]]
-    mem_used: List[str]
 
 
 class HybridRetrievalAgent:
@@ -151,6 +144,7 @@ class HybridRetrievalAgent:
 
     def _setup_tools(self):
         """Setup retrieval tools"""
+
         @tool
         def retrieve_long_term(query: str) -> str:
             """Retrieve long-term profile facts (stable traits, preferences, demographics)"""
@@ -158,18 +152,10 @@ class HybridRetrievalAgent:
             formatted = []
             for r in results:
                 formatted.append(
-                    {"Category": r['category'], "Key": r['key'], "Value": r['value']}
+                    f"Category: {r['category']}, Key: {r['key']}, Value: {r['value']}"
                 )
-            return json.dumps(formatted) if formatted else "No relevant long-term data found"
-            # print(results)
-            # formatted = []
-            # for r in results:
-            #     formatted.append(
-            #         f"Category: {r['category']}, Key: {r['key']}, Value: {r['value']}"
-            #     )
-            # print("long term retrieval was made!")
-            # return "\n".join(formatted) if formatted else "No relevant long-term information found"
-
+            print("long term retrieval was made!")
+            return "\n".join(formatted) if formatted else "No relevant long-term information found"
 
         @tool
         def retrieve_health(query: str) -> str:
@@ -178,18 +164,10 @@ class HybridRetrievalAgent:
             formatted = []
             for r in results:
                 formatted.append(
-                    {"Type": r['record_type'], "Description": r['description'], "Date": r['diagnosis_date']}
+                    f"Type: {r['record_type']}, Description: {r['description']}, Date: {r['diagnosis_date']}"
                 )
-            return json.dumps(formatted) if formatted else "No relevant health data found"
-            # formatted = []
-            # for r in results:
-            #     formatted.append(
-            #         f"Type: {r['record_type']}, Description: {r['description']}, Date: {r['diagnosis_date']}"
-            #     )
-            # print("Health retrieval was made!")
-            # return "\n".join(formatted) if formatted else "No relevant health information found"
-            #return json.dumps(results)
-
+            print("Health retrieval was made!")
+            return "\n".join(formatted) if formatted else "No relevant health information found"
 
         @tool
         def retrieve_short_term(query: str) -> str:
@@ -198,17 +176,10 @@ class HybridRetrievalAgent:
             formatted = []
             for r in results:
                 formatted.append(
-                    {"Content": r['content'], "Created": r['created_at'].strftime("%Y-%m-%d %H:%M:%S") if isinstance(r['created_at'], datetime) else r['created_at']}
+                    f"Content: {r['content']}, Created: {r['created_at']}"
                 )
-            return json.dumps(formatted) if formatted else "No relevant short-term data found"
-            # formatted = []
-            # for r in results:
-            #     formatted.append(
-            #         f"Content: {r['content']}, Created: {r['created_at']}"
-            #     )
-            # print("short term retrieval was made!")
-            # return "\n".join(formatted) if formatted else "No relevant short-term information found"
-            #return json.dumps(results)
+            print("short term retrieval was made!")
+            return "\n".join(formatted) if formatted else "No relevant short-term information found"
 
         self.retrieval_tools = [retrieve_long_term, retrieve_health, retrieve_short_term]
 
@@ -243,37 +214,13 @@ class HybridRetrievalAgent:
 
             # Bucket the raw tool returns
             personal, health, conv = [], [], []
-            retrieved_ltm, retrieved_hcm, retrieved_stm = [], [], []
-            mem_used = []
-
             for tm in tool_msgs:
-                # The content is a JSON string, so we parse it.
-                try:
-                    content_data = json.loads(tm.content)
-
-                except json.JSONDecodeError:
-                    # Handle cases where content is not a valid JSON string
-                    # For example, if a tool returns a simple string.
-                    content_data = []
-
-                if tm.name == "retrieve_long_term":
-                    mem_used.append("long-term-memory")
-                    retrieved_ltm.extend(content_data)
-                    print(retrieved_ltm)
-                    for r in content_data:
-                        personal.append(f"Category: {r.get('category')}, Key: {r.get('key')}, Value: {r.get('value')}")
-                elif tm.name == "retrieve_health":
-                    mem_used.append("health-data")
-                    retrieved_hcm.extend(content_data)
-                    print(retrieved_hcm)
-                    for r in content_data:
-                        health.append(f"Type: {r.get('record_type')}, Description: {r.get('description')}, Date: {r.get('diagnosis_date')}")
-                elif tm.name == "retrieve_short_term":
-                    mem_used.append("short-term-memory")
-                    retrieved_stm.extend(content_data)
-                    print(retrieved_stm)
-                    for r in content_data:
-                        conv.append(f"Content: {r.get('content')}, Created: {r.get('created_at')}")
+                if "long_term" in tm.name:
+                    personal.append(tm.content)
+                elif "health" in tm.name:
+                    health.append(tm.content)
+                elif "short_term" in tm.name:
+                    conv.append(tm.content)
 
             # Helper: join or fallback
             def sect(data):
@@ -284,8 +231,8 @@ class HybridRetrievalAgent:
             You are Susan, a Non-Ageist Elder Companion Friend — you are warm, respectful, and emotionally intelligent presence designed to provide gentle support and joyful connection to older adults. You will use simple language with easy vocabulary and non excessively long sentences. Be patience, humorous, curiosity, and deep respect. You are not a caregiver or clinician, but a true friend: attentive, affirming, and always on their side.
 
             ## Guide
-            - Speak with gentle clarity, using natural, conversational language. Avoid infantilizing phrases or over-explaining. Assume competence and wisdom. Use humor when appropriate, and always ask before offering help.
-            - You do not give medical advice or make decisions for the user.
+            - Speak with gentle clarity, using natural, conversational language. Avoid infantilizing phrases or over-explaining. Assume competence and wisdom. Use humor when appropriate, and always ask before offering help. 
+            - You do not give medical advice or make decisions for the user. 
             - You listen, encourage, and empower — never patronize or presume.
 
             ## User Information and Profile Context:
@@ -298,13 +245,7 @@ class HybridRetrievalAgent:
             {sect(conv)}
             """
 
-            return {
-                "mem_used" : mem_used,
-                "final_answer": template,
-                "retrieved_ltm": retrieved_ltm,
-                "retrieved_hcm": retrieved_hcm,
-                "retrieved_stm": retrieved_stm
-            }
+            return {"final_answer": template}
 
         def route_retrieval(state: AgentState):
             """Conditional routing based on tool calls"""
@@ -345,7 +286,7 @@ class HybridRetrievalAgent:
         self.graph = workflow.compile()
 
     def retrieve_hybrid_ltm(self, query: str, top_k_retrieval: int = 5, sim_threshold: float = 0.3,
-                        fuzzy_distance: int = 2, alpha_retrieval: float = 0.5):
+                            fuzzy_distance: int = 2, alpha_retrieval: float = 0.5):
         try:
             emb = self.embedder.embed(query)
 
@@ -389,18 +330,29 @@ class HybridRetrievalAgent:
             # query = query.replace("'", "''")
 
             sql_bm25 = text("""
-                SELECT id, category, key, value, last_updated, embedding, paradedb.score(id) AS bm25_score
-                FROM long_term_memory
-                WHERE elderly_id = :elderly_id
-                AND (
-                    category_search @@@ :query OR key @@@ :query OR value @@@ :query
-                    OR id @@@ paradedb.match('category_search', :query, distance => :distance)
-                    OR id @@@ paradedb.match('key', :query, distance => :distance)
-                    OR id @@@ paradedb.match('value', :query, distance => :distance)
-                )
-                ORDER BY bm25_score DESC
-                LIMIT :top_k;
-            """)
+                            SELECT id, category, key, value, last_updated, embedding, paradedb.score(id) AS bm25_score
+                            FROM long_term_memory
+                            WHERE elderly_id = :elderly_id
+                              AND (
+                                category_search @@@ :query
+                               OR key @@@ :query
+                               OR value @@@ :query
+                               OR id @@@ paradedb.match('category_search'
+                                , :query
+                                , distance =
+                                > :distance)
+                               OR id @@@ paradedb.match('key'
+                                , :query
+                                , distance =
+                                > :distance)
+                               OR id @@@ paradedb.match('value'
+                                , :query
+                                , distance =
+                                > :distance)
+                                )
+                            ORDER BY bm25_score DESC
+                                LIMIT :top_k;
+                            """)
             params_bm25 = {
                 "elderly_id": self.elderly_id,
                 "query": normalize_for_paradedb(query),
@@ -471,7 +423,8 @@ class HybridRetrievalAgent:
             logging.warning(f"❌ Failed hybrid LTM retrieval: {str(e)}")
             return []
 
-    def retrieve_hybrid_stm(self, query: str, top_k_retrieval: int = 5, sim_threshold: float = 0.3, fuzzy_distance: int = 2, alpha_retrieval: float = 0.5):
+    def retrieve_hybrid_stm(self, query: str, top_k_retrieval: int = 5, sim_threshold: float = 0.3,
+                            fuzzy_distance: int = 2, alpha_retrieval: float = 0.5):
         try:
             emb = self.embedder.embed(query)
 
@@ -514,14 +467,14 @@ class HybridRetrievalAgent:
             # query = query.replace("'", "''")
 
             sql_bm25 = text("""
-                SELECT id, content, created_at, embedding, paradedb.score(id) AS bm25_score
-                FROM short_term_memory
-                WHERE elderly_id = :elderly_id
-                AND (content @@@ :query OR id @@@ paradedb.match('content', :query, distance => :distance))
-                ORDER BY bm25_score DESC
-                LIMIT :top_k;
-            """)
-            params_bm25 = {"elderly_id": self.elderly_id, "query": normalize_for_paradedb(query), "distance": fuzzy_distance, "top_k": top_k_retrieval}
+                            SELECT id, content, created_at, embedding, paradedb.score(id) AS bm25_score
+                            FROM short_term_memory
+                            WHERE elderly_id = :elderly_id
+                              AND (content @@@ :query OR id @@@ paradedb.match('content', :query, distance => :distance))
+                            ORDER BY bm25_score DESC LIMIT :top_k;
+                            """)
+            params_bm25 = {"elderly_id": self.elderly_id, "query": normalize_for_paradedb(query),
+                           "distance": fuzzy_distance, "top_k": top_k_retrieval}
             with self.engine.connect() as conn:
                 rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
 
@@ -557,7 +510,7 @@ class HybridRetrievalAgent:
             return []
 
     def retrieve_hybrid_hcm(self, query: str, top_k_retrieval: int = 5, sim_threshold: float = 0.3,
-                         fuzzy_distance: int = 2, alpha_retrieval: float = 0.5):
+                            fuzzy_distance: int = 2, alpha_retrieval: float = 0.5):
         try:
             emb = self.embedder.embed(query)
 
@@ -601,17 +554,22 @@ class HybridRetrievalAgent:
             # query = query.replace("'", "''")
 
             sql_bm25 = text("""
-                SELECT id, record_type, description, diagnosis_date, last_updated, embedding, paradedb.score(id) AS bm25_score
-                FROM healthcare_records
-                WHERE elderly_id = :elderly_id
-                AND (
-                    record_type_search @@@ :query OR description @@@ :query
-                    OR id @@@ paradedb.match('record_type_search', :query, distance => :distance)
-                    OR id @@@ paradedb.match('description', :query, distance => :distance)
-                )
-                ORDER BY bm25_score DESC
-                LIMIT :top_k;
-            """)
+                            SELECT id,
+                                   record_type,
+                                   description,
+                                   diagnosis_date,
+                                   last_updated,
+                                   embedding,
+                                   paradedb.score(id) AS bm25_score
+                            FROM healthcare_records
+                            WHERE elderly_id = :elderly_id
+                              AND (
+                                record_type_search @@@ :query OR description @@@ :query
+                                OR id @@@ paradedb.match('record_type_search', :query, distance => :distance)
+                                OR id @@@ paradedb.match('description', :query, distance => :distance)
+                                )
+                            ORDER BY bm25_score DESC LIMIT :top_k;
+                            """)
             params_bm25 = {
                 "elderly_id": self.elderly_id,
                 "query": normalize_for_paradedb(query),
@@ -683,17 +641,17 @@ class HybridRetrievalAgent:
             return []
 
     def rerank_with_mmr_and_recency(
-        self,
-        query: str,
-        candidates: List[Dict[str, Any]],
-        cross_encoder: CrossEmbedder,
-        alpha_MMR: float = 0.7,   # MMR balance: relevance vs diversity
-        beta_recency: float = 0.1,    # Small bonus for recency
-        top_k_MMR: int = 5,
+            self,
+            query: str,
+            candidates: List[Dict[str, Any]],
+            cross_encoder: CrossEmbedder,
+            alpha_MMR: float = 0.7,  # MMR balance: relevance vs diversity
+            beta_recency: float = 0.1,  # Small bonus for recency
+            top_k_MMR: int = 5,
     ) -> List[Dict[str, Any]]:
         if not candidates:
             return []
-        
+
         #################################################################
         # --- Extracting relevant metadata about information chunks --- #
         #################################################################
@@ -706,7 +664,8 @@ class HybridRetrievalAgent:
         for r in candidates:
             text = r.get("content") or r.get("value") or r.get("description")
             if not isinstance(text, str) or not text.strip():
-                raise ValueError("Each result must have one of 'content', 'value', or 'description' as non-empty string.")
+                raise ValueError(
+                    "Each result must have one of 'content', 'value', or 'description' as non-empty string.")
             texts.append(text)
 
         # extract embeddings
@@ -723,7 +682,7 @@ class HybridRetrievalAgent:
         #################################################################
         # ---               Computing CE Relevance                    --- #
         #################################################################
-        
+
         # relevance from cross-encoder
         pairs = [[query, text] for text in texts]
         ce_raw_scores = cross_encoder.predict(pairs)
@@ -780,19 +739,19 @@ class HybridRetrievalAgent:
         return ranked_results
 
     def retrieve_rerank(
-        self,
-        query: str,
-        mode: str = "long-term",  # Options: "short-term", "long-term", "healthcare"
-        top_k_retrieval: int = 25,
-        sim_threshold: float = 0.3,
-        fuzzy_distance: int = 2,
-        alpha_retrieval: float = 0.5,
-        cross_encoder: Optional[CrossEmbedder] = None,
-        alpha_MMR: float = 0.75,
-        beta_recency: float = 0.1,
-        top_k_MMR: int = 8
+            self,
+            query: str,
+            mode: str = "long-term",  # Options: "short-term", "long-term", "healthcare"
+            top_k_retrieval: int = 25,
+            sim_threshold: float = 0.3,
+            fuzzy_distance: int = 2,
+            alpha_retrieval: float = 0.5,
+            cross_encoder: Optional[CrossEmbedder] = None,
+            alpha_MMR: float = 0.75,
+            beta_recency: float = 0.1,
+            top_k_MMR: int = 8
     ) -> List[Dict[str, Any]]:
-        
+
         # Initialize default cross-encoder if not provided
         if cross_encoder is None:
             cross_encoder = CrossEmbedder('BAAI/bge-reranker-base')
@@ -874,33 +833,12 @@ class HybridRetrievalAgent:
             # Process through the workflow
             result = self.graph.invoke(initial_state)
 
-            # Extract tool calls and retrieved context
-            tool_calls = []
-            retrieved_context = []
-            if result.get("messages"):
-                for message in result["messages"]:
-                    if isinstance(message, AIMessage) and message.tool_calls:
-                        for tool_call in message.tool_calls:
-                            tool_calls.append({
-                                "tool_name": tool_call['name'],
-                                "tool_args": tool_call['args']
-                            })
-                    if isinstance(message, ToolMessage):
-                        retrieved_context.append({
-                            "content": message.content
-                        })
-
             return {
                 "success": True,
-                "mem_used": result.get("mem_used", []),
                 "final_answer": result.get("final_answer", ""),
                 "user_input": user_input,
                 "messages_count": len(result.get("messages", [])),
-                "has_context": bool(result.get("final_answer")),
-                "tool_calls": tool_calls,
-                "retrieved_ltm": result.get("retrieved_ltm", []),
-                "retrieved_hcm": result.get("retrieved_hcm", []),
-                "retrieved_stm": result.get("retrieved_stm", []),
+                "has_context": bool(result.get("final_answer"))
             }
 
         except Exception as e:
