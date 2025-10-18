@@ -17,3 +17,6 @@ class Config:
 
     # Authorisation token for Flask endpoints
     AUTHORIZATION_TOKEN = os.getenv("AUTHORIZATION_TOKEN")
+
+    # Token to verify that JWT from frontend is issued by backend
+    JWT_SECRET_KEY = os.getenv("JWT_SECRET_KEY")
