@@ -6,3 +6,5 @@ __pycache__/
 *.log
 #pycharm specific
 /.idea
+.env
+.venv
