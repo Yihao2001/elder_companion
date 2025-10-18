@@ -1,0 +1,510 @@
+[
+  {
+    "id": "LTM_1",
+    "conversation": [
+      {
+        "user_query": "Who is your daughter-in-law?",
+        "time": "2025-09-20T10:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "ltm": [
+        {
+        "document_id": "LTM001",
+        "key": "Daughter-in-law",
+        "value": "Meena Singh"
+        }
+      ]
+    }
+  },
+  {
+    "id": "LTM_2",
+    "conversation": [
+      {
+        "user_query": "Who usually joins me for birthday celebrations?",
+        "time": "2025-09-21T09:30:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "ltm": [
+        {
+          "document_id": "LTM005",
+          "key": "family_relationship",
+          "value": "Children and grandchildren usually join birthday celebrations"
+        }
+      ]
+    }
+  },
+  {
+    "id": "HCM_1",
+    "conversation": [
+      {
+        "user_query": "What medications do I take every morning?",
+        "time": "2025-09-22T08:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "hcm": [
+        {
+            "document_id": "HCM_001",
+            "type": "medication",
+            "medication_name": "Metformin",
+            "dosage": "500mg",
+            "frequency": "every morning",
+            "description": "Patient has to take Metformin 500mg every morning to manage blood sugar levels."
+        },
+        {
+            "document_id": "HCM_002",
+            "type": "medication",
+            "medication_name": "Amlodipine",
+            "dosage": "10mg",
+            "frequency": "every morning",
+            "description": "Patient has to take Amlodipine 10mg every morning to manage blood pressure."
+        }
+      ]
+    },
+    "expected_response": "You take Metformin 500mg and Amlodipine 10mg every morning."
+  },
+  {
+    "id": "STM_1",
+    "conversation": [
+      {
+        "user_query": "What should I have for dinner later?",
+        "time": "2025-09-24T18:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "stm": [
+        {
+          "document_id": "STM014",
+          "timestamp": "2025-10-01T18:30:00Z",
+          "content": "I feel like eating fish head curry tonight."
+        }
+      ]
+    }
+  },
+  {
+    "id": "STM_2",
+    "conversation": [
+      {
+        "user_query": "What was I supposed to do in the morning?",
+        "time": "2025-09-29T08:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "stm": [
+        {
+          "document_id": "STM_011",
+          "timestamp": "2025-09-28T20:00:00Z",
+          "content": "I\u2019d like to call my daughter Meena tomorrow morning."
+        }
+      ]
+    }
+  },
+  {
+    "id": "STM_3",
+    "conversation": [
+      {
+        "user_query": "When was the health talk again?",
+        "time": "2025-10-08T08:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "stm": [
+        {
+            "document_id": "STM_052",
+            "timestamp": "2025-10-02T03:56:53Z",
+            "content": "I heard there will be a health talk at the community centre next week."
+        }
+      ]
+    }
+  },
+  {
+    "id": "Temporal_1",
+    "conversation": [
+      {
+        "user_query": "What should I eat now?",
+        "time": "2025-09-27T12:30:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "stm": [
+        {
+          "document_id": "STM_010",
+          "timestamp": "2025-09-27T12:00:00Z",
+          "content": "I want to eat salad for lunch today."
+        },
+        {
+          "document_id": "STM_014",
+          "timestamp": "2025-10-01 18:30:00Z",
+          "content": "I feel like eating fish head curry tonight."
+        },
+        {
+          "document_id": "STM_003",
+          "timestamp": "2025-09-20T12:30:00Z",
+          "content": "I feel like eating chicken rice later."
+        }
+      ]
+    }
+  },
+  {
+    "id": "MultiMem_1",
+    "conversation": [
+      {
+        "user_query": "Should I bring someone for my morning walk tomorrow?",
+        "time": "2025-09-26T20:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "ltm": [
+        {
+          "document_id": "LTM_004",
+          "category": "lifestyle",
+          "key": "routine",
+          "value": "Morning walks with Mr Lim at 7.30am every day"
+        },
+        {
+          "document_id": "LTM_003",
+          "category": "lifestyle",
+          "key": "friend",
+          "value": "Mr Lim"
+        }
+      ]
+    }
+  },
+  {
+    "id": "MultiMem_2",
+    "conversation": [
+      {
+        "user_query": "Can I still play badminton?",
+        "time": "2025-09-28T15:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "ltm": [
+        {
+          "document_id": "LTM_010",
+          "category": "lifestyle",
+          "key": "hobby",
+          "value": "used to play badminton in school days"
+        }
+      ],
+      "hcm": [
+        {
+          "document_id": "HCM_005",
+          "type": "procedure",
+          "procedure_name": "Knee Replacement Surgery",
+          "date": "2023-09-18",
+          "description": "Patient has undergone Knee Replacement Surgery on 2023-09-18."
+        }
+      ]
+    }
+  },
+  {
+    "id": "MultiMem_3",
+    "conversation": [
+      {
+        "user_query": "What\u2019s my usual breakfast?",
+        "time": "2025-09-25T08:30:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "ltm": [
+        {
+          "document_id": "LTM_008",
+          "category": "lifestyle",
+          "key": "routine",
+          "value": "soft boiled eggs and coffee everyday for breakfast"
+        }
+      ]
+    }
+  },
+  {
+    "id": "MultiMem_4",
+    "conversation": [
+      {
+        "user_query": "Can I drink coffee with my medicines?",
+        "time": "2025-09-27T08:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "ltm": [
+        {
+          "document_id": "LTM_008",
+          "category": "lifestyle",
+          "key": "routine",
+          "value": "soft boiled eggs and coffee everyday for breakfast"
+        }
+      ],
+      "hcm": [
+        {
+          "document_id": "HCM001",
+          "medication_name": "Metformin",
+          "dosage": "500mg"
+        },
+        {
+          "document_id": "HCM002",
+          "medication_name": "Amlodipine",
+          "dosage": "10mg"
+        }
+      ]
+    },
+    "expected_response": "You usually have coffee with breakfast, but since you\u2019re on Metformin and Amlodipine, you should confirm with your doctor if coffee is safe."
+  },
+  {
+    "id": "LTM_3",
+    "conversation": [
+      {
+        "user_query": "Who is my grandson?",
+        "time": "2025-09-25T09:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "ltm": [
+        {
+          "document_id": "LTM_011",
+          "category": "family",
+          "key": "grandson",
+          "value": "Aarav Singh"
+        }
+      ]
+    }
+  },
+  {
+    "id": "STM_3",
+    "conversation": [
+      {
+        "user_query": "Who did I meet yesterday at the bakery?",
+        "time": "2025-09-22T09:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "stm": [
+        {
+          "document_id": "STM_012",
+          "timestamp": "2025-09-21T00:23:56Z",
+          "content": "I met Mrs Tan while buying bread at the bakery; she looked cheerful."
+        }
+      ]
+    }
+  },
+  {
+    "id": "HCM_2",
+    "conversation": [
+      {
+        "user_query": "What health conditions do I currently have?",
+        "time": "2025-09-23T10:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "hcm": [
+        {
+            "document_id": "HCM_003",
+            "type": "condition",
+            "condition_name": "Type 2 Diabetes",
+            "date": "2024-05-10",
+            "status": "stable",
+            "description": "Patient was diagnosed with Type 2 Diabetes on 2024-05-10 and is currently stable."
+        },
+        {
+            "document_id": "HCM_004",
+            "type": "condition",
+            "condition_name": "Hypertension",
+            "status": "active",
+            "description": "Patient has an active condition of Hypertension."
+        }
+      ]
+    }
+  },
+  {
+    "id": "MultiMem_5",
+    "conversation": [
+      {
+        "user_query": "Who do I usually meet for my morning walks?",
+        "time": "2025-09-26T07:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "ltm": [
+        {
+          "document_id": "LTM_003",
+          "category": "lifestyle",
+          "key": "friend",
+          "value": "Mr Lim"
+        },
+        {
+          "document_id": "LTM_004",
+          "category": "lifestyle",
+          "key": "routine",
+          "value": "Morning walks with Mr Lim at 7.30am every day"
+        }
+      ],
+      "stm": [
+        {
+          "document_id": "STM_014",
+          "timestamp": "2025-09-21T18:00:00Z",
+          "content": "I\u00e2\u20ac\u2122m meeting Mr Lim at the park tomorrow morning."
+        }
+      ]
+    }
+  },
+  {
+    "id": "MultiMem_6",
+    "conversation": [
+      {
+        "user_query": "Should I attend the health talk next week?",
+        "time": "2025-10-02T10:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "stm": [
+        {
+          "document_id": "STM_052",
+          "timestamp": "2025-10-02T03:56:53Z",
+          "content": "I heard there will be a health talk at the community centre next week."
+        }
+      ],
+      "hcm": [
+        {
+          "document_id": "HCM_003",
+          "type": "condition",
+          "condition_name": "Type 2 Diabetes",
+          "date": "2024-05-10",
+          "status": "stable",
+          "description": "Patient was diagnosed with Type 2 Diabetes on 2024-05-10 and is currently stable."
+        },
+        {
+          "document_id": "HCM_004",
+          "type": "condition",
+          "condition_name": "Hypertension",
+          "status": "active",
+          "description": "Patient has an active condition of Hypertension."
+        }
+      ]
+    }
+  },
+  {
+    "id": "Temporal_2",
+    "conversation": [
+      {
+        "user_query": "What did I plan to buy tomorrow morning?",
+        "time": "2025-09-28T20:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "stm": [
+        {
+          "document_id": "STM_036",
+          "timestamp": "2025-09-28T09:14:14Z",
+          "content": "I need to buy milk and eggs tomorrow morning."
+        }
+      ]
+    }
+  },
+  {
+    "id": "CrossMem_1",
+    "conversation": [
+      {
+        "user_query": "What hobbies do I enjoy that keep me healthy?",
+        "time": "2025-09-28T17:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "ltm": [
+        {
+          "document_id": "LTM_007",
+          "category": "lifestyle",
+          "key": "hobby",
+          "value": "gardening"
+        },
+        {
+          "document_id": "LTM_013",
+          "category": "lifestyle",
+          "key": "hobby",
+          "value": "painting"
+        }
+      ],
+      "hcm": [
+        {
+          "document_id": "HCM_004",
+          "type": "condition",
+          "condition_name": "Hypertension",
+          "status": "active",
+          "description": "Patient has an active condition of Hypertension."
+        }
+      ]
+    }
+  },
+  {
+    "id": "CrossMem_2",
+    "conversation": [
+      {
+        "user_query": "What did I say about my grandson\u2019s school project?",
+        "time": "2025-09-28T20:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "ltm": [
+        {
+          "document_id": "LTM_011",
+          "category": "family",
+          "key": "grandson",
+          "value": "Aarav Singh"
+        }
+      ],
+      "stm": [
+        {
+          "document_id": "STM_031",
+          "timestamp": "2025-09-26T18:39:42Z",
+          "content": "I spoke to my grandson on the phone; he told me about his new school project."
+        }
+      ]
+    }
+  },
+  {
+    "id": "MultiMem_7",
+    "conversation": [
+      {
+        "user_query": "Do I still enjoy gardening despite my knee surgery?",
+        "time": "2025-09-30T09:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "ltm": [
+        {
+          "document_id": "LTM_007",
+          "category": "lifestyle",
+          "key": "hobby",
+          "value": "gardening"
+        }
+      ],
+      "hcm": [
+        {
+          "document_id": "HCM_005",
+          "type": "procedure",
+          "procedure_name": "Knee Replacement Surgery",
+          "date": "2023-09-18",
+          "description": "Patient has undergone Knee Replacement Surgery on 2023-09-18."
+        }
+      ]
+    }
+  },
+  {
+    "id": "STM_4",
+    "conversation": [
+      {
+        "user_query": "What did I enjoy listening to yesterday evening?",
+        "time": "2025-10-01T09:00:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "stm": [
+        {
+          "document_id": "STM_044",
+          "timestamp": "2025-09-30T16:41:03Z",
+          "content": "I enjoyed listening to some old Hindi songs this evening."
+        }
+      ]
+    }
+  }
+]

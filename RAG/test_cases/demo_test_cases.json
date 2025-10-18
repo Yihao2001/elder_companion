@@ -1,0 +1,31 @@
+[
+  {
+    "id": "Temporal_1",
+    "conversation": [
+      {
+        "user_query": "What should I eat now?",
+        "time": "2025-09-27T12:30:00Z"
+      }
+    ],
+    "expected_retrieval": {
+      "stm": [
+        {
+          "document_id": "STM_010",
+          "timestamp": "2025-09-27T12:00:00Z",
+          "content": "I want to eat salad for lunch today."
+        },
+        {
+          "document_id": "STM_014",
+          "timestamp": "2025-10-01 18:30:00Z",
+          "content": "I feel like eating fish head curry tonight."
+        },
+        {
+          "document_id": "STM_003",
+          "timestamp": "2025-09-20T12:30:00Z",
+          "content": "I feel like eating chicken rice later."
+        }
+      ]
+    }
+  },
+
+]
