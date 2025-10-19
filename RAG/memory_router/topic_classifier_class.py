@@ -21,13 +21,13 @@ class TopicClassifier:
     def __init__(
         self,
         ova_models_paths: dict = {
-            'healthcare': "./model_weights/log_reg_ova_healthcare.pkl",
-            'long-term': "./model_weights/log_reg_ova_long-term.pkl",
-            'short-term': "./model_weights/log_reg_ova_short-term.pkl"
+            'healthcare': "RAG/memory_router/model_weights/log_reg_ova_healthcare.pkl",
+            'long-term': "RAG/memory_router/model_weights/log_reg_ova_long-term.pkl",
+            'short-term': "RAG/memory_router/model_weights/log_reg_ova_short-term.pkl"
         },
-        tfidf_path: str = "./model_weights/topic_tfidf_vectorizer.pkl",
-        sbert_name_path: str = "./model_weights/topic_sbert_model_name.pkl",
-        keywords_path: str = "./model_weights/topic_category_keywords.pkl"
+        tfidf_path: str = "RAG/memory_router/model_weights/topic_tfidf_vectorizer.pkl",
+        sbert_name_path: str = "RAG/memory_router/model_weights/topic_sbert_model_name.pkl",
+        keywords_path: str = "RAG/memory_router/model_weights/topic_category_keywords.pkl"
     ):
         # Load OvA models
         self.models_ova = {}

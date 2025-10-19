@@ -1,8 +1,8 @@
 from langgraph.graph import StateGraph, START, END
 from pydantic import BaseModel
 from typing import TypedDict, Literal, Optional, List
-from qa_classifier_class import QAClassifier
-from topic_classifier_class import TopicClassifier
+from RAG.memory_router.qa_classifier_class import QAClassifier
+from RAG.memory_router.topic_classifier_class import TopicClassifier
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain.schema import HumanMessage
 import os, re

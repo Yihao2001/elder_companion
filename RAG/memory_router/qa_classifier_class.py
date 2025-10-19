@@ -19,9 +19,9 @@ class QAClassifier:
 
     def __init__(
         self,
-        model_path: str = "./model_weights/qa_stacked_hybrid_model.pkl",
-        tfidf_path: str = "./model_weights/qa_tfidf_vectorizer.pkl",
-        sbert_name_path: str = "./model_weights/qa_sbert_model_name.pkl",
+        model_path: str = "RAG/memory_router/model_weights/qa_stacked_hybrid_model.pkl",
+        tfidf_path: str = "RAG/memory_router/model_weights/qa_tfidf_vectorizer.pkl",
+        sbert_name_path: str = "RAG/memory_router/model_weights/qa_sbert_model_name.pkl",
     ):
         # Load trained components
         with open(model_path, "rb") as f:
