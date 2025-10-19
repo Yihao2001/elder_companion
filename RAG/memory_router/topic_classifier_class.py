@@ -9,41 +9,46 @@ class ClassificationState(TypedDict):
     text: str
     flow_type: Literal["online", "offline"]
     qa: Optional[str]
-    topic: Optional[str]
+    topic: Optional[List[str]]  # now multi-label
 
 
 class TopicClassifier:
     """
-    A class-based wrapper for the stacked QA classifier using TF-IDF, SBERT, and simple NLP features.
+    Multi-label topic classifier using TF-IDF, SBERT, and category word counts.
     Compatible with LangChain's Runnable interface.
     """
 
     def __init__(
         self,
-        model_path: str = "./model_weights/topic_log_reg_hybrid_model.pkl",
+        ova_models_paths: dict = {
+            'healthcare': "./model_weights/log_reg_ova_healthcare.pkl",
+            'long-term': "./model_weights/log_reg_ova_long-term.pkl",
+            'short-term': "./model_weights/log_reg_ova_short-term.pkl"
+        },
         tfidf_path: str = "./model_weights/topic_tfidf_vectorizer.pkl",
         sbert_name_path: str = "./model_weights/topic_sbert_model_name.pkl",
-        le_path: str = "./model_weights/topic_label_encoder.pkl",
         keywords_path: str = "./model_weights/topic_category_keywords.pkl"
     ):
-        # Load trained components
-        with open(model_path, "rb") as f:
-            self.log_reg_model_topic = pickle.load(f)
+        # Load OvA models
+        self.models_ova = {}
+        for label, path in ova_models_paths.items():
+            with open(path, "rb") as f:
+                self.models_ova[label] = pickle.load(f)
 
+        # Load TF-IDF vectorizer
         with open(tfidf_path, "rb") as f:
             self.tfidf_vectorizer_topic = pickle.load(f)
 
+        # Load SBERT model
         with open(sbert_name_path, "rb") as f:
             sbert_model_name = pickle.load(f)
             self.sbert_model_topic = SentenceTransformer(sbert_model_name)
 
-        with open(le_path, "rb") as f:
-            self.le_topic = pickle.load(f)
-
+        # Load category keywords
         with open(keywords_path, "rb") as f:
             self.CATEGORY_KEYWORDS = pickle.load(f)
 
-        # Define question-related words for heuristic features
+        # Define question-related words for heuristic features (if needed)
         self.question_words = ['who', 'what', 'where', 'when', 'why', 'how', 'which']
 
     def count_category_words_topic(self, text, category_words):
@@ -65,8 +70,15 @@ class TopicClassifier:
 
     def classify_text_topic(self, state: ClassificationState) -> ClassificationState:
         X_features = self.prepare_features_topic([state["text"]])
-        pred_int = self.log_reg_model_topic.predict(X_features)
-        state["topic"] = self.le_topic.inverse_transform(pred_int)[0]
+        predicted_labels = []
+
+        # Run all OvA models independently
+        for label_name, clf in self.models_ova.items():
+            pred = clf.predict(X_features)[0]
+            if pred == 1:
+                predicted_labels.append(label_name)
+
+        state["topic"] = predicted_labels  # multi-label output
         return state
 
 '''

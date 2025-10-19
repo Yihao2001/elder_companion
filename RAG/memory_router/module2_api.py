@@ -1,20 +1,27 @@
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel
-from graph_flow import app
-from typing import Literal
+from graph_flow import app as compiled_graph 
+from typing import Literal, List, Optional
 
+# Request model
 class FlowRequest(BaseModel):
     text: str
     flow_type: Literal["offline", "online"]
-    qa: str = ""
-    topic: str = ""
+    qa: Optional[str] = None
+    topic: Optional[List[str]] = None
+
+# Response model
+class FlowResponse(BaseModel):
+    qa: Optional[str]
+    topic: Optional[List[str]]
 
 # Initialize FastAPI
-api = FastAPI(title="Module 2 API")
+app = FastAPI(title="Module 2 API")
 
-@api.post("/invoke")
+@app.post("/invoke", response_model=FlowResponse)
 def invoke_flow(request: FlowRequest):
-    """Invoke the module2 app with the provided flow parameters."""
+    """Invoke the compiled LangGraph workflow safely via FastAPI."""
+    
     input_data = request.model_dump()
 
     # Validate flow_type
@@ -24,5 +31,10 @@ def invoke_flow(request: FlowRequest):
             detail=f"Invalid flow_type: {input_data['flow_type']}. Must be 'offline' or 'online'."
         )
 
-    result = app.invoke(input_data)
-    return {"result": result}
+    result = compiled_graph.invoke(input_data)
+
+    # Ensure topic is always a list
+    if not isinstance(result.get("topic"), list):
+        result["topic"] = [result["topic"]] if result.get("topic") else []
+
+    return {"qa": result.get("qa"), "topic": result.get("topic")}
