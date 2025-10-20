@@ -78,7 +78,7 @@ class CrossEmbedder:
 
         try:
             logger.info(f"Loading CrossEncoder model: {self.model_name}")
-            self.model = CrossEncoder(self.model_name)
+            self.model = CrossEncoder(self.model_name, trust_remote_code=True)
             logger.info(f"✅ CrossEncoder loaded: {self.model_name}")
         except Exception as e:
             logger.error(f"❌ Error loading CrossEncoder model: {e}")
