@@ -80,7 +80,7 @@ def post_ltm():
     return jsonify({"id": str(record.id), "message": "Inserted into LTM"}), 201
 
 @ltm_bp.route("/ltm", methods=["PUT"])
-def update_ltm(ltm_id):
+def update_ltm():
     db: Session = next(get_db())
     
     record_id = request.args.get("ltm_id")
@@ -130,4 +130,4 @@ def update_ltm(ltm_id):
     db.commit()
     db.close()
 
-    return jsonify({"message": f"LTM record {ltm_id} updated successfully"}), 200
+    return jsonify({"message": f"LTM record {record_id} updated successfully"}), 200

@@ -69,7 +69,7 @@ def post_healthcare():
     new_record = {
         "record_type": record.record_type.value,
         "description": record.description,
-        "diagnosis_date": record.diagnosis_date
+        "diagnosis_date": format_date(record.diagnosis_date)
     }
     create_audit_log(db, elderly_id, TableNameEnum.healthcare_records, None, new_record, ActionEnum.add)
 
@@ -91,7 +91,7 @@ def update_healthcare():
     curr_record = {
         'record_type': record.record_type.value,
         'description': record.description,
-        'diagnosis_date': record.diagnosis_date
+        'diagnosis_date': format_date(record.diagnosis_date)
     }
 
     if not record:
@@ -122,7 +122,7 @@ def update_healthcare():
     new_record = {
         'record_type': record.record_type.value,
         'description': record.description,
-        'diagnosis_date': record.diagnosis_date
+        'diagnosis_date': format_date(record.diagnosis_date)
     }
     create_audit_log(db, record.elderly_id, TableNameEnum.healthcare_records, curr_record, new_record, ActionEnum.update)
 
@@ -130,3 +130,8 @@ def update_healthcare():
     db.close()
 
     return jsonify({"message": f"Healthcare record {record_id} updated successfully"}), 200
+
+def format_date(date_obj):
+    if date_obj is None:
+        return None
+    return date_obj.isoformat() if hasattr(date_obj, 'isoformat') else str(date_obj)

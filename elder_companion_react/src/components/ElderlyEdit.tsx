@@ -5,7 +5,7 @@ import { useAuth } from '../context/AuthContext';
 import { BASE_URL } from '../config';
 
 interface LTMInfo {
-    id?: string;
+    ltm_id: string;
     category: string;
     key: string;
     value: string;
@@ -13,7 +13,7 @@ interface LTMInfo {
 }
 
 interface HealthcareInfo {
-    id?: string;
+    healthcare_record_id: string;
     description: string;
     diagnosis_date: string;
     last_updated: string;
@@ -64,6 +64,8 @@ const ElderlyEdit: React.FC = () => {
                 ]);
                 setLtmInfo(ltmRes.data);
                 setHealthcareInfo(healthcareRes.data);
+                console.log("LTM data:", ltmRes.data);
+                console.log("Healthcare data:", healthcareRes.data);
             } catch (err) {
                 setError('Failed to load records');
                 console.error(err);
@@ -100,6 +102,8 @@ const ElderlyEdit: React.FC = () => {
     const handleSave = async () => {
         if (!selectedRecord) return;
 
+        console.log("Selected record:", selectedRecord);
+
         setSaving(true);
         setError('');
         setSuccess('');
@@ -107,39 +111,67 @@ const ElderlyEdit: React.FC = () => {
         try {
             if (selectedSection === 'ltm') {
                 const ltmRecord = selectedRecord as LTMInfo;
-                await axios.post(`${BASE_URL}/ltm`, {
-                    elderly_id: id,
-                    category: ltmRecord.category,
-                    key: ltmRecord.key,
-                    value: ltmRecord.value
-                });
-                
+
+                if (mode === 'create') {
+                    // CREATE uses POST
+                    await axios.post(`${BASE_URL}/ltm`, {
+                        elderly_id: id,
+                        category: ltmRecord.category,
+                        key: ltmRecord.key,
+                        value: ltmRecord.value
+                    });
+                } else {
+                    // EDIT uses PUT
+                    await axios.put(
+                        `${BASE_URL}/ltm?ltm_id=${ltmRecord.ltm_id}`,
+                        {
+                            category: ltmRecord.category,
+                            key: ltmRecord.key,
+                            value: ltmRecord.value
+                        }
+                    );
+                }
+
                 // Update local state
                 setLtmInfo(prev => prev.map(item => 
-                    item.key === ltmRecord.key && item.category === ltmRecord.category 
+                    item.ltm_id === ltmRecord.ltm_id
                         ? { ...ltmRecord, last_updated: new Date().toISOString() }
                         : item
                 ));
             } else {
                 const healthRecord = selectedRecord as HealthcareInfo;
-                await axios.post(`${BASE_URL}/healthcare`, {
-                    elderly_id: id,
-                    description: healthRecord.description,
-                    diagnosis_date: healthRecord.diagnosis_date,
-                    record_type: healthRecord.record_type
-                });
-                
+
+                if (mode === 'create') {
+                    // CREATE uses POST
+                    await axios.post(`${BASE_URL}/healthcare`, {
+                        elderly_id: id,
+                        description: healthRecord.description,
+                        diagnosis_date: healthRecord.diagnosis_date,
+                        record_type: healthRecord.record_type
+                    });
+                } else {
+                    // EDIT uses PUT
+                    await axios.put(
+                        `${BASE_URL}/healthcare?healthcare_record_id=${healthRecord.healthcare_record_id}`, 
+                        {
+                            description: healthRecord.description,
+                            diagnosis_date: healthRecord.diagnosis_date,
+                            record_type: healthRecord.record_type
+                        }
+                    );
+                }
+
                 // Update local state
                 setHealthcareInfo(prev => prev.map(item => 
-                    item.description === healthRecord.description && item.record_type === healthRecord.record_type
+                    item.healthcare_record_id === healthRecord.healthcare_record_id
                         ? { ...healthRecord, last_updated: new Date().toISOString() }
                         : item
                 ));
             }
-            
-            setSuccess('Record updated successfully!');
+
+            setSuccess(mode === 'create' ? 'Record created successfully!' : 'Record updated successfully!');
         } catch (err) {
-            setError('Failed to update record');
+            setError(mode === 'create' ? 'Failed to create record' : 'Failed to update record');
             console.error(err);
         } finally {
             setSaving(false);
