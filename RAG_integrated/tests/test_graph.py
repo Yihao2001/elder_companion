@@ -21,7 +21,7 @@ session_start = time.perf_counter()
 session = SessionContext(
     db_url=os.getenv("DATABASE_URL"),
     elderly_id="87654321-4321-4321-4321-019876543210",
-    cross_encoder_model="jinaai/jina-reranker-v1-turbo-en"
+    cross_encoder_model="Alibaba-NLP/gte-reranker-modernbert-base"
 )
 session_end = time.perf_counter()
 session_latency = session_end - session_start
