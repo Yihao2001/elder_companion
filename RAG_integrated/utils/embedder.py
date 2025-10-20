@@ -2,6 +2,8 @@ import logging
 import os
 from typing import List
 from dotenv import load_dotenv
+from huggingface_hub import login
+from sentence_transformers import SentenceTransformer, CrossEncoder
 
 logger = logging.getLogger(__name__)
 logging.basicConfig(level=logging.INFO)
@@ -24,8 +26,7 @@ class Embedder:
             return
 
         # Import heavy modules here, not at top-level
-        from sentence_transformers import SentenceTransformer
-        from huggingface_hub import login
+
 
         huggingface_token = os.getenv("HUGGINGFACE_TOKEN")
         if huggingface_token:
@@ -59,7 +60,7 @@ class CrossEmbedder:
     Lazy loader for CrossEncoder reranker.
     """
 
-    def __init__(self, model_name: str = "BAAI/bge-reranker-base"):
+    def __init__(self, model_name: str = "jinaai/jina-reranker-v1-turbo-en"):
         load_dotenv()
         self.model_name = model_name
         self.model = None
@@ -67,9 +68,6 @@ class CrossEmbedder:
 
     def _ensure_model_loaded(self):
         """Load CrossEncoder model lazily."""
-        from huggingface_hub import login
-        from sentence_transformers import CrossEncoder
-
         huggingface_token = os.getenv("HUGGINGFACE_TOKEN")
         if huggingface_token:
             login(token=huggingface_token)
@@ -78,7 +76,7 @@ class CrossEmbedder:
 
         try:
             logger.info(f"Loading CrossEncoder model: {self.model_name}")
-            self.model = CrossEncoder(self.model_name)
+            self.model = CrossEncoder(self.model_name, trust_remote_code=True)
             logger.info(f"✅ CrossEncoder loaded: {self.model_name}")
         except Exception as e:
             logger.error(f"❌ Error loading CrossEncoder model: {e}")

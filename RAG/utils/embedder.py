@@ -61,7 +61,7 @@ class Embedder:
 
 class CrossEmbedder:
 
-    def __init__(self, model_name: str = "BAAI/bge-reranker-base"):
+    def __init__(self, model_name: str = "jinaai/jina-reranker-v1-turbo-en"):
         load_dotenv()
         self.model_name = model_name
         self.model = None
@@ -80,7 +80,7 @@ class CrossEmbedder:
 
         logging.info(f"Loading CrossEncoder model: {self.model_name}")
         try:
-            model = CrossEncoder(self.model_name)
+            model = CrossEncoder(self.model_name, trust_remote_code=True)
             logging.info(f"✅ CrossEncoder model loaded: {self.model_name}")
             return model
         except Exception as e:

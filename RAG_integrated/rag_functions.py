@@ -5,43 +5,58 @@ from typing import List, Dict, Optional, Any
 from datetime import datetime
 import numpy as np
 from sklearn.metrics.pairwise import cosine_similarity
-from sqlalchemy import create_engine, text
+# from sqlalchemy import create_engine, text # Already imported
 from utils.utils import normalize_for_paradedb
 from utils.embedder import Embedder, CrossEmbedder
 from utils.recency_score import compute_recency_score
 
 
-def insert_short_term(engine, content: str, elderly_id: str, embedder=Embedder) -> dict:
-    """Insert short-term memory item"""
+
+def insert_short_term(conn, content: str, elderly_id: str, embedder: Optional[Embedder] = None, embedding: Optional[List[float]] = None) -> dict:
+    """
+    Insert short-term memory item.
+    Takes a connection (`conn`) and an optional pre-computed `embedding`.
+    """
     if elderly_id is None:
         raise ValueError("elderly_id is required and cannot be None.")
 
     if not content or not content.strip():
         return {"success": False, "error": "content is required and cannot be empty."}
 
-    embedding = embedder.embed(content)
+    if embedding is None:
+        if embedder is None:
+            raise ValueError("Either embedder or pre-computed embedding must be provided.")
+        embedding = embedder.embed(content)
+
+    embedding_str = str(embedding)
 
     try:
-        with engine.connect() as conn:
-            query = text("""
-                INSERT INTO short_term_memory (
-                    elderly_id, content, embedding
-                ) VALUES (
-                    :elderly_id, :content, :embedding
-                )
-                RETURNING id, created_at;
-            """)
-            result = conn.execute(query, {
-                "elderly_id": elderly_id.strip(),
-                "content": content.strip(),
-                "embedding": str(embedding)
-            }).fetchone()
-            conn.commit()
-
-            # Log successful insertion
-            logging.info(
-                f"✅ Successfully inserted short-term memory for elderly_id={elderly_id}, record_id={result.id}"
+        query = text("""
+            INSERT INTO short_term_memory (
+                elderly_id, content, embedding
+            ) VALUES (
+                :elderly_id, :content, :embedding
             )
+            RETURNING id, created_at;
+        """)
+        # Execute on the passed connection
+        result = conn.execute(query, {
+            "elderly_id": elderly_id.strip(),
+            "content": content.strip(),
+            "embedding": embedding_str
+        }).fetchone()
+        # conn.commit() is removed, caller is responsible for transaction management.
+
+        # Log successful insertion
+        logging.info(
+            f"✅ Successfully inserted short-term memory for elderly_id={elderly_id}, record_id={result.id}"
+        )
+        
+        return {
+            "success": True, 
+            "record_id": str(result.id), 
+            "created_at": result.created_at.isoformat() if result.created_at else None
+        }
 
     except SQLAlchemyError as e:
         logging.error(f"❌ Database error inserting STM: {str(e)}")
@@ -52,119 +67,22 @@ def insert_short_term(engine, content: str, elderly_id: str, embedder=Embedder) 
     
 
 
-# def insert_long_term(engine, category: str, key: str, value: str, elderly_id: str, embedder=Embedder) -> dict:
-#     """Insert long-term memory item"""
-#     if elderly_id is None:
-#         raise ValueError("elderly_id is required and cannot be None.")
-
-#     if not category or not category.strip():
-#         return {"success": False, "error": "category is required and cannot be empty."}
-#     if not key or not key.strip():
-#         return {"success": False, "error": "key is required and cannot be empty."}
-#     if not value or not value.strip():
-#         return {"success": False, "error": "value is required and cannot be empty."}
-
-#     # Use embedder instance instead of local embedding function
-#     embedding = embedder.embed(value)
-
-#     try:
-#         with engine.connect() as conn:
-#             query = text("""
-#                 INSERT INTO long_term_memory (
-#                     elderly_id, category, key, value, embedding
-#                 ) VALUES (
-#                     :elderly_id, :category, :key, :value, :embedding
-#                 )
-#                 RETURNING id, last_updated;
-#             """)
-#             result = conn.execute(query, {
-#                 "elderly_id": elderly_id.strip(),
-#                 "category": category.strip(),
-#                 "key": key.strip(),
-#                 "value": value.strip(),
-#                 "embedding": str(embedding)
-#             }).fetchone()
-#             conn.commit()
-
-#             return {
-#                 "success": True,
-#                 "message": "Long-term memory stored successfully",
-#                 "record_id": str(result.id),
-#                 "last_updated": result.last_updated.isoformat() if result.last_updated else None,
-#                 "embedding_provided": embedding is not None
-#             }
-
-#     except SQLAlchemyError as e:
-#         logging.error(f"❌ Database error inserting LTM: {str(e)}")
-#         return {"success": False, "error": f"Database error: {str(e)}"}
-#     except Exception as e:
-#         logging.error(f"Unexpected error inserting LTM: {str(e)}")
-#         return {"success": False, "error": f"Unexpected error: {str(e)}"}
-
-
-
-# def insert_health_record(engine, record_type: str, description: str, elderly_id: str, embedder: Embedder, diagnosis_date: Optional[str] = None, ) -> dict:
-#     """Insert healthcare record"""
-#     if elderly_id is None:
-#         raise ValueError("elderly_id is required and cannot be None.")
-
-#     if not record_type or not record_type.strip():
-#         return {"success": False, "error": "record_type is required and cannot be empty."}
-#     if not description or not description.strip():
-#         return {"success": False, "error": "description is required and cannot be empty."}
-
-#     # Validate date format if provided
-#     if diagnosis_date:
-#         try:
-#             datetime.strptime(diagnosis_date, "%Y-%m-%d")
-#         except ValueError:
-#             return {"success": False, "error": "diagnosis_date must be in YYYY-MM-DD format if provided."}
-
-#     # Use embedder instance instead of local embedding function
-#     embedding = embedder.embed(description)
-
-#     try:
-#         with engine.connect() as conn:
-#             query = text("""
-#                 INSERT INTO healthcare_records (
-#                     elderly_id, record_type, description, diagnosis_date, embedding
-#                 ) VALUES (
-#                     :elderly_id, :record_type, :description, :diagnosis_date, :embedding
-#                 )
-#                 RETURNING id, last_updated;
-#             """)
-#             result = conn.execute(query, {
-#                 "elderly_id": elderly_id.strip(),
-#                 "record_type": record_type.strip(),
-#                 "description": description.strip(),
-#                 "diagnosis_date": diagnosis_date if diagnosis_date else None,
-#                 "embedding": str(embedding) if embedding else None
-#             }).fetchone()
-#             conn.commit()
-
-#             return {
-#                 "success": True,
-#                 "message": "Healthcare record stored successfully",
-#                 "record_id": str(result.id),
-#                 "last_updated": result.last_updated.isoformat() if result.last_updated else None,
-#                 "embedding_provided": embedding is not None,
-#                 "diagnosis_date": diagnosis_date
-#             }
-
-#     except SQLAlchemyError as e:
-#         logging.error(f"❌ Database error inserting health record: {str(e)}")
-#         return {"success": False, "error": f"Database error: {str(e)}"}
-#     except Exception as e:
-#         logging.error(f"Unexpected error inserting health record: {str(e)}")
-#         return {"success": False, "error": f"Unexpected error: {str(e)}"}
-
-
-
-def retrieve_hybrid_ltm(engine, elderly_id, query, top_k_retrieval=5, sim_threshold=0.3, 
-                        fuzzy_distance=2, alpha_retrieval=0.5, embedder = Embedder):
-    """Retrieve long-term memory using hybrid (embedding + BM25) approach"""
+def retrieve_hybrid_ltm(conn, elderly_id, query: str, embedder: Optional[Embedder] = None, embedding: Optional[List[float]] = None, 
+                        top_k_retrieval=5, sim_threshold=0.3, fuzzy_distance=2, alpha_retrieval=0.5):
+    """
+    Retrieve long-term memory using hybrid (embedding + BM25) approach.
+    Takes a connection (`conn`) and an optional pre-computed `embedding`.
+    """
     try:
-        emb = embedder.embed(query)
+        if embedding is None:
+            if embedder is None:
+                raise ValueError("Either embedder or pre-computed embedding must be provided for retrieval.")
+            emb = embedder.embed(query)
+        else:
+            emb = embedding
+            
+        emb_str = str(emb) # Use string format for SQL parameter
+
         # --- Embeddings ---
         sql_emb = text(f"""
             WITH nearest AS MATERIALIZED (
@@ -181,11 +99,13 @@ def retrieve_hybrid_ltm(engine, elderly_id, query, top_k_retrieval=5, sim_thresh
             ORDER BY distance
             LIMIT :top_k;
         """)
-        params_emb = {"emb": str(emb), "elderly_id": elderly_id, "top_k": top_k_retrieval}
+        params_emb = {"emb": emb_str, "elderly_id": elderly_id, "top_k": top_k_retrieval}
         if sim_threshold is not None:
             params_emb["threshold"] = sim_threshold
-        with engine.connect() as conn:
-            rows_emb = conn.execute(sql_emb, params_emb).fetchall()
+        
+        # Execute on the passed connection
+        rows_emb = conn.execute(sql_emb, params_emb).fetchall()
+        
         emb_results = {
             r.id: {
                 "id": r.id,
@@ -221,8 +141,10 @@ def retrieve_hybrid_ltm(engine, elderly_id, query, top_k_retrieval=5, sim_thresh
             "distance": fuzzy_distance,
             "top_k": top_k_retrieval
         }
-        with engine.connect() as conn:
-            rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
+        
+        # Execute on the passed connection
+        rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
+        
         max_bm25 = max((float(r.bm25_score) for r in rows_bm25), default=1.0)
         bm25_results = {
             r.id: {
@@ -281,11 +203,22 @@ def retrieve_hybrid_ltm(engine, elderly_id, query, top_k_retrieval=5, sim_thresh
 
 
 
-def retrieve_hybrid_stm(engine, elderly_id, query, top_k_retrieval=5, sim_threshold=0.3, 
-                        fuzzy_distance=2, alpha_retrieval=0.5, embedder=Embedder):
-    """Retrieve short-term memory using hybrid (embedding + BM25) approach"""
+def retrieve_hybrid_stm(conn, elderly_id, query: str, embedder: Optional[Embedder] = None, embedding: Optional[List[float]] = None, 
+                        top_k_retrieval=5, sim_threshold=0.3, fuzzy_distance=2, alpha_retrieval=0.5):
+    """
+    Retrieve short-term memory using hybrid (embedding + BM25) approach.
+    Takes a connection (`conn`) and an optional pre-computed `embedding`.
+    """
     try:
-        emb = embedder.embed(query)
+        if embedding is None:
+            if embedder is None:
+                raise ValueError("Either embedder or pre-computed embedding must be provided for retrieval.")
+            emb = embedder.embed(query)
+        else:
+            emb = embedding
+            
+        emb_str = str(emb)
+
         # --- Embeddings ---
         sql_emb = text(f"""
             WITH nearest AS MATERIALIZED (
@@ -303,11 +236,13 @@ def retrieve_hybrid_stm(engine, elderly_id, query, top_k_retrieval=5, sim_thresh
             ORDER BY distance
             LIMIT :top_k;
         """)
-        params_emb = {"emb": str(emb), "elderly_id": elderly_id, "top_k": top_k_retrieval}
+        params_emb = {"emb": emb_str, "elderly_id": elderly_id, "top_k": top_k_retrieval}
         if sim_threshold is not None:
             params_emb["threshold"] = sim_threshold
-        with engine.connect() as conn:
-            rows_emb = conn.execute(sql_emb, params_emb).fetchall()
+        
+        # Execute on the passed connection
+        rows_emb = conn.execute(sql_emb, params_emb).fetchall()
+        
         emb_results = {
             r.id: {
                 "id": r.id,
@@ -329,8 +264,10 @@ def retrieve_hybrid_stm(engine, elderly_id, query, top_k_retrieval=5, sim_thresh
         """)
         params_bm25 = {"elderly_id": elderly_id, "query": normalize_for_paradedb(query),
                        "distance": fuzzy_distance, "top_k": top_k_retrieval}
-        with engine.connect() as conn:
-            rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
+        
+        # Execute on the passed connection
+        rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
+        
         max_bm25 = max((float(r.bm25_score) for r in rows_bm25), default=1.0)
         bm25_results = {
             r.id: {
@@ -362,11 +299,22 @@ def retrieve_hybrid_stm(engine, elderly_id, query, top_k_retrieval=5, sim_thresh
 
 
 
-def retrieve_hybrid_hcm(engine, elderly_id, query, top_k_retrieval=5, sim_threshold=0.3, 
-                        fuzzy_distance=2, alpha_retrieval=0.5, embedder=Embedder):
-    """Retrieve healthcare records using hybrid (embedding + BM25) approach"""
+def retrieve_hybrid_hcm(conn, elderly_id, query: str, embedder: Optional[Embedder] = None, embedding: Optional[List[float]] = None, 
+                        top_k_retrieval=5, sim_threshold=0.3, fuzzy_distance=2, alpha_retrieval=0.5):
+    """
+    Retrieve healthcare records using hybrid (embedding + BM25) approach.
+    Takes a connection (`conn`) and an optional pre-computed `embedding`.
+    """
     try:
-        emb = embedder.embed(query)
+        if embedding is None:
+            if embedder is None:
+                raise ValueError("Either embedder or pre-computed embedding must be provided for retrieval.")
+            emb = embedder.embed(query)
+        else:
+            emb = embedding
+            
+        emb_str = str(emb)
+
         # --- Embeddings ---
         sql_emb = text(f"""
             WITH nearest AS MATERIALIZED (
@@ -383,11 +331,13 @@ def retrieve_hybrid_hcm(engine, elderly_id, query, top_k_retrieval=5, sim_thresh
             ORDER BY distance
             LIMIT :top_k;
         """)
-        params_emb = {"emb": str(emb), "elderly_id": elderly_id, "top_k": top_k_retrieval}
+        params_emb = {"emb": emb_str, "elderly_id": elderly_id, "top_k": top_k_retrieval}
         if sim_threshold is not None:
             params_emb["threshold"] = sim_threshold
-        with engine.connect() as conn:
-            rows_emb = conn.execute(sql_emb, params_emb).fetchall()
+        
+        # Execute on the passed connection
+        rows_emb = conn.execute(sql_emb, params_emb).fetchall()
+        
         emb_results = {
             r.id: {
                 "id": r.id,
@@ -425,8 +375,10 @@ def retrieve_hybrid_hcm(engine, elderly_id, query, top_k_retrieval=5, sim_thresh
             "distance": fuzzy_distance,
             "top_k": top_k_retrieval
         }
-        with engine.connect() as conn:
-            rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
+        
+        # Execute on the passed connection
+        rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
+        
         max_bm25 = max((float(r.bm25_score) for r in rows_bm25), default=1.0)
         bm25_results = {
             r.id: {
@@ -485,9 +437,9 @@ def retrieve_hybrid_hcm(engine, elderly_id, query, top_k_retrieval=5, sim_thresh
 
 
 
-def rerank_with_mmr_and_recency(query: str, candidates: List[Dict[str, Any]], cross_encoder: CrossEmbedder, 
+def rerank_with_mmr_and_recency(query: str, candidates: List[Dict[str, Any]], cross_encoder:CrossEmbedder, 
                                 alpha_MMR: float = 0.7, beta_recency: float = 0.1, top_k_MMR: int = 5) -> List[Dict[str, Any]]:
-    """Rerank candidates using MMR and recency scoring"""
+    """Rerank candidates using MMR and recency scoring - No changes here as it uses embedder/conn only for setup."""
     if not candidates:
         return []
     
@@ -503,9 +455,21 @@ def rerank_with_mmr_and_recency(query: str, candidates: List[Dict[str, Any]], cr
     # Extract embeddings
     embeddings = []
     for r in candidates:
+        # NOTE: embedding is popped here, so it's not available in the final result.
+        # It's assumed the embedding is a string representation of a list of floats.
         emb_str = r.pop("embedding", None)
-        emb_list = [float(x) for x in emb_str.strip("[]").split(",")]
+        # Handle potential empty string or different formats if necessary, assuming str(list) format.
+        try:
+            emb_list = [float(x) for x in emb_str.strip("[]").split(",")]
+        except Exception:
+            logging.warning("Could not parse embedding string, skipping result.")
+            continue # Skip candidate if embedding cannot be parsed
+            
         embeddings.append(emb_list)
+    
+    if not embeddings:
+        return []
+        
     embeddings = np.array(embeddings, dtype=np.float32)
     
     # Get recency scores
@@ -549,31 +513,59 @@ def rerank_with_mmr_and_recency(query: str, candidates: List[Dict[str, Any]], cr
 
 
 
-def retrieve_rerank(engine, elderly_id, query, mode="long-term", top_k_retrieval=25, 
+def retrieve_rerank(conn, elderly_id, query, embedder:Optional[Embedder]=None, cross_encoder:Optional[CrossEmbedder]=None, mode="long-term", top_k_retrieval=25, 
                     sim_threshold=0.3, fuzzy_distance=2, alpha_retrieval=0.5, 
-                    alpha_MMR=0.75, beta_recency=0.1, top_k_MMR=8, embedder=Embedder, cross_encoder=CrossEmbedder()):
-    """Retrieve and rerank results based on mode"""
+                    alpha_MMR=0.75, beta_recency=0.1, top_k_MMR=8, 
+                    query_embedding: Optional[List[float]] = None):
+    """
+    Retrieve and rerank results based on mode.
+    Takes a connection (`conn`) and an optional pre-computed `query_embedding`.
+    """
     if cross_encoder is None:
-        cross_encoder = CrossEmbedder('BAAI/bge-reranker-base')
-    
-    # Step 1: Retrieve candidates based on mode
+        # Assuming a default CrossEmbedder can be instantiated if none is provided
+        try:
+            cross_encoder = CrossEmbedder('BAAI/bge-reranker-base')
+        except Exception as e:
+            logging.error(f"Failed to instantiate default CrossEmbedder: {e}")
+            # If cross_encoder fails, we can't rerank. Maybe just return the candidates.
+            pass
+
+    # Step 1: Pre-calculate embedding if not provided
+    if query_embedding is None:
+        if embedder is None:
+            # Note: Retrieval functions will raise ValueError if both are None
+            pass
+        else:
+            query_embedding = embedder.embed(query)
+
+    # Step 2: Retrieve candidates based on mode
     if mode == "short-term":
-        candidates = retrieve_hybrid_stm(engine, embedder, elderly_id, query, top_k_retrieval, 
-                                        sim_threshold, fuzzy_distance, alpha_retrieval)
+        candidates = retrieve_hybrid_stm(conn, elderly_id, query, embedder=embedder, embedding=query_embedding,
+                                        top_k_retrieval=top_k_retrieval, 
+                                        sim_threshold=sim_threshold, fuzzy_distance=fuzzy_distance, 
+                                        alpha_retrieval=alpha_retrieval)
     elif mode == "long-term":
-        candidates = retrieve_hybrid_ltm(engine, embedder, elderly_id, query, top_k_retrieval, 
-                                        sim_threshold, fuzzy_distance, alpha_retrieval)
+        candidates = retrieve_hybrid_ltm(conn, elderly_id, query, embedder=embedder, embedding=query_embedding,
+                                        top_k_retrieval=top_k_retrieval, 
+                                        sim_threshold=sim_threshold, fuzzy_distance=fuzzy_distance, 
+                                        alpha_retrieval=alpha_retrieval)
     elif mode == "healthcare":
-        candidates = retrieve_hybrid_hcm(engine, embedder, elderly_id, query, top_k_retrieval, 
-                                        sim_threshold, fuzzy_distance, alpha_retrieval)
+        candidates = retrieve_hybrid_hcm(conn, elderly_id, query, embedder=embedder, embedding=query_embedding,
+                                        top_k_retrieval=top_k_retrieval, 
+                                        sim_threshold=sim_threshold, fuzzy_distance=fuzzy_distance, 
+                                        alpha_retrieval=alpha_retrieval)
     else:
         raise ValueError(f"Unsupported mode: {mode}. Choose from 'short-term', 'long-term', or 'healthcare'.")
     
-    # Step 2: Rerank with MMR + recency
-    reranked_results = rerank_with_mmr_and_recency(query, candidates, cross_encoder, alpha_MMR, 
-                                                  beta_recency, top_k_MMR)
+    # Step 3: Rerank with MMR + recency
+    if candidates and cross_encoder:
+        reranked_results = rerank_with_mmr_and_recency(query, candidates, cross_encoder, alpha_MMR, 
+                                                    beta_recency, top_k_MMR)
+    else:
+        # If no candidates or no cross_encoder, return the candidates directly (or empty list)
+        reranked_results = candidates
     
-    # Step 3: Remove internal score keys
+    # Step 4: Remove internal score keys (only if reranking was performed)
     score_keys = {'emb_score', 'bm25_score', 'hybrid_score', 'recency_score', 
                  'cross_encoder_score', 'mmr_score'}
     clean_results = [

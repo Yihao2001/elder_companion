@@ -3,7 +3,7 @@ import requests
 url = "http://127.0.0.1:8000/invoke"
 data = {
     "text": "When do I take my medicine?",
-    "flow_type": "onldssssine", #offline or online
+    "flow_type": "offline", #offline or online
     "qa": "",
     "topic": ""
 }
