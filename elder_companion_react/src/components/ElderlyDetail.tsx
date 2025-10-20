@@ -18,6 +18,7 @@ interface ElderlyProfile {
 }
 
 interface LTMInfo {
+    ltm_id: string;
     category: string;
     key: string;
     value: string;
@@ -25,6 +26,7 @@ interface LTMInfo {
 }
 
 interface HealthcareInfo {
+    healthcare_id: string;
     description: string;
     diagnosis_date: string;
     last_updated: string;

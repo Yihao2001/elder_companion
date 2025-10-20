@@ -20,6 +20,24 @@ interface HealthcareInfo {
     record_type: string;
 }
 
+const LTM_CATEGORIES = [
+  "personal",
+  "family",
+  "education",
+  "career",
+  "lifestyle",
+  "finance",
+  "legal"
+] as const;
+
+const RECORD_TYPES = [
+  "condition",
+  "procedure",
+  "appointment",
+  "medication"
+] as const;
+
+
 const ElderlyEdit: React.FC = () => {
     const { id } = useParams<{ id: string }>();
     const { user, logout } = useAuth();
@@ -235,10 +253,12 @@ const ElderlyEdit: React.FC = () => {
                                         <tr>
                                             <td><strong>Category</strong></td>
                                             <td>
-                                                <input 
-                                                    type="text" 
-                                                    onChange={(e) => handleFieldChange('category', e.target.value)}
-                                                />
+                                                <select onChange={(e) => handleFieldChange('category', e.target.value)}>
+                                                    <option value="">-- Select Category --</option>
+                                                    {LTM_CATEGORIES.map((cat) => (
+                                                        <option key={cat} value={cat}>{cat}</option>
+                                                    ))}
+                                                </select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -274,10 +294,12 @@ const ElderlyEdit: React.FC = () => {
                                         <tr>
                                             <td><strong>Record Type</strong></td>
                                             <td>
-                                                <input 
-                                                    type="text" 
-                                                    onChange={(e) => handleFieldChange('record_type', e.target.value)}
-                                                />
+                                                <select onChange={(e) => handleFieldChange('record_type', e.target.value)}>
+                                                    <option value="">-- Select Record Type --</option>
+                                                    {RECORD_TYPES.map((type) => (
+                                                        <option key={type} value={type}>{type}</option>
+                                                    ))}
+                                                </select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -322,11 +344,15 @@ const ElderlyEdit: React.FC = () => {
                                         <tr>
                                             <td><strong>Category</strong></td>
                                             <td>
-                                                <input 
-                                                    type="text" 
-                                                    value={(selectedRecord as LTMInfo).category}
-                                                    onChange={(e) => handleFieldChange('category', e.target.value)}
-                                                />
+                                                <select
+                                                value={(selectedRecord as LTMInfo).category}
+                                                onChange={(e) => handleFieldChange('category', e.target.value)}
+                                                >
+                                                <option value="">-- Select Category --</option>
+                                                {LTM_CATEGORIES.map((cat) => (
+                                                    <option key={cat} value={cat}>{cat}</option>
+                                                ))}
+                                                </select>
                                             </td>
                                         </tr>
                                         <tr>
@@ -365,11 +391,15 @@ const ElderlyEdit: React.FC = () => {
                                         <tr>
                                             <td><strong>Record Type</strong></td>
                                             <td>
-                                                <input 
-                                                    type="text" 
-                                                    value={(selectedRecord as HealthcareInfo).record_type}
-                                                    onChange={(e) => handleFieldChange('record_type', e.target.value)}
-                                                />
+                                                <select
+                                                value={(selectedRecord as HealthcareInfo).record_type}
+                                                onChange={(e) => handleFieldChange('record_type', e.target.value)}
+                                                >
+                                                <option value="">-- Select Record Type --</option>
+                                                {RECORD_TYPES.map((type) => (
+                                                    <option key={type} value={type}>{type}</option>
+                                                ))}
+                                                </select>
                                             </td>
                                         </tr>
                                         <tr>
