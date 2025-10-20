@@ -59,7 +59,7 @@ class CrossEmbedder:
     Lazy loader for CrossEncoder reranker.
     """
 
-    def __init__(self, model_name: str = "jinaai/jina-reranker-v1-turbo-en"):
+    def __init__(self, model_name: str = "Alibaba-NLP/gte-reranker-modernbert-base"):
         load_dotenv()
         self.model_name = model_name
         self.model = None
