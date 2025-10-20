@@ -11,50 +11,62 @@ Entry function is `compute_recency_score`
 - returns:
     - list of chunks (dicts) with a key (`time_relevance_score`) for the time relevance score
 '''
-
-from datetime import datetime, timedelta
-from typing import List, Dict, Any, Optional, Tuple
-import re
+from datetime import datetime, timedelta, timezone
+from typing import List, Dict, Any
 import math
 
 # Global parameters
 TTL_DAYS = 14
-HALF_LIFE_DAYS = 6   # you can adjust (e.g., 3 or 7) depending on how steep you want decay
+HALF_LIFE_DAYS = 6
+
+# Define Singapore timezone (UTC+8) without pytz
+SGT = timezone(timedelta(hours=8))
 
 
 def _get_content_datetime(content: Dict[str, Any]) -> datetime:
-    """Extract datetime from content (created_at or last_updated)."""
+    """Extract datetime from content (created_at or last_updated) and convert to SGT."""
     raw = content.get('last_updated') or content.get('created_at')
     if raw is None:
         raise ValueError("Content must have either 'created_at' or 'last_updated' key")
-    
+
+    # Case 1: Already a datetime
     if isinstance(raw, datetime):
-        return raw
+        if raw.tzinfo is None:
+            # Treat naive datetimes as SGT
+            return raw.replace(tzinfo=SGT)
+        return raw.astimezone(SGT)
+
+    # Case 2: String timestamp
     if isinstance(raw, str):
         try:
-            return datetime.fromisoformat(raw)  # works for 'YYYY-MM-DD HH:MM:SS'
+            dt = datetime.fromisoformat(raw)
         except ValueError:
-            # fallback to explicit format if needed
-            return datetime.strptime(raw, "%Y-%m-%d %H:%M:%S")
-    
-    raise ValueError(f"Unsupported datetime type: {type(raw)}")
-    
+            dt = datetime.strptime(raw, "%Y-%m-%d %H:%M:%S")
+        if dt.tzinfo is None:
+            dt = dt.replace(tzinfo=SGT)
+        else:
+            dt = dt.astimezone(SGT)
+        return dt
 
-def _exponential_decay(days_diff: int, half_life_days: int) -> float:
+    raise ValueError(f"Unsupported datetime type: {type(raw)}")
+
+
+def _exponential_decay(days_diff: float, half_life_days: int) -> float:
     """Generic exponential decay based on half-life."""
     decay_constant = math.log(2) / half_life_days
     return math.exp(-decay_constant * days_diff)
 
 
 def _calculate_decay_score(content_time: datetime, reference_time: datetime = None) -> float:
-    """Decay scoring with TTL cutoff (fractional days)."""
+    """Decay scoring using SGT time."""
     if reference_time is None:
-        reference_time = datetime.now()
+        reference_time = datetime.now(SGT)
 
-    # --- OLD: integer days ---
-    # age_days = (reference_time - content_time).days
+    if content_time.tzinfo is None:
+        content_time = content_time.replace(tzinfo=SGT)
+    else:
+        content_time = content_time.astimezone(SGT)
 
-    # --- NEW: fractional days (hours + minutes count) ---
     age_days = (reference_time - content_time).total_seconds() / 86400.0
 
     if age_days > TTL_DAYS:
@@ -62,22 +74,21 @@ def _calculate_decay_score(content_time: datetime, reference_time: datetime = No
     return _exponential_decay(age_days, HALF_LIFE_DAYS)
 
 
-
 def compute_recency_score(content_list: List[Dict[str, Any]], query: str = "") -> List[Dict[str, Any]]:
     """
     Computes and adds a 'recency_score' key directly to each content dict in-place.
-    Returns the same list (modified) for chaining.
+    All times are interpreted as Singapore Time (UTC+8).
     """
     for content in content_list:
         try:
             content_time = _get_content_datetime(content)
             score = _calculate_decay_score(content_time)
             content['recency_score'] = round(score, 4)
+            content['timezone_used'] = "Asia/Singapore (UTC+8)"
         except ValueError as e:
             content['recency_score'] = 0.0
             content['error'] = str(e)
     return content_list
-
 
 
 # # ====================================================
