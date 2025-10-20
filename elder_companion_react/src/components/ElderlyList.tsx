@@ -27,7 +27,7 @@ const ElderlyList: React.FC = () => {
 
     useEffect(() => {
     // Temporary hardcoded list of elderly IDs you want to fetch
-    const elderlyIds = ['1632319b-05ba-4ff9-ba35-be63a24e42af'];
+    const elderlyIds = ['1632319b-05ba-4ff9-ba35-be63a24e42af', '87654321-4321-4321-4321-019876543210'];
 
     const fetchProfiles = async () => {
         try {
@@ -68,7 +68,7 @@ const ElderlyList: React.FC = () => {
             </div>
 
             <div className="nav-links">
-                {/* <Link to="/dashboard" className="nav-link">Dashboard</Link> */}
+                <Link to="/dashboard" className="nav-link">Dashboard</Link>
                 <Link to="/elderly" className="nav-link">Care Recipient Profiles</Link>
             </div>
 
