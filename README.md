@@ -2,6 +2,8 @@
 
 A comprehensive AI-powered companion system designed to support elderly individuals through natural language processing, memory management, and caregiver integration.
 
+(not yet updated, kindly ignore for now)
+
 ## 🏗️ Architecture Overview
 
 ElderComp consists of four main modules working together to provide intelligent elderly care support:
@@ -344,3 +346,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 ---
 
 **ElderComp** - Empowering elderly care through intelligent technology 🏠💙
+
