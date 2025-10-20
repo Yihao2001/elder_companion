@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 # 1️⃣ Start timing imports
 start_import_time = time.perf_counter()
 
-from RAG_integrated.offline_graph_builder import build_unified_graph, GraphState
+from offline_graph_builder import build_unified_graph, GraphState
 from session_context import SessionContext
 
 import_end_time = time.perf_counter()
@@ -21,7 +21,7 @@ session_start = time.perf_counter()
 session = SessionContext(
     db_url=os.getenv("DATABASE_URL"),
     elderly_id="87654321-4321-4321-4321-019876543210",
-    cross_encoder_model="Alibaba-NLP/gte-reranker-modernbert-base"
+    cross_encoder_model="jinaai/jina-reranker-v1-tiny-en"
 )
 session_end = time.perf_counter()
 session_latency = session_end - session_start

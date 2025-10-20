@@ -28,7 +28,7 @@ def timed(func: Callable[..., Any]) -> Callable[..., Any]:
     return wrapper
 
 # ---------------- Imports (after defining timed) ----------------
-from RAG_integrated.offline_graph_builder import (
+from offline_graph_builder import (
     GraphState,
     build_unified_graph,
     retrieval_node_health,
@@ -70,7 +70,7 @@ def main():
     session = SessionContext(
         db_url=os.getenv("DATABASE_URL"),
         elderly_id="87654321-4321-4321-4321-019876543210",
-        cross_encoder_model="Alibaba-NLP/gte-reranker-modernbert-base"
+        cross_encoder_model="jinaai/jina-reranker-v1-tiny-en"
     )
 
     profiler = cProfile.Profile()

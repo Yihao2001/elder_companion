@@ -61,7 +61,7 @@ class Embedder:
 
 class CrossEmbedder:
 
-    def __init__(self, model_name: str = "Alibaba-NLP/gte-reranker-modernbert-base"):
+    def __init__(self, model_name: str = "jinaai/jina-reranker-v1-tiny-en"):
         load_dotenv()
         self.model_name = model_name
         self.model = None
