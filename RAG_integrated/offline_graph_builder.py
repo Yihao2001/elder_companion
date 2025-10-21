@@ -2,8 +2,6 @@ from __future__ import annotations
 from typing import TypedDict, Literal, List, Dict, Any, Optional
 from typing_extensions import Annotated
 import operator
-import logging
-
 from langgraph.graph import StateGraph, START, END
 from session_context import SessionContext
 
@@ -14,10 +12,8 @@ from rag_functions import (
     rerank_with_mmr_and_recency,
     insert_short_term,
 )
+from utils.logger import logger 
 
-# ---------- Logging ----------
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
 
 AllowedTopic = Literal["healthcare", "long-term", "short-term"]
 
