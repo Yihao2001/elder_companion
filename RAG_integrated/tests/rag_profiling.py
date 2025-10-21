@@ -70,7 +70,7 @@ def main():
     session = SessionContext(
         db_url=os.getenv("DATABASE_URL"),
         elderly_id="87654321-4321-4321-4321-019876543210",
-        cross_encoder_model="jinaai/jina-reranker-v1-tiny-en"
+        cross_encoder_model="jinaai/jina-reranker-v1-turbo-en"
     )
 
     profiler = cProfile.Profile()
