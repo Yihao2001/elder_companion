@@ -1,10 +1,9 @@
 import logging
 from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import create_engine, text
+from sqlalchemy import text
 from typing import List, Dict, Optional, Any
 from datetime import datetime
 import numpy as np
-from sklearn.metrics.pairwise import cosine_similarity
 # from sqlalchemy import create_engine, text # Already imported
 from utils.utils import normalize_for_paradedb
 from utils.embedder import Embedder, CrossEmbedder
@@ -437,54 +436,67 @@ def retrieve_hybrid_hcm(conn, elderly_id, query: str, embedder: Optional[Embedde
 
 
 
-def rerank_with_mmr_and_recency(query: str, candidates: List[Dict[str, Any]], cross_encoder:CrossEmbedder, 
-                                alpha_MMR: float = 0.7, beta_recency: float = 0.1, top_k_MMR: int = 5) -> List[Dict[str, Any]]:
-    """Rerank candidates using MMR and recency scoring - No changes here as it uses embedder/conn only for setup."""
+def rerank_with_mmr_and_recency(query: str, candidates: List[Dict[str, Any]], cross_encoder: CrossEmbedder,
+    alpha_MMR: float = 0.7,
+    beta_recency: float = 0.1,
+    top_k_MMR: int = 5
+) -> List[Dict[str, Any]]:
+    """Rerank candidates using MMR and recency scoring (NumPy-optimized cosine similarity)."""
     if not candidates:
         return []
-    
-    # Extract relevant metadata
+
+    # --- Step 1. Compute recency ---
     candidates = compute_recency_score(candidates, query)
+
     texts = []
     for r in candidates:
         text = r.get("content") or r.get("value") or r.get("description")
         if not isinstance(text, str) or not text.strip():
             raise ValueError("Each result must have one of 'content', 'value', or 'description' as non-empty string.")
         texts.append(text)
-    
-    # Extract embeddings
+
+    # --- Step 2. Parse embeddings ---
     embeddings = []
-    for r in candidates:
-        # NOTE: embedding is popped here, so it's not available in the final result.
-        # It's assumed the embedding is a string representation of a list of floats.
+    valid_indices = []
+    for i, r in enumerate(candidates):
         emb_str = r.pop("embedding", None)
-        # Handle potential empty string or different formats if necessary, assuming str(list) format.
         try:
             emb_list = [float(x) for x in emb_str.strip("[]").split(",")]
+            embeddings.append(emb_list)
+            valid_indices.append(i)
         except Exception:
             logging.warning("Could not parse embedding string, skipping result.")
-            continue # Skip candidate if embedding cannot be parsed
-            
-        embeddings.append(emb_list)
-    
+            continue
+
     if not embeddings:
         return []
-        
-    embeddings = np.array(embeddings, dtype=np.float32)
-    
-    # Get recency scores
-    recency_normalized = np.array([r.get("recency_score", 0.0) for r in candidates], dtype=np.float32)
-    
-    # Compute cross-encoder relevance
-    pairs = [[query, text] for text in texts]
+
+    embeddings = np.asarray(embeddings, dtype=np.float32)
+
+    # --- Step 3. Normalize embeddings (so cosine = dot product) ---
+    norms = np.linalg.norm(embeddings, axis=1, keepdims=True)
+    embeddings_normed = embeddings / (norms + 1e-8)
+
+    # --- Step 4. Compute cosine similarity matrix (NumPy-only) ---
+    cos_sim_matrix = np.dot(embeddings_normed, embeddings_normed.T)
+
+    # --- Step 5. Recency & cross-encoder scores ---
+    recency_normalized = np.array([candidates[i].get("recency_score", 0.0) for i in valid_indices], dtype=np.float32)
+
+    pairs = [[query, texts[i]] for i in range(len(valid_indices))]
     ce_raw_scores = cross_encoder.predict(pairs)
+
     min_score, max_score = ce_raw_scores.min(), ce_raw_scores.max()
-    ce_scores = (ce_raw_scores - min_score) / (max_score - min_score) if max_score != min_score else np.ones_like(ce_raw_scores)
-    
-    # MMR greedy selection
-    cos_sim_matrix = cosine_similarity(embeddings)
+    ce_scores = (
+        (ce_raw_scores - min_score) / (max_score - min_score)
+        if max_score != min_score
+        else np.ones_like(ce_raw_scores)
+    )
+
+    # --- Step 6. MMR reranking ---
     selected_indices = []
-    remaining_indices = list(range(len(candidates)))
+    remaining_indices = list(range(len(valid_indices)))
+
     while len(selected_indices) < top_k_MMR and remaining_indices:
         best_score, best_idx = -float("inf"), None
         for idx in remaining_indices:
@@ -493,22 +505,24 @@ def rerank_with_mmr_and_recency(query: str, candidates: List[Dict[str, Any]], cr
             mmr_score = alpha_MMR * ce_score - (1 - alpha_MMR) * max_sim + beta_recency * recency_normalized[idx]
             if mmr_score > best_score:
                 best_score, best_idx = mmr_score, idx
+
         if best_idx is None:
             break
         selected_indices.append(best_idx)
         remaining_indices.remove(best_idx)
-    
-    # Reorder results
-    ranked_results = [candidates[i] for i in selected_indices]
+
+    # --- Step 7. Build final ranked results ---
+    ranked_results = [candidates[valid_indices[i]] for i in selected_indices]
     for i, result in enumerate(ranked_results):
         idx = selected_indices[i]
         result["cross_encoder_score"] = float(ce_scores[idx])
         result["recency_score"] = float(recency_normalized[idx])
         result["mmr_score"] = float(
-            alpha_MMR * ce_scores[idx] -
-            (1 - alpha_MMR) * max((cos_sim_matrix[idx][selected_indices[j]] for j in range(i)), default=0.0) +
-            beta_recency * recency_normalized[idx]
+            alpha_MMR * ce_scores[idx]
+            - (1 - alpha_MMR) * max((cos_sim_matrix[idx][selected_indices[j]] for j in range(i)), default=0.0)
+            + beta_recency * recency_normalized[idx]
         )
+
     return ranked_results
 
 
