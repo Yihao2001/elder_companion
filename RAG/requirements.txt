@@ -23,6 +23,7 @@ transformers
 numpy
 
 # Notebook & visualization
+colorlog
 ipython
 graphviz
 streamlit
