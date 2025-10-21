@@ -20,6 +20,7 @@ sqlalchemy
 sentence-transformers
 huggingface_hub
 transformers
+numpy
 
 # Notebook & visualization
 ipython
