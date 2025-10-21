@@ -1,4 +1,3 @@
-import logging
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import text
 from typing import List, Dict, Optional, Any
@@ -8,7 +7,7 @@ import numpy as np
 from utils.utils import normalize_for_paradedb
 from utils.embedder import Embedder, CrossEmbedder
 from utils.recency_score import compute_recency_score
-
+from utils.logger import logger
 
 
 def insert_short_term(conn, content: str, elderly_id: str, embedder: Optional[Embedder] = None, embedding: Optional[List[float]] = None) -> dict:
@@ -47,7 +46,7 @@ def insert_short_term(conn, content: str, elderly_id: str, embedder: Optional[Em
         # conn.commit() is removed, caller is responsible for transaction management.
 
         # Log successful insertion
-        logging.info(
+        logger.info(
             f"✅ Successfully inserted short-term memory for elderly_id={elderly_id}, record_id={result.id}"
         )
         
@@ -58,10 +57,10 @@ def insert_short_term(conn, content: str, elderly_id: str, embedder: Optional[Em
         }
 
     except SQLAlchemyError as e:
-        logging.error(f"❌ Database error inserting STM: {str(e)}")
+        logger.error(f"❌ Database error inserting STM: {str(e)}")
         return {"success": False, "error": f"Database error: {str(e)}"}
     except Exception as e:
-        logging.error(f"Unexpected error inserting STM: {str(e)}")
+        logger.error(f"Unexpected error inserting STM: {str(e)}")
         return {"success": False, "error": f"Unexpected error: {str(e)}"}
     
 
@@ -197,7 +196,7 @@ def retrieve_hybrid_ltm(conn, elderly_id, query: str, embedder: Optional[Embedde
             }
         return sorted(combined.values(), key=lambda x: x["hybrid_score"], reverse=True)[:top_k_retrieval]
     except Exception as e:
-        logging.warning(f"❌ Failed hybrid LTM retrieval: {str(e)}")
+        logger.warning(f"❌ Failed hybrid LTM retrieval: {str(e)}")
         return []
 
 
@@ -293,7 +292,7 @@ def retrieve_hybrid_stm(conn, elderly_id, query: str, embedder: Optional[Embedde
             }
         return sorted(combined.values(), key=lambda x: x["hybrid_score"], reverse=True)[:top_k_retrieval]
     except Exception as e:
-        logging.warning(f"❌ Failed hybrid STM retrieval: {str(e)}")
+        logger.warning(f"❌ Failed hybrid STM retrieval: {str(e)}")
         return []
 
 
@@ -431,7 +430,7 @@ def retrieve_hybrid_hcm(conn, elderly_id, query: str, embedder: Optional[Embedde
             }
         return sorted(combined.values(), key=lambda x: x["hybrid_score"], reverse=True)[:top_k_retrieval]
     except Exception as e:
-        logging.warning(f"❌ Failed hybrid health retrieval: {str(e)}")
+        logger.warning(f"❌ Failed hybrid health retrieval: {str(e)}")
         return []
 
 
@@ -465,7 +464,7 @@ def rerank_with_mmr_and_recency(query: str, candidates: List[Dict[str, Any]], cr
             embeddings.append(emb_list)
             valid_indices.append(i)
         except Exception:
-            logging.warning("Could not parse embedding string, skipping result.")
+            logger.warning("Could not parse embedding string, skipping result.")
             continue
 
     if not embeddings:
@@ -540,7 +539,7 @@ def retrieve_rerank(conn, elderly_id, query, embedder:Optional[Embedder]=None, c
         try:
             cross_encoder = CrossEmbedder('BAAI/bge-reranker-base')
         except Exception as e:
-            logging.error(f"Failed to instantiate default CrossEmbedder: {e}")
+            logger.error(f"Failed to instantiate default CrossEmbedder: {e}")
             # If cross_encoder fails, we can't rerank. Maybe just return the candidates.
             pass
 

@@ -6,10 +6,7 @@ import pstats
 from collections import defaultdict
 from typing import Any, Dict, List, Callable
 from functools import wraps
-
-# ---------------- Logging setup ----------------
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("profile_online")
+from utils.logger import logger
 
 # ---------------- Timing decorator ----------------
 timing_data: Dict[str, List[float]] = defaultdict(list)
@@ -83,7 +80,7 @@ def main():
     profiler.disable()
 
     # Save detailed profile
-    out_file = "online_profile.stats"
+    out_file = "tests/online_profile.stats"
     profiler.dump_stats(out_file)
     logger.info(f"Profile data saved to: {out_file}")
 

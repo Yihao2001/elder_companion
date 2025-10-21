@@ -86,7 +86,7 @@ def main():
     profiler.disable()
 
     # Save detailed profile
-    out_file = "rag_profile.stats"
+    out_file = "tests/rag_profile.stats"
     profiler.dump_stats(out_file)
     logger.info(f"Profile data saved to: {out_file}")
 

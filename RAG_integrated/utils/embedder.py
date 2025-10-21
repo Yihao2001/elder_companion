@@ -4,9 +4,7 @@ from typing import List
 from dotenv import load_dotenv
 from huggingface_hub import login
 from sentence_transformers import SentenceTransformer, CrossEncoder
-
-logger = logging.getLogger(__name__)
-logging.basicConfig(level=logging.INFO)
+from utils.logger import logger
 
 class Embedder:
     """
@@ -34,7 +32,6 @@ class Embedder:
         else:
             logger.warning("⚠️ No HuggingFace token found. Proceeding without login.")
 
-        logger.info(f"Loading embedding model: {self.embedding_model_name}")
         self.model = SentenceTransformer(self.embedding_model_name, device="cpu")
         logger.info(f"✅ Embedding model loaded: {self.embedding_model_name}")
 
@@ -75,7 +72,6 @@ class CrossEmbedder:
             logger.warning("⚠️ No HuggingFace token found. Proceeding with public model access.")
 
         try:
-            logger.info(f"Loading CrossEncoder model: {self.model_name}")
             self.model = CrossEncoder(self.model_name, trust_remote_code=True)
             logger.info(f"✅ CrossEncoder loaded: {self.model_name}")
         except Exception as e:
