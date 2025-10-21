@@ -162,10 +162,7 @@ def route_after_tools(state: AgentState) -> Command[Literal["rerank", END]]:
 # ---------- Build Graph ----------
 def build_graph(tools: Optional[List] = None) -> StateGraph:
     if tools is None:
-        @tool
-        def noop_tool(text: str) -> str:
-            return text
-        tools = [noop_tool]
+        tools = []
 
     graph = StateGraph(AgentState)
 

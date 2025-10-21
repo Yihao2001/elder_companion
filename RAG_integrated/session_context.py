@@ -4,6 +4,7 @@ from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from langchain_google_genai import ChatGoogleGenerativeAI
 from utils.embedder import Embedder, CrossEmbedder
+from utils.logger import logger
 
 class SessionContext:
 
@@ -30,8 +31,7 @@ class SessionContext:
         # === Shared LLM (for online classification or generation) ===
         self.llm_online = ChatGoogleGenerativeAI(
             model="gemini-2.5-flash-lite",
-            temperature=0,
-            max_output_tokens=1000,
+            temperature=0.6,
         )
 
     # ------------------------------------------------------------------
@@ -40,7 +40,8 @@ class SessionContext:
     def shutdown(self):
         """Dispose pooled DB connections on app shutdown."""
         try:
+            logger.info("Shutting down")
             self.db_engine.dispose()
-            print("✅ SessionContext shutdown: database engine disposed.")
+            logger.info("✅ SessionContext shutdown: database engine disposed.")
         except Exception as e:
-            print(f"⚠️ Error during shutdown: {e}")
+            logger.error(f"Shut down error:  {e}")
