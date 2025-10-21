@@ -30,7 +30,7 @@ def timed(func: Callable[..., Any]) -> Callable[..., Any]:
 # ---------------- Imports (after defining timed) ----------------
 from offline_graph_builder import (
     GraphState,
-    build_unified_graph,
+    build_offline_graph,
     retrieval_node_health,
     retrieval_node_longterm,
     retrieval_node_shortterm,
@@ -61,7 +61,7 @@ def run_workflow(session: SessionContext, input_text: str, qa_type: str, topics:
         "final_chunks": [],
         "inserted": False,
     }
-    graph = build_unified_graph()
+    graph = build_offline_graph()
     result_state = graph.invoke(state)
     return result_state
 

@@ -28,7 +28,7 @@ class GraphState(TypedDict):
     input_text: Annotated[str, lambda x, y: x or y]
     qa_type: Annotated[Literal["question", "statement"], lambda x, y: x or y]
     topics: Annotated[List[AllowedTopic], lambda x, y: x or y]
-    query_embedding: Annotated[Optional[List[float]], lambda x, y: x or y] # NEW
+    query_embedding: Annotated[Optional[List[float]], lambda x, y: x or y]
     candidates: Annotated[List[Dict[str, Any]], operator.add]
     final_chunks: Annotated[List[Dict[str, Any]], operator.add]
     inserted: Annotated[bool, lambda x, y: x or y]
@@ -205,7 +205,7 @@ def build_insertion_subgraph(name_prefix: str = "") -> StateGraph[GraphState]:
 
 
 # ---------- Unified Graph (Modified) ----------
-def build_unified_graph() -> Any:
+def build_offline_graph() -> Any:
     """Unifies the embedding, retrieval and insertion logic."""
     retrieval = build_retrieval_subgraph("q_")
     retrieval_stmt = build_retrieval_subgraph("s_")
@@ -256,7 +256,7 @@ def build_unified_graph() -> Any:
 # ---------- Visualization (No change needed) ----------
 def save_mermaid_graph(as_png: bool = True):
     """Build and save the LangGraph DAGs as PNG images only."""
-    unified_graph = build_unified_graph()
+    unified_graph = build_offline_graph()
     retrieval_q_graph = build_retrieval_subgraph("q_").compile()
     retrieval_s_graph = build_retrieval_subgraph("s_").compile()
     insertion_graph = build_insertion_subgraph("s_").compile()
@@ -288,7 +288,7 @@ def save_mermaid_graph(as_png: bool = True):
 if __name__ == "__main__":
     # Example usage:
     # Build and compile the graph
-    app = build_unified_graph()
+    app = build_offline_graph()
     print("Graph built successfully.")
     
     save_mermaid_graph(as_png=True)

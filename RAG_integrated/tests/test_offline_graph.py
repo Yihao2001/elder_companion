@@ -6,7 +6,7 @@ from dotenv import load_dotenv
 # 1️⃣ Start timing imports
 start_import_time = time.perf_counter()
 
-from offline_graph_builder import build_unified_graph, GraphState
+from offline_graph_builder import build_offline_graph, GraphState
 from session_context import SessionContext
 
 import_end_time = time.perf_counter()
@@ -29,7 +29,7 @@ print(f"⏱️ SessionContext initialized in {session_latency:.3f} seconds")
 
 # 4️⃣ Build the compiled graph once
 graph_build_start = time.perf_counter()
-graph = build_unified_graph()
+graph = build_offline_graph()
 graph_build_end = time.perf_counter()
 graph_build_latency = graph_build_end - graph_build_start
 print(f"⏱️ Graph built in {graph_build_latency:.3f} seconds\n")
@@ -66,7 +66,7 @@ def run_test_case(description: str, qa_type: str, input_text: str, topics: list[
             if "final_chunks" in result and len(result["final_chunks"]) > 0:
                 passed = True
                 print(f"✅ Retrieved {len(result['final_chunks'])} chunks.")
-                for i, chunk in enumerate(result["final_chunks"][:3]):
+                for i, chunk in enumerate(result["final_chunks"]):
                     print(f"{i+1}.", chunk.get("content", chunk))
             else:
                 print("⚠️ No chunks returned for this question.")
@@ -77,69 +77,29 @@ def run_test_case(description: str, qa_type: str, input_text: str, topics: list[
             else:
                 print("⚠️ Content was not inserted.")
 
-        return {"desc": description, "latency": latency, "passed": passed}
+        return {"desc": description, "latency": latency, "passed": passed, "result": result}
 
     except Exception as e:
         print("❌ Test failed with error:", e)
-        return {"desc": description, "latency": None, "passed": False}
+        return {"desc": description, "latency": None, "passed": False, "result": None}
 
 
 # 5️⃣ Define all test scenarios
 test_cases = [
     # 🔹 Retrieval questions
-    {
-        "description": "Q: Healthcare + Short-term",
-        "qa_type": "question",
-        "input_text": "What is John's current medication plan?",
-        "topics": ["healthcare", "short-term"],
-    },
-    {
-        "description": "Q: Healthcare + Long-term",
-        "qa_type": "question",
-        "input_text": "What chronic illnesses is John being treated for?",
-        "topics": ["healthcare", "long-term"],
-    },
-    {
-        "description": "Q: Short-term only",
-        "qa_type": "question",
-        "input_text": "What happened to John this morning?",
-        "topics": ["short-term"],
-    },
-    {
-        "description": "Q: Long-term only",
-        "qa_type": "question",
-        "input_text": "What are John's ongoing conditions?",
-        "topics": ["long-term"],
-    },
-    {
-        "description": "Q: Multi-topic (healthcare + short + long)",
-        "qa_type": "question",
-        "input_text": "Summarize John's overall health record.",
-        "topics": ["healthcare", "short-term", "long-term"],
-    },
+    {"description": "Q: Healthcare + Short-term", "qa_type": "question", "input_text": "What is John's current medication plan?", "topics": ["healthcare", "short-term"]},
+    {"description": "Q: Healthcare + Long-term", "qa_type": "question", "input_text": "What chronic illnesses is John being treated for?", "topics": ["healthcare", "long-term"]},
+    {"description": "Q: Short-term only", "qa_type": "question", "input_text": "What happened to John this morning?", "topics": ["short-term"]},
+    {"description": "Q: Long-term only", "qa_type": "question", "input_text": "What are John's ongoing conditions?", "topics": ["long-term"]},
+    {"description": "Q: Multi-topic (healthcare + short + long)", "qa_type": "question", "input_text": "Summarize John's overall health record.", "topics": ["healthcare", "short-term", "long-term"]},
 
-    # 🔹 Insertion statements (always short-term)
-    {
-        "description": "S: Insert medication update",
-        "qa_type": "statement",
-        "input_text": "John started taking 5mg of atorvastatin daily.",
-        "topics": ["short-term"],
-    },
-    {
-        "description": "S: Insert daily observation",
-        "qa_type": "statement",
-        "input_text": "John’s blood pressure was stable this morning.",
-        "topics": ["short-term"],
-    },
-    {
-        "description": "S: Insert mood observation",
-        "qa_type": "statement",
-        "input_text": "John was cheerful after breakfast.",
-        "topics": ["short-term"],
-    },
+    # 🔹 Insertion statements
+    {"description": "S: Insert medication update", "qa_type": "statement", "input_text": "John started taking 5mg of atorvastatin daily.", "topics": ["short-term"]},
+    {"description": "S: Insert daily observation", "qa_type": "statement", "input_text": "John’s blood pressure was stable this morning.", "topics": ["short-term"]},
+    {"description": "S: Insert mood observation", "qa_type": "statement", "input_text": "John was cheerful after breakfast.", "topics": ["short-term"]},
 ]
 
-# 🔀 Randomize test order to check for lazy initialization bottlenecks
+# 🔀 Randomize test order
 random.shuffle(test_cases)
 print("\n🔀 Test case order randomized.")
 print("🧭 First test to run:", test_cases[0]["description"])
@@ -150,8 +110,7 @@ total_start = time.perf_counter()
 
 results = []
 for case in test_cases:
-    result = run_test_case(**case)
-    results.append(result)
+    results.append(run_test_case(**case))
 
 total_end = time.perf_counter()
 total_duration = total_end - total_start
@@ -174,4 +133,4 @@ print(f"🧩 Import time: {import_latency:.3f} sec")
 print(f"🧩 Session init time: {session_latency:.3f} sec")
 print(f"🧩 Graph build time: {graph_build_latency:.3f} sec")
 print(f"🕒 Total runtime for all tests: {total_duration:.3f} sec")
-print("🎉 All tests completed.")
+print("🎉 All tests completed.\n")
