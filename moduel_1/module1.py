@@ -1,6 +1,8 @@
 import re
 import uuid
 import json
+from dotenv import load_dotenv
+import os
 from typing import List, Dict, Any, Optional
 from datetime import datetime
 
@@ -9,12 +11,14 @@ from spacy.matcher import Matcher
 from pydantic import BaseModel, Field, ValidationError
 import google.generativeai as genai
 
+from module_3.utils.logger import logger
+
 # -----------------------------
 # Gemini API Config
 # -----------------------------
-GEMINI_API_KEY = "AIzaSyDwNbpu5hvUJ2wZYXMY14zQlsevLdlr2qw"
+load_dotenv()
+GEMINI_API_KEY = os.getenv("GEMINI_API_KEY")
 genai.configure(api_key=GEMINI_API_KEY)
-
 
 # -----------------------------
 # Data Models
@@ -166,7 +170,7 @@ class GeminiPostProcessor:
         self.model = genai.GenerativeModel(model_name)
 
     def parse(self, collection: EntityCollection) -> Dict[str, Any]:
-        print(collection.raw_text)
+        logger.info(f"Raw POS-tagged text: {collection.raw_text}")
         system_prompt = """You are an assistant that converts elderly conversation into structured JSON.
         The language used may be Singlish-based; understand its nuances.
         The schema must look like this:
@@ -205,6 +209,7 @@ class GeminiPostProcessor:
         try:
             return json.loads(result_text)
         except Exception as e:
+            logger.error(f"Invalid JSON from Gemini: {e}")
             return {"error": f"Invalid JSON from Gemini: {e}", "raw": result_text}
 
 
@@ -218,25 +223,26 @@ class NaturalLanguageToJSONPipeline:
         self.llm = GeminiPostProcessor(api_key=GEMINI_API_KEY)
 
     def run(self, text: str) -> Dict[str, Any]:
-        print("Beginning preprocessing...")
+        logger.info("Beginning preprocessing...")
         prep = self.pre.process(text)
 
         cleaned, sentences = prep["cleaned"], prep["sentences"]
-        print("Starting NER+POS extraction...")
+        logger.info("Starting NER+POS extraction...")
         collection = self.extractor.extract(cleaned, sentences)
 
-        print("Sending to Gemini for structured parsing...")
+        logger.info("Sending to Gemini for structured parsing...")
         structured = self.llm.parse(collection)
 
         # Inject POS-tagged text
         if isinstance(structured, dict):
             structured["pos_tagged_text"] = collection.raw_text
 
-        print("Validating output schema...")
+        logger.info("Validating output schema...")
         try:
             validated = FinalStructuredOutput(**structured)
             return validated.dict()
         except ValidationError as e:
+            logger.error("Validation failed during schema validation.")
             return {"error": "Validation failed", "details": e.errors(), "raw": structured}
 
 
