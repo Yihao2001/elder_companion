@@ -31,15 +31,15 @@ CROSS_ENCODER_MODEL = "jinaai/jina-reranker-v1-turbo-en"
 # ==========================================================
 test_cases = [
     # 🔹 Retrieval questions
-    {"description": "Q: Healthcare + Short-term", "qa_type": "question", "input_text": "What is John's current medication plan?", "topics": ["healthcare", "short-term"]},
-    {"description": "Q: Healthcare + Long-term", "qa_type": "question", "input_text": "What chronic illnesses is John being treated for?", "topics": ["healthcare", "long-term"]},
+    {"description": "Q: Healthcare", "qa_type": "question", "input_text": "What is John's current medication plan?", "topics": ["healthcare"]},
+    {"description": "Q: Long-term", "qa_type": "question", "input_text": "What is John's address?", "topics": ["long-term"]},
     {"description": "Q: Short-term only", "qa_type": "question", "input_text": "What happened to John this morning?", "topics": ["short-term"]},
-    {"description": "Q: Long-term only", "qa_type": "question", "input_text": "What are John's ongoing conditions?", "topics": ["long-term"]},
-    {"description": "Q: Multi-topic (healthcare + short + long)", "qa_type": "question", "input_text": "Summarize John's overall health record.", "topics": ["healthcare", "short-term", "long-term"]},
+    {"description": "S: Insert and Healthcare", "qa_type": "question", "input_text": "John took 5mg of atorvastatin this morning", "topics": ["healthcare", "short-term"]},
+    {"description": "S: Insert and Multi-topic (healthcare + short + long)", "qa_type": "question", "input_text": "John's brother David brought him to see the doctor this morning at Firefly Hospital for his diabetes checkout", "topics": ["healthcare", "short-term", "long-term"]},
 
     # 🔹 Insertion statements
     {"description": "S: Insert medication update", "qa_type": "statement", "input_text": "John started taking 5mg of atorvastatin daily.", "topics": ["short-term"]},
-    {"description": "S: Insert daily observation", "qa_type": "statement", "input_text": "John’s blood pressure was stable this morning.", "topics": ["short-term"]},
+    {"description": "S: Insert and Healthcare", "qa_type": "statement", "input_text": "John’s blood pressure was stable this morning.", "topics": ["short-term", "healthcare"]},
     {"description": "S: Insert mood observation", "qa_type": "statement", "input_text": "John was cheerful after breakfast.", "topics": ["short-term"]},
 ]
 

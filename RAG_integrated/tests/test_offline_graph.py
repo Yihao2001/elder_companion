@@ -87,15 +87,15 @@ def run_test_case(description: str, qa_type: str, input_text: str, topics: list[
 # 5️⃣ Define all test scenarios
 test_cases = [
     # 🔹 Retrieval questions
-    {"description": "Q: Healthcare + Short-term", "qa_type": "question", "input_text": "What is John's current medication plan?", "topics": ["healthcare", "short-term"]},
-    {"description": "Q: Healthcare + Long-term", "qa_type": "question", "input_text": "What chronic illnesses is John being treated for?", "topics": ["healthcare", "long-term"]},
+    {"description": "Q: Healthcare", "qa_type": "question", "input_text": "What is John's current medication plan?", "topics": ["healthcare"]},
+    {"description": "Q: Long-term", "qa_type": "question", "input_text": "What is John's address?", "topics": ["long-term"]},
     {"description": "Q: Short-term only", "qa_type": "question", "input_text": "What happened to John this morning?", "topics": ["short-term"]},
-    {"description": "Q: Long-term only", "qa_type": "question", "input_text": "What are John's ongoing conditions?", "topics": ["long-term"]},
-    {"description": "Q: Multi-topic (healthcare + short + long)", "qa_type": "question", "input_text": "Summarize John's overall health record.", "topics": ["healthcare", "short-term", "long-term"]},
+    {"description": "S: Insert and Healthcare", "qa_type": "question", "input_text": "John took 5mg of atorvastatin this morning", "topics": ["healthcare", "short-term"]},
+    {"description": "S: Insert and Multi-topic (healthcare + short + long)", "qa_type": "question", "input_text": "John's brother David brought him to see the doctor this morning at Firefly Hospital for his diabetes checkout", "topics": ["healthcare", "short-term", "long-term"]},
 
     # 🔹 Insertion statements
     {"description": "S: Insert medication update", "qa_type": "statement", "input_text": "John started taking 5mg of atorvastatin daily.", "topics": ["short-term"]},
-    {"description": "S: Insert daily observation", "qa_type": "statement", "input_text": "John’s blood pressure was stable this morning.", "topics": ["short-term"]},
+    {"description": "S: Insert and Healthcare", "qa_type": "statement", "input_text": "John’s blood pressure was stable this morning.", "topics": ["short-term", "healthcare"]},
     {"description": "S: Insert mood observation", "qa_type": "statement", "input_text": "John was cheerful after breakfast.", "topics": ["short-term"]},
 ]
 
@@ -129,6 +129,16 @@ for r in results:
 
 print("-" * 90)
 print(f"✅ Passed: {passed_tests} / {len(results)}")
+
+# 🕒 Latency summary
+latencies = [r["latency"] for r in results if r["latency"] is not None]
+if latencies:
+    total_latency = sum(latencies)
+    avg_latency = total_latency / len(latencies)
+    print(f"⚡ Fastest: {min(latencies):.3f} sec")
+    print(f"🐢 Slowest: {max(latencies):.3f} sec")
+    print(f"📈 Average: {avg_latency:.3f} sec")
+
 print(f"🧩 Import time: {import_latency:.3f} sec")
 print(f"🧩 Session init time: {session_latency:.3f} sec")
 print(f"🧩 Graph build time: {graph_build_latency:.3f} sec")
