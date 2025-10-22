@@ -1,7 +1,8 @@
 # test_both_graphs.py
 import os
 from dotenv import load_dotenv
-from session_context import SessionContext
+
+from module_3.session_context import SessionContext
 from module_3.online_graph import OnlineGraph
 from module_3.offline_graph import OfflineGraph
 
@@ -10,7 +11,7 @@ load_dotenv()
 
 def main():
     # Shared config
-    elderly_id = os.getenv("ELDERLY_ID")
+    elderly_id = "87654321-4321-4321-4321-019876543210"
     db_url = os.getenv("DATABASE_URL")
     cross_encoder_model = "jinaai/jina-reranker-v1-turbo-en"
     

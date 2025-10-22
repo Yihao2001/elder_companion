@@ -4,13 +4,7 @@ import numpy as np
 import pickle
 import warnings
 
-
-class ClassificationState(TypedDict):
-    text: str
-    flow_type: Literal["online", "offline"]
-    qa: Optional[str]
-    topic: Optional[str]
-
+from module_2.states import ClassificationState
 
 class QAClassifier:
     """

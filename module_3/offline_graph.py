@@ -15,7 +15,7 @@ from OfflineGraph import OfflineGraph
 # Example input payload
 data = {
     "text": "When do I take my medicine?",
-    "flow_type": "offline",
+    "flow_type": "offline", ## this is not neccessary
     "qa": "question",
     "topic": "healthcare"
 }

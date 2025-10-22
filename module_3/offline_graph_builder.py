@@ -54,7 +54,7 @@ def retrieval_node_health(state: GraphState) -> Dict[str, Any]:
     embedding = state["query_embedding"] # Get pre-computed embedding
     logger.info("Called retrieval_node_health...")
     results = retrieve_hybrid_hcm(
-        conn=session.conn,
+        engine=session.engine,
         elderly_id=session.elderly_id,
         query=text,
         embedder=session.embedder, # Pass embedder as fallback/for other steps in hybrid
@@ -70,7 +70,7 @@ def retrieval_node_longterm(state: GraphState) -> Dict[str, Any]:
     embedding = state["query_embedding"] # Get pre-computed embedding
     logger.info("Called retrieval_node_longterm...")
     results = retrieve_hybrid_ltm(
-        conn=session.conn,
+        engine=session.engine,
         elderly_id=session.elderly_id,
         query=text,
         embedder=session.embedder,
@@ -86,7 +86,7 @@ def retrieval_node_shortterm(state: GraphState) -> Dict[str, Any]:
     embedding = state["query_embedding"] # Get pre-computed embedding
     logger.info("Called retrieval_node_shortterm...")
     results = retrieve_hybrid_stm(
-        conn=session.conn,
+        engine=session.engine,
         elderly_id=session.elderly_id,
         query=text,
         embedder=session.embedder,
@@ -118,7 +118,7 @@ def insertion_node(state: GraphState) -> Dict[str, Any]:
     
     # The insert_short_term function now accepts the pre-computed embedding
     result = insert_short_term(
-        conn=session.conn,
+        engine=session.engine,
         content=text,
         elderly_id=session.elderly_id,
         embedder=session.embedder,

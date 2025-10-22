@@ -10,21 +10,23 @@ from module_3.utils.logger import logger
 
 class SessionContext:
 
-    def __init__(self, elderly_id: str, db_url: str, cross_encoder_model):
+    def __init__(self, elderly_id: str, db_url: str, cross_encoder_model="jinaai/jina-reranker-v1-turbo-en"):
         load_dotenv()
 
         self.elderly_id = elderly_id
 
         # === Database engine ===
-        self.db_engine = create_engine(
+        self.engine = create_engine(
             os.getenv("DATABASE_URL"),
-            pool_size=5,
-            max_overflow=10,
+            pool_size=8,
+            max_overflow=16,
             pool_pre_ping=True,
-            pool_recycle=3600,
+            pool_recycle=600,     # e.g., 10 min; keep < proxy idle timeout
+            pool_timeout=30,
+            pool_use_lifo=True,
         )
 
-        self.conn = self.db_engine.connect()
+        # self.conn = self.db_engine.connect()
 
         # === Shared embedding models ===
         self.embedder = Embedder(model_name="google/embeddinggemma-300m")
@@ -43,7 +45,7 @@ class SessionContext:
         """Dispose pooled DB connections on app shutdown."""
         try:
             logger.info("Shutting down")
-            self.db_engine.dispose()
+            self.engine.dispose()   # <-- was self.db_engine
             logger.info("✅ SessionContext shutdown: database engine disposed.")
         except Exception as e:
-            logger.error(f"Shut down error:  {e}")
+            logger.error(f"Shut down error: {e}")

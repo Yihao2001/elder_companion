@@ -6,7 +6,8 @@ import pstats
 from collections import defaultdict
 from typing import Any, Dict, List, Callable
 from functools import wraps
-from utils.logger import logger
+
+from module_3.utils.logger import logger
 
 # ---------------- Timing decorator ----------------
 timing_data: Dict[str, List[float]] = defaultdict(list)

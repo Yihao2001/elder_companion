@@ -1,124 +1,126 @@
 import os
 from dotenv import load_dotenv
-from pydantic import BaseModel
-from typing import TypedDict, Literal, Optional, List
-
+from typing import List, Dict, Any
 from langgraph.graph import StateGraph, START, END
 from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain.schema import HumanMessage
 
 from module_2.qa_classifier_class import QAClassifier
 from module_2.topic_classifier_class import TopicClassifier
+from module_2.states import ClassificationState
+from module_3.utils.logger import logger 
 
-
-load_dotenv()
-api_key = os.getenv("GOOGLE_API_KEY")
-
-gemini_client = ChatGoogleGenerativeAI(
-    model="gemini-2.5-flash",
-    temperature=0,
-    max_output_tokens=1000,
-    api_key=api_key
-)
-
-# Unified state definition
-class ClassificationState(TypedDict):
-    text: str
-    flow_type: Literal["online", "offline"]
-    qa: Optional[str]
-    topic: Optional[List[str]]  # now multi-label
-
-# Define nodes
+# ---------- MODELS ----------
 qa_model = QAClassifier()
 topic_model = TopicClassifier()
 
-def qa_node(state: ClassificationState) -> ClassificationState:
-    """Run offline QA classifier."""
+
+# ---------- NODES ----------
+def qa_node(state: ClassificationState) -> Dict[str, Any]:
+    """Run QA classifier."""
+    logger.info("Running QA node")
     result = qa_model.classify_text_qa({
         "text": state["text"],
         "qa": state.get("qa", "")
     })
-    state["qa"] = result["qa"]
-    return state
+    logger.info("QA node successful")
+    return {"qa": result["qa"]}
 
-def topic_node(state: ClassificationState) -> ClassificationState:
-    """Run offline topic classifier (multi-label)."""
+
+def topic_node(state: ClassificationState) -> Dict[str, Any]:
+    """Run topic classifier."""
+    logger.info("Running topic node")
     result = topic_model.classify_text_topic({
         "text": state["text"],
         "topic": state.get("topic", [])
     })
-    topics = result.get("topic") or []
-    if not topics:
-        topics = ["short-term"]
-    
-    state["topic"] = topics
-    return state
+    topics = result.get("topic") or ["short-term"]
+    logger.info("Topic node successful")
+    return {"topic": topics}
 
-class ClassificationResult(BaseModel):
-    topic: List[str]
-    qa: str
 
-def llm_node(state: ClassificationState) -> ClassificationState:
-    prompt = (
-        f"Classify the following text into topic(s) and QA type.\n\n"
-        f"Text: {state['text']}\n\n"
-        f"Output must be valid JSON in this format:\n"
-        f'{{"topic": ["healthcare", "long-term"], "qa": "question"}}\n'
-        f"Allowed topics: healthcare, long-term, short-term. QA type: question or statement.\n"
-        f"Reply ONLY with JSON, no extra text or Markdown."
+def finalize_node(state: ClassificationState) -> Dict[str, Any]:
+    """Combine final results."""
+    qa = state.get("qa", "unknown")
+    topics = state.get("topic", [])
+    logger.info(f"✅ Finalized output → QA: {qa} | Topics: {topics}")
+    return {"qa": qa, "topic": topics}
+
+
+# ---------- BUILD GRAPH ----------
+def build_classification_graph():
+    graph = StateGraph(ClassificationState)
+
+    graph.add_node("QAClassifier", qa_node)
+    graph.add_node("TopicClassifier", topic_node)
+    graph.add_node("Finalize", finalize_node)
+
+    # Conditional routing from START
+    def choose_flow(state: ClassificationState):
+        if state["flow_type"] == "online":
+            return "END"  # Skip everything
+        elif state["flow_type"] == "offline":
+            # Run both classifiers concurrently
+            return ["QAClassifier", "TopicClassifier"]
+        else:
+            raise ValueError(f"Invalid flow_type: {state['flow_type']}")
+
+    graph.add_conditional_edges(
+        START,
+        choose_flow,
+        {
+            "END": END,
+            "QAClassifier": "QAClassifier",
+            "TopicClassifier": "TopicClassifier",
+        },
     )
-    
-    llm_response = gemini_client.invoke([HumanMessage(content=prompt)])
-    content = llm_response.content.strip()
 
-    # Remove triple backticks if present
-    if content.startswith("```") and content.endswith("```"):
-        content = "\n".join(content.splitlines()[1:-1]).strip()
+    # Fan-in to Finalize, then END
+    graph.add_edge("QAClassifier", "Finalize")
+    graph.add_edge("TopicClassifier", "Finalize")
+    graph.add_edge("Finalize", END)
 
-    # Parse JSON directly into Pydantic model
-    try:
-        result = ClassificationResult.parse_raw(content)
-    except Exception as e:
-        print("LLM output parsing failed, using defaults:", repr(content))
-        result = ClassificationResult(topic=["short-term"], qa="unknown")
+    return graph.compile()
 
-    # Update state
-    state["topic"] = result.topic
-    state["qa"] = result.qa
 
-    return state
+# # ---------- VISUALIZATION ----------
+# def save_mermaid_graph(as_png: bool = True):
+#     compiled_graph = build_classification_graph()
+#     gviz = compiled_graph.get_graph()
 
-# Build LangGraph
-graph = StateGraph(ClassificationState)
+#     try:
+#         png_bytes = gviz.draw_mermaid_png()
+#         with open("module_2/assets/classification_graph.png", "wb") as f:
+#             f.write(png_bytes)
+#         print("🖼️ Saved: classification_graph.png")
+#     except Exception as e:
+#         print(f"⚠️ Could not save graph PNG: {e}")
+#         print("Please ensure Graphviz is installed for PNG generation.")
+#
+#
+# # ---------- TEST EXECUTION ----------
+# if __name__ == "__main__":
+#     graph = build_classification_graph()
+#     print("✅ Classification graph built successfully.")
+#     save_mermaid_graph(as_png=True)
 
-graph.add_node("QAClassifier", qa_node)
-graph.add_node("TopicClassifier", topic_node)
-graph.add_node("LLMClassifier", llm_node)
+#     print("\n🚀 Running test flows...\n")
 
-# Conditional branch from START
-def choose_flow(state: ClassificationState):
-    if state["flow_type"] == "online":
-        return "LLMClassifier"
-    elif state["flow_type"] == "offline":
-        return "QAClassifier"
-    else:
-        raise ValueError(f"Invalid flow_type, please select offline or online: {state['flow_type']}")
+#     # --- Test offline flow (parallel QA + Topic) ---
+#     offline_state = {
+#         "text": "What are the long-term effects of daily exercise?",
+#         "flow_type": "offline",
+#         "qa": "",
+#         "topic": []
+#     }
+#     result_offline = graph.invoke(offline_state)
+#     print("\n🧩 Offline Flow Result:", result_offline)
 
-graph.add_conditional_edges(
-    START,
-    choose_flow,
-    {
-        "LLMClassifier": "LLMClassifier",
-        "QAClassifier": "QAClassifier"
-    }
-)
-
-# Offline flow chain
-graph.add_edge("QAClassifier", "TopicClassifier")
-graph.add_edge("TopicClassifier", END)
-
-# LLM flow ends directly
-graph.add_edge("LLMClassifier", END)
-
-# Compile
-app = graph.compile()
+#     # --- Test online flow (skip everything) ---
+#     online_state = {
+#         "text": "Is this a test input?",
+#         "flow_type": "online",
+#         "qa": "",
+#         "topic": []
+#     }
+#     result_online = graph.invoke(online_state)
+#     print("\n🧩 Online Flow Result:", result_online)

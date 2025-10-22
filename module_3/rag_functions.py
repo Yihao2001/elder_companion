@@ -1,6 +1,4 @@
 from typing import List, Dict, Optional, Any
-from datetime import datetime
-
 from sqlalchemy.exc import SQLAlchemyError
 from sqlalchemy import text
 import numpy as np
@@ -11,14 +9,14 @@ from module_3.utils.recency_score import compute_recency_score
 from module_3.utils.logger import logger
 
 
-def insert_short_term(conn, content: str, elderly_id: str, embedder: Optional[Embedder] = None, embedding: Optional[List[float]] = None) -> dict:
+def insert_short_term(engine, content: str, elderly_id: str,
+                      embedder: Optional[Embedder] = None,
+                      embedding: Optional[List[float]] = None) -> dict:
     """
-    Insert short-term memory item.
-    Takes a connection (`conn`) and an optional pre-computed `embedding`.
+    Insert short-term memory item using a pooled connection.
     """
     if elderly_id is None:
         raise ValueError("elderly_id is required and cannot be None.")
-
     if not content or not content.strip():
         return {"success": False, "error": "content is required and cannot be empty."}
 
@@ -38,23 +36,20 @@ def insert_short_term(conn, content: str, elderly_id: str, embedder: Optional[Em
             )
             RETURNING id, created_at;
         """)
-        # Execute on the passed connection
-        result = conn.execute(query, {
-            "elderly_id": elderly_id.strip(),
-            "content": content.strip(),
-            "embedding": embedding_str
-        }).fetchone()
-        # conn.commit() is removed, caller is responsible for transaction management.
 
-        # Log successful insertion
-        logger.info(
-            f"✅ Successfully inserted short-term memory for elderly_id={elderly_id}, record_id={result.id}"
-        )
-        
+        # BEGIN context auto-commits if no exception
+        with engine.begin() as conn:
+            row = conn.execute(query, {
+                "elderly_id": elderly_id.strip(),
+                "content": content.strip(),
+                "embedding": embedding_str
+            }).fetchone()
+
+        logger.info(f"✅ Inserted STM for elderly_id={elderly_id}, record_id={row.id}")
         return {
-            "success": True, 
-            "record_id": str(result.id), 
-            "created_at": result.created_at.isoformat() if result.created_at else None
+            "success": True,
+            "record_id": str(row.id),
+            "created_at": row.created_at.isoformat() if row.created_at else None
         }
 
     except SQLAlchemyError as e:
@@ -63,14 +58,15 @@ def insert_short_term(conn, content: str, elderly_id: str, embedder: Optional[Em
     except Exception as e:
         logger.error(f"Unexpected error inserting STM: {str(e)}")
         return {"success": False, "error": f"Unexpected error: {str(e)}"}
-    
 
 
-def retrieve_hybrid_ltm(conn, elderly_id, query: str, embedder: Optional[Embedder] = None, embedding: Optional[List[float]] = None, 
-                        top_k_retrieval=5, sim_threshold=0.3, fuzzy_distance=2, alpha_retrieval=0.5):
+def retrieve_hybrid_ltm(engine, elderly_id, query: str,
+                        embedder: Optional[Embedder] = None,
+                        embedding: Optional[List[float]] = None,
+                        top_k_retrieval=5, sim_threshold=0.3,
+                        fuzzy_distance=2, alpha_retrieval=0.5):
     """
     Retrieve long-term memory using hybrid (embedding + BM25) approach.
-    Takes a connection (`conn`) and an optional pre-computed `embedding`.
     """
     try:
         if embedding is None:
@@ -79,14 +75,12 @@ def retrieve_hybrid_ltm(conn, elderly_id, query: str, embedder: Optional[Embedde
             emb = embedder.embed(query)
         else:
             emb = embedding
-            
-        emb_str = str(emb) # Use string format for SQL parameter
+        emb_str = str(emb)
 
-        # --- Embeddings ---
         sql_emb = text(f"""
             WITH nearest AS MATERIALIZED (
                 SELECT id, category, key, value, last_updated, embedding,
-                    embedding <=> (:emb)::vector AS distance
+                       embedding <=> (:emb)::vector AS distance
                 FROM long_term_memory
                 WHERE elderly_id = :elderly_id
                 ORDER BY distance
@@ -101,38 +95,22 @@ def retrieve_hybrid_ltm(conn, elderly_id, query: str, embedder: Optional[Embedde
         params_emb = {"emb": emb_str, "elderly_id": elderly_id, "top_k": top_k_retrieval}
         if sim_threshold is not None:
             params_emb["threshold"] = sim_threshold
-        
-        # Execute on the passed connection
-        rows_emb = conn.execute(sql_emb, params_emb).fetchall()
-        
-        emb_results = {
-            r.id: {
-                "id": r.id,
-                "category": r.category,
-                "key": r.key,
-                "value": r.value,
-                "last_updated": r.last_updated,
-                "embedding": r.embedding,
-                "emb_score": float(r.similarity)
-            }
-            for r in rows_emb
-        }
-        
-        # --- BM25 ---
+
         sql_bm25 = text("""
-            SELECT id, category, key, value, last_updated, embedding, paradedb.score(id) AS bm25_score
+            SELECT id, category, key, value, last_updated, embedding,
+                   paradedb.score(id) AS bm25_score
             FROM long_term_memory
             WHERE elderly_id = :elderly_id
               AND (
                 category_search @@@ :query
-               OR key @@@ :query
-               OR value @@@ :query
-               OR id @@@ paradedb.match('category_search', :query, distance => :distance)
-               OR id @@@ paradedb.match('key', :query, distance => :distance)
-               OR id @@@ paradedb.match('value', :query, distance => :distance)
-                )
+                OR key @@@ :query
+                OR value @@@ :query
+                OR id @@@ paradedb.match('category_search', :query, distance => :distance)
+                OR id @@@ paradedb.match('key', :query, distance => :distance)
+                OR id @@@ paradedb.match('value', :query, distance => :distance)
+              )
             ORDER BY bm25_score DESC
-                LIMIT :top_k;
+            LIMIT :top_k;
         """)
         params_bm25 = {
             "elderly_id": elderly_id,
@@ -140,46 +118,35 @@ def retrieve_hybrid_ltm(conn, elderly_id, query: str, embedder: Optional[Embedde
             "distance": fuzzy_distance,
             "top_k": top_k_retrieval
         }
-        
-        # Execute on the passed connection
-        rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
-        
+
+        with engine.connect() as conn:
+            rows_emb = conn.execute(sql_emb, params_emb).fetchall()
+            rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
+
+        emb_results = {
+            r.id: {
+                "id": r.id, "category": r.category, "key": r.key, "value": r.value,
+                "last_updated": r.last_updated, "embedding": r.embedding,
+                "emb_score": float(r.similarity)
+            } for r in rows_emb
+        }
+
         max_bm25 = max((float(r.bm25_score) for r in rows_bm25), default=1.0)
         bm25_results = {
             r.id: {
-                "id": r.id,
-                "category": r.category,
-                "key": r.key,
-                "value": r.value,
-                "last_updated": r.last_updated,
-                "embedding": r.embedding,
+                "id": r.id, "category": r.category, "key": r.key, "value": r.value,
+                "last_updated": r.last_updated, "embedding": r.embedding,
                 "bm25_score": float(r.bm25_score) / max_bm25
-            }
-            for r in rows_bm25
+            } for r in rows_bm25
         }
-        
-        # --- Merge + hybrid ---
+
         combined = {}
         all_ids = set(emb_results.keys()) | set(bm25_results.keys())
         for id_ in all_ids:
-            emb_data = emb_results.get(id_, {
-                "id": id_,
-                "category": "",
-                "key": "",
-                "value": "",
-                "last_updated": None,
-                "embedding": [],
-                "emb_score": 0.0
-            })
-            bm25_data = bm25_results.get(id_, {
-                "id": id_,
-                "category": "",
-                "key": "",
-                "value": "",
-                "last_updated": None,
-                "embedding": [],
-                "bm25_score": 0.0
-            })
+            emb_data = emb_results.get(id_, {"id": id_, "category": "", "key": "", "value": "",
+                                             "last_updated": None, "embedding": [], "emb_score": 0.0})
+            bm25_data = bm25_results.get(id_, {"id": id_, "category": "", "key": "", "value": "",
+                                               "last_updated": None, "embedding": [], "bm25_score": 0.0})
             combined[id_] = {
                 "id": id_,
                 "category": emb_data["category"] or bm25_data["category"],
@@ -190,23 +157,25 @@ def retrieve_hybrid_ltm(conn, elderly_id, query: str, embedder: Optional[Embedde
                 "emb_score": emb_data.get("emb_score", 0.0),
                 "bm25_score": bm25_data.get("bm25_score", 0.0),
                 "hybrid_score": round(
-                    alpha_retrieval * bm25_data.get("bm25_score", 0.0) +
-                    (1 - alpha_retrieval) * emb_data.get("emb_score", 0.0),
+                    alpha_retrieval * bm25_data.get("bm25_score", 0.0)
+                    + (1 - alpha_retrieval) * emb_data.get("emb_score", 0.0),
                     4
                 )
             }
         return sorted(combined.values(), key=lambda x: x["hybrid_score"], reverse=True)[:top_k_retrieval]
+
     except Exception as e:
         logger.warning(f"❌ Failed hybrid LTM retrieval: {str(e)}")
         return []
 
 
-
-def retrieve_hybrid_stm(conn, elderly_id, query: str, embedder: Optional[Embedder] = None, embedding: Optional[List[float]] = None, 
-                        top_k_retrieval=5, sim_threshold=0.3, fuzzy_distance=2, alpha_retrieval=0.5):
+def retrieve_hybrid_stm(engine, elderly_id, query: str,
+                        embedder: Optional[Embedder] = None,
+                        embedding: Optional[List[float]] = None,
+                        top_k_retrieval=5, sim_threshold=0.3,
+                        fuzzy_distance=2, alpha_retrieval=0.5):
     """
     Retrieve short-term memory using hybrid (embedding + BM25) approach.
-    Takes a connection (`conn`) and an optional pre-computed `embedding`.
     """
     try:
         if embedding is None:
@@ -215,15 +184,12 @@ def retrieve_hybrid_stm(conn, elderly_id, query: str, embedder: Optional[Embedde
             emb = embedder.embed(query)
         else:
             emb = embedding
-            
         emb_str = str(emb)
 
-        # --- Embeddings ---
         sql_emb = text(f"""
             WITH nearest AS MATERIALIZED (
-                SELECT
-                    id, content, created_at, embedding,
-                    embedding <=> (:emb)::vector AS distance
+                SELECT id, content, created_at, embedding,
+                       embedding <=> (:emb)::vector AS distance
                 FROM short_term_memory
                 WHERE elderly_id = :elderly_id
                 ORDER BY distance
@@ -238,48 +204,41 @@ def retrieve_hybrid_stm(conn, elderly_id, query: str, embedder: Optional[Embedde
         params_emb = {"emb": emb_str, "elderly_id": elderly_id, "top_k": top_k_retrieval}
         if sim_threshold is not None:
             params_emb["threshold"] = sim_threshold
-        
-        # Execute on the passed connection
-        rows_emb = conn.execute(sql_emb, params_emb).fetchall()
-        
-        emb_results = {
-            r.id: {
-                "id": r.id,
-                "content": r.content,
-                "created_at": r.created_at,
-                "embedding": r.embedding,
-                "emb_score": float(r.similarity)
-            }
-            for r in rows_emb
-        }
-        
-        # --- BM25 ---
+
         sql_bm25 = text("""
             SELECT id, content, created_at, embedding, paradedb.score(id) AS bm25_score
             FROM short_term_memory
             WHERE elderly_id = :elderly_id
               AND (content @@@ :query OR id @@@ paradedb.match('content', :query, distance => :distance))
-            ORDER BY bm25_score DESC LIMIT :top_k;
+            ORDER BY bm25_score DESC
+            LIMIT :top_k;
         """)
-        params_bm25 = {"elderly_id": elderly_id, "query": normalize_for_paradedb(query),
-                       "distance": fuzzy_distance, "top_k": top_k_retrieval}
-        
-        # Execute on the passed connection
-        rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
-        
+        params_bm25 = {
+            "elderly_id": elderly_id,
+            "query": normalize_for_paradedb(query),
+            "distance": fuzzy_distance,
+            "top_k": top_k_retrieval
+        }
+
+        with engine.connect() as conn:
+            rows_emb = conn.execute(sql_emb, params_emb).fetchall()
+            rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
+
+        emb_results = {
+            r.id: {
+                "id": r.id, "content": r.content, "created_at": r.created_at,
+                "embedding": r.embedding, "emb_score": float(r.similarity)
+            } for r in rows_emb
+        }
+
         max_bm25 = max((float(r.bm25_score) for r in rows_bm25), default=1.0)
         bm25_results = {
             r.id: {
-                "id": r.id,
-                "content": r.content,
-                "created_at": r.created_at,
-                "embedding": r.embedding,
-                "bm25_score": float(r.bm25_score) / max_bm25
-            }
-            for r in rows_bm25
+                "id": r.id, "content": r.content, "created_at": r.created_at,
+                "embedding": r.embedding, "bm25_score": float(r.bm25_score) / max_bm25
+            } for r in rows_bm25
         }
-        
-        # --- Merge + hybrid ---
+
         combined = {}
         for id_, r in {**emb_results, **bm25_results}.items():
             emb_score = emb_results.get(id_, {}).get("emb_score", 0.0)
@@ -292,17 +251,19 @@ def retrieve_hybrid_stm(conn, elderly_id, query: str, embedder: Optional[Embedde
                 "hybrid_score": round(hybrid, 4)
             }
         return sorted(combined.values(), key=lambda x: x["hybrid_score"], reverse=True)[:top_k_retrieval]
+
     except Exception as e:
         logger.warning(f"❌ Failed hybrid STM retrieval: {str(e)}")
         return []
 
 
-
-def retrieve_hybrid_hcm(conn, elderly_id, query: str, embedder: Optional[Embedder] = None, embedding: Optional[List[float]] = None, 
-                        top_k_retrieval=5, sim_threshold=0.3, fuzzy_distance=2, alpha_retrieval=0.5):
+def retrieve_hybrid_hcm(engine, elderly_id, query: str,
+                        embedder: Optional[Embedder] = None,
+                        embedding: Optional[List[float]] = None,
+                        top_k_retrieval=5, sim_threshold=0.3,
+                        fuzzy_distance=2, alpha_retrieval=0.5):
     """
     Retrieve healthcare records using hybrid (embedding + BM25) approach.
-    Takes a connection (`conn`) and an optional pre-computed `embedding`.
     """
     try:
         if embedding is None:
@@ -311,14 +272,12 @@ def retrieve_hybrid_hcm(conn, elderly_id, query: str, embedder: Optional[Embedde
             emb = embedder.embed(query)
         else:
             emb = embedding
-            
         emb_str = str(emb)
 
-        # --- Embeddings ---
         sql_emb = text(f"""
             WITH nearest AS MATERIALIZED (
                 SELECT id, record_type, description, diagnosis_date, last_updated, embedding,
-                    embedding <=> (:emb)::vector AS distance
+                       embedding <=> (:emb)::vector AS distance
                 FROM healthcare_records
                 WHERE elderly_id = :elderly_id
                 ORDER BY distance
@@ -333,10 +292,31 @@ def retrieve_hybrid_hcm(conn, elderly_id, query: str, embedder: Optional[Embedde
         params_emb = {"emb": emb_str, "elderly_id": elderly_id, "top_k": top_k_retrieval}
         if sim_threshold is not None:
             params_emb["threshold"] = sim_threshold
-        
-        # Execute on the passed connection
-        rows_emb = conn.execute(sql_emb, params_emb).fetchall()
-        
+
+        sql_bm25 = text("""
+            SELECT id, record_type, description, diagnosis_date, last_updated, embedding,
+                   paradedb.score(id) AS bm25_score
+            FROM healthcare_records
+            WHERE elderly_id = :elderly_id
+              AND (
+                record_type_search @@@ :query OR description @@@ :query
+                OR id @@@ paradedb.match('record_type_search', :query, distance => :distance)
+                OR id @@@ paradedb.match('description', :query, distance => :distance)
+              )
+            ORDER BY bm25_score DESC
+            LIMIT :top_k;
+        """)
+        params_bm25 = {
+            "elderly_id": elderly_id,
+            "query": normalize_for_paradedb(query),
+            "distance": fuzzy_distance,
+            "top_k": top_k_retrieval
+        }
+
+        with engine.connect() as conn:
+            rows_emb = conn.execute(sql_emb, params_emb).fetchall()
+            rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
+
         emb_results = {
             r.id: {
                 "id": r.id,
@@ -346,38 +326,9 @@ def retrieve_hybrid_hcm(conn, elderly_id, query: str, embedder: Optional[Embedde
                 "last_updated": r.last_updated.isoformat() if r.last_updated else None,
                 "embedding": r.embedding,
                 "emb_score": float(r.similarity)
-            }
-            for r in rows_emb
+            } for r in rows_emb
         }
-        
-        # --- BM25 ---
-        sql_bm25 = text("""
-            SELECT id,
-                   record_type,
-                   description,
-                   diagnosis_date,
-                   last_updated,
-                   embedding,
-                   paradedb.score(id) AS bm25_score
-            FROM healthcare_records
-            WHERE elderly_id = :elderly_id
-              AND (
-                record_type_search @@@ :query OR description @@@ :query
-                OR id @@@ paradedb.match('record_type_search', :query, distance => :distance)
-                OR id @@@ paradedb.match('description', :query, distance => :distance)
-                )
-            ORDER BY bm25_score DESC LIMIT :top_k;
-        """)
-        params_bm25 = {
-            "elderly_id": elderly_id,
-            "query": normalize_for_paradedb(query),
-            "distance": fuzzy_distance,
-            "top_k": top_k_retrieval
-        }
-        
-        # Execute on the passed connection
-        rows_bm25 = conn.execute(sql_bm25, params_bm25).fetchall()
-        
+
         max_bm25 = max((float(r.bm25_score) for r in rows_bm25), default=1.0)
         bm25_results = {
             r.id: {
@@ -388,32 +339,18 @@ def retrieve_hybrid_hcm(conn, elderly_id, query: str, embedder: Optional[Embedde
                 "last_updated": r.last_updated.isoformat() if r.last_updated else None,
                 "embedding": r.embedding,
                 "bm25_score": float(r.bm25_score) / max_bm25
-            }
-            for r in rows_bm25
+            } for r in rows_bm25
         }
-        
-        # --- Merge + hybrid ---
+
         combined = {}
         all_ids = set(emb_results.keys()) | set(bm25_results.keys())
         for id_ in all_ids:
-            emb_data = emb_results.get(id_, {
-                "id": id_,
-                "record_type": "",
-                "description": "",
-                "diagnosis_date": None,
-                "last_updated": None,
-                "embedding": [],
-                "emb_score": 0.0
-            })
-            bm25_data = bm25_results.get(id_, {
-                "id": id_,
-                "record_type": "",
-                "description": "",
-                "diagnosis_date": None,
-                "last_updated": None,
-                "embedding": [],
-                "bm25_score": 0.0
-            })
+            emb_data = emb_results.get(id_, {"id": id_, "record_type": "", "description": "",
+                                             "diagnosis_date": None, "last_updated": None,
+                                             "embedding": [], "emb_score": 0.0})
+            bm25_data = bm25_results.get(id_, {"id": id_, "record_type": "", "description": "",
+                                               "diagnosis_date": None, "last_updated": None,
+                                               "embedding": [], "bm25_score": 0.0})
             combined[id_] = {
                 "id": id_,
                 "record_type": emb_data["record_type"] or bm25_data["record_type"],
@@ -424,15 +361,17 @@ def retrieve_hybrid_hcm(conn, elderly_id, query: str, embedder: Optional[Embedde
                 "emb_score": emb_data.get("emb_score", 0.0),
                 "bm25_score": bm25_data.get("bm25_score", 0.0),
                 "hybrid_score": round(
-                    alpha_retrieval * bm25_data.get("bm25_score", 0.0) +
-                    (1 - alpha_retrieval) * emb_data.get("emb_score", 0.0),
+                    alpha_retrieval * bm25_data.get("bm25_score", 0.0)
+                    + (1 - alpha_retrieval) * emb_data.get("emb_score", 0.0),
                     4
                 )
             }
         return sorted(combined.values(), key=lambda x: x["hybrid_score"], reverse=True)[:top_k_retrieval]
+
     except Exception as e:
         logger.warning(f"❌ Failed hybrid health retrieval: {str(e)}")
         return []
+
 
 
 
@@ -527,7 +466,7 @@ def rerank_with_mmr_and_recency(query: str, candidates: List[Dict[str, Any]], cr
 
 
 
-def retrieve_rerank(conn, elderly_id, query, embedder:Optional[Embedder]=None, cross_encoder:Optional[CrossEmbedder]=None, mode="long-term", top_k_retrieval=25, 
+def retrieve_rerank(engine, elderly_id, query, embedder:Optional[Embedder]=None, cross_encoder:Optional[CrossEmbedder]=None, mode="long-term", top_k_retrieval=25, 
                     sim_threshold=0.3, fuzzy_distance=2, alpha_retrieval=0.5, 
                     alpha_MMR=0.75, beta_recency=0.1, top_k_MMR=8, 
                     query_embedding: Optional[List[float]] = None):
@@ -554,17 +493,17 @@ def retrieve_rerank(conn, elderly_id, query, embedder:Optional[Embedder]=None, c
 
     # Step 2: Retrieve candidates based on mode
     if mode == "short-term":
-        candidates = retrieve_hybrid_stm(conn, elderly_id, query, embedder=embedder, embedding=query_embedding,
+        candidates = retrieve_hybrid_stm(engine, elderly_id, query, embedder=embedder, embedding=query_embedding,
                                         top_k_retrieval=top_k_retrieval, 
                                         sim_threshold=sim_threshold, fuzzy_distance=fuzzy_distance, 
                                         alpha_retrieval=alpha_retrieval)
     elif mode == "long-term":
-        candidates = retrieve_hybrid_ltm(conn, elderly_id, query, embedder=embedder, embedding=query_embedding,
+        candidates = retrieve_hybrid_ltm(engine, elderly_id, query, embedder=embedder, embedding=query_embedding,
                                         top_k_retrieval=top_k_retrieval, 
                                         sim_threshold=sim_threshold, fuzzy_distance=fuzzy_distance, 
                                         alpha_retrieval=alpha_retrieval)
     elif mode == "healthcare":
-        candidates = retrieve_hybrid_hcm(conn, elderly_id, query, embedder=embedder, embedding=query_embedding,
+        candidates = retrieve_hybrid_hcm(engine, elderly_id, query, embedder=embedder, embedding=query_embedding,
                                         top_k_retrieval=top_k_retrieval, 
                                         sim_threshold=sim_threshold, fuzzy_distance=fuzzy_distance, 
                                         alpha_retrieval=alpha_retrieval)

@@ -15,7 +15,7 @@ from OnlineGraph import OnlineGraph
 # Example input payload
 data = {
     "text": "When do I take my medicine?",
-    "flow_type": "offline",
+    "flow_type": "online", ## this is not neccessary
     "qa": "question",
     "topic": "healthcare"
 }

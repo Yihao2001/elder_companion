@@ -57,7 +57,7 @@ def make_tools(session: SessionContext):
         logger.info("Tool called: retrieve_healthcare")
         embedding = getattr(session, "current_embedding", None)
         result = retrieve_hybrid_hcm(
-            conn=session.conn,
+            engine=session.engine,
             elderly_id=session.elderly_id,
             query=query,
             embedder=session.embedder,
@@ -78,7 +78,7 @@ def make_tools(session: SessionContext):
         logger.info("Tool called: retrieve_long_term")
         embedding = getattr(session, "current_embedding", None)
         result = retrieve_hybrid_ltm(
-            conn=session.conn,
+            engine=session.engine,
             elderly_id=session.elderly_id,
             query=query,
             embedder=session.embedder,
@@ -99,7 +99,7 @@ def make_tools(session: SessionContext):
         logger.info("Tool called: retrieve_short_term")
         embedding = getattr(session, "current_embedding", None)
         result = retrieve_hybrid_stm(
-            conn=session.conn,
+            engine=session.engine,
             elderly_id=session.elderly_id,
             query=query,
             embedder=session.embedder,
@@ -120,7 +120,7 @@ def make_tools(session: SessionContext):
         logger.info("Tool called: insert_statement")
 
         insert_short_term(
-            conn=session.conn,
+            engine=session.engine,
             content=content,
             elderly_id=session.elderly_id,
             embedder=session.embedder,

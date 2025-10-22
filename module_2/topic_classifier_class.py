@@ -1,16 +1,9 @@
 from sentence_transformers import SentenceTransformer
-from typing import TypedDict, List, Literal, Optional
 import numpy as np
 import pickle
 import re
 
-
-class ClassificationState(TypedDict):
-    text: str
-    flow_type: Literal["online", "offline"]
-    qa: Optional[str]
-    topic: Optional[List[str]]  # now multi-label
-
+from module_2.states import ClassificationState
 
 class TopicClassifier:
     """

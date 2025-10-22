@@ -34,7 +34,6 @@ formatter = SGTimeFormatter(
         'INFO':     'green',
         'WARNING':  'yellow',
         'ERROR':    'red',
-        'CRITICAL': 'red,bg_white',
     },
     secondary_log_colors={},
     style='%'
