@@ -1,3 +1,7 @@
+## For Backend pipeline module 1 -> module 3
+fastapi
+uvicorn
+
 # Core agentic frameworks
 langchain
 langgraph
@@ -5,7 +9,6 @@ langchain-core
 langchain-google-genai
 google-generativeai
 einops
-pickle
 
 # Environment & validation
 python-dotenv
@@ -33,5 +36,5 @@ snakeviz
 spacy
 xgboost
 lightgbm
+scikit-learn
 
-en_core_web_lg
