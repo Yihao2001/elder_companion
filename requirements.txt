@@ -1,0 +1,40 @@
+## For Backend pipeline module 1 -> module 3
+fastapi
+uvicorn
+
+# Core agentic frameworks
+langchain
+langgraph
+langchain-core
+langchain-google-genai
+google-generativeai
+einops
+
+# Environment & validation
+python-dotenv
+pydantic
+pyyaml
+
+# Database
+psycopg2-binary
+sqlalchemy
+
+# Embeddings / HuggingFace
+sentence-transformers
+huggingface_hub
+transformers
+numpy
+
+# Notebook & visualization
+colorlog
+ipython
+graphviz
+streamlit
+snakeviz
+
+# ml models
+spacy
+xgboost
+lightgbm
+scikit-learn
+
