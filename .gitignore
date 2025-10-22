@@ -2,12 +2,29 @@
 __pycache__/
 *.pyc
 *.pyo
-*.env
+*.pyd
 *.log
 
-#pycharm specific
-/.idea
-.env
+# Virtual environments
+venv/
 .venv
+*.venv
 
+# Environment
+*.env
+.env
+env/
+# only allow this pattern for examples
+!example.env  
+!.env.example
+
+# IDEs and editors
+/.idea
+.idea/
+/.idea/
 .DS_Store
+
+# Node.js
+/node_modules
+/node_modules/
+node_modules/
