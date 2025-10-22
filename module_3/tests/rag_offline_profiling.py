@@ -6,10 +6,7 @@ import pstats
 from collections import defaultdict
 from typing import Any, Dict, List, Callable
 from functools import wraps
-
-# ---------------- Logging setup ----------------
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger("profile_rag")
+from module_3.utils.logger import logger
 
 # ---------------- Timing decorator ----------------
 timing_data: Dict[str, List[float]] = defaultdict(list)
@@ -28,7 +25,9 @@ def timed(func: Callable[..., Any]) -> Callable[..., Any]:
     return wrapper
 
 # ---------------- Imports (after defining timed) ----------------
-from offline_graph_builder import (
+from module_3.session_context import SessionContext
+
+from module_3.offline_graph_builder import (
     GraphState,
     build_offline_graph,
     retrieval_node_health,
@@ -37,8 +36,6 @@ from offline_graph_builder import (
     reranker_node,
     insertion_node,
 )
-
-from session_context import SessionContext
 
 for fn in [
     retrieval_node_health,

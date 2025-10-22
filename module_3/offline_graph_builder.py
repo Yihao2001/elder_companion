@@ -2,23 +2,22 @@ from __future__ import annotations
 from typing import TypedDict, Literal, List, Dict, Any, Optional
 from typing_extensions import Annotated
 import operator
-from langgraph.graph import StateGraph, START, END
-from session_context import SessionContext
 
-from rag_functions import (
+from langgraph.graph import StateGraph, START, END
+
+from module_3.session_context import SessionContext
+from module_3.utils.logger import logger 
+from module_3.rag_functions import (
     retrieve_hybrid_stm,
     retrieve_hybrid_hcm,
     retrieve_hybrid_ltm,
     rerank_with_mmr_and_recency,
     insert_short_term,
 )
-from utils.logger import logger 
-
-
-AllowedTopic = Literal["healthcare", "long-term", "short-term"]
-
 
 # ---------- State ----------
+AllowedTopic = Literal["healthcare", "long-term", "short-term"]
+
 class GraphState(TypedDict):
     session: Annotated[SessionContext, lambda x, y: x or y]
     input_text: Annotated[str, lambda x, y: x or y]

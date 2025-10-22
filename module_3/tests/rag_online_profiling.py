@@ -26,14 +26,14 @@ def timed(func: Callable[..., Any]) -> Callable[..., Any]:
 
 
 # ---------------- Imports (after defining timed) ----------------
-from online_graph_builder import (
+from module_3.online_graph_builder import (
     build_online_graph,
     make_tools,
     route_after_tools,
     reranker_node,
     embedding_node,
 )
-from session_context import SessionContext
+from module_3.session_context import SessionContext
 from langchain_core.messages import HumanMessage
 
 # Wrap critical nodes

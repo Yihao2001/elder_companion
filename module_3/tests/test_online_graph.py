@@ -10,10 +10,11 @@ from dotenv import load_dotenv
 # ==========================================================
 start_import_time = time.perf_counter()
 
-from session_context import SessionContext
 from langchain_core.messages import HumanMessage, SystemMessage
-from online_graph_builder import build_online_graph
-from utils.prompt import SYSTEM_PROMPT
+
+from module_3.session_context import SessionContext
+from module_3.online_graph_builder import build_online_graph
+from module_3.utils.prompt import SYSTEM_PROMPT
 
 import_end_time = time.perf_counter()
 import_latency = import_end_time - start_import_time

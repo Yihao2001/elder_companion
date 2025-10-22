@@ -1,13 +1,14 @@
-from sqlalchemy.exc import SQLAlchemyError
-from sqlalchemy import text
 from typing import List, Dict, Optional, Any
 from datetime import datetime
+
+from sqlalchemy.exc import SQLAlchemyError
+from sqlalchemy import text
 import numpy as np
-# from sqlalchemy import create_engine, text # Already imported
-from utils.utils import normalize_for_paradedb
-from utils.embedder import Embedder, CrossEmbedder
-from utils.recency_score import compute_recency_score
-from utils.logger import logger
+
+from module_3.utils.utils import normalize_for_paradedb
+from module_3.utils.embedder import Embedder, CrossEmbedder
+from module_3.utils.recency_score import compute_recency_score
+from module_3.utils.logger import logger
 
 
 def insert_short_term(conn, content: str, elderly_id: str, embedder: Optional[Embedder] = None, embedding: Optional[List[float]] = None) -> dict:

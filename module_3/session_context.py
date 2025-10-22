@@ -1,10 +1,12 @@
 import os
+
 import pickle
 from dotenv import load_dotenv
 from sqlalchemy import create_engine
 from langchain_google_genai import ChatGoogleGenerativeAI
-from utils.embedder import Embedder, CrossEmbedder
-from utils.logger import logger
+
+from module_3.utils.embedder import Embedder, CrossEmbedder
+from module_3.utils.logger import logger
 
 class SessionContext:
 

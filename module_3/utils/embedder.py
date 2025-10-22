@@ -4,14 +4,9 @@ from typing import List
 from dotenv import load_dotenv
 from huggingface_hub import login
 from sentence_transformers import SentenceTransformer, CrossEncoder
-from utils.logger import logger
+from module_3.utils.logger import logger
 
 class Embedder:
-    """
-    Lazy loader for SentenceTransformer embeddings.
-    Loads model only when explicitly instantiated.
-    """
-
     def __init__(self, model_name: str = "google/embeddinggemma-300m"):
         load_dotenv()
         self.embedding_model_name = model_name
@@ -53,10 +48,6 @@ class Embedder:
 
 
 class CrossEmbedder:
-    """
-    Lazy loader for CrossEncoder reranker.
-    """
-
     def __init__(self, model_name: str = "jinaai/jina-reranker-v1-turbo-en"):
         load_dotenv()
         self.model_name = model_name

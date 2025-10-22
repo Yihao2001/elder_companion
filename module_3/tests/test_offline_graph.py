@@ -6,8 +6,8 @@ from dotenv import load_dotenv
 # 1️⃣ Start timing imports
 start_import_time = time.perf_counter()
 
-from offline_graph_builder import build_offline_graph, GraphState
-from session_context import SessionContext
+from module_3.offline_graph_builder import build_offline_graph, GraphState
+from module_3.session_context import SessionContext
 
 import_end_time = time.perf_counter()
 import_latency = import_end_time - start_import_time
