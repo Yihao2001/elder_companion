@@ -1,8 +1,9 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, g
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from ..db import get_db
 from ..config import Config
+from ..models import ElderlyProfile, user_elderly
 
 elderly_bp = Blueprint("elderly", __name__)
 
@@ -48,6 +49,41 @@ def get_elderly():
         "marital_status": row["marital_status"],
         "address": row["address"]
     }
+
+    return jsonify(result), 200
+
+@elderly_bp.route("/all_elderly", methods=["GET"])
+def get_all_elderly_ids():
+
+    # Retrieve user info from flask context
+    user_id = g.get('user_id')
+    user_role = g.get('user_role')
+
+    if not user_id or not user_role:
+        return jsonify({"error": "Missing user_id or user_role in flask context"}), 500
+
+    db: Session = next(get_db())
+
+    if user_role == "super_admin":
+        # super admin → return all elderly IDs
+        elderly_ids = (
+            db.session.query(ElderlyProfile.id)
+            .distinct()
+            .all()
+        )
+    else:
+        # normal user → return elderly IDs linked to this user
+        elderly_ids = (
+            db.session.query(user_elderly.c.elderly_id)
+            .filter(user_elderly.c.user_id == user_id)
+            .distinct()
+            .all()
+        )
+    db.close()
+
+    # `all()` returns list of Row objects like: [(uuid1,), (uuid2,)]
+    # so we extract the UUID, convert to string
+    result = [str(eid[0]) for eid in elderly_ids]
 
     return jsonify(result), 200
 
