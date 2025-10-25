@@ -86,8 +86,9 @@ def verify_jwt():
     if not user:
         return jsonify({"error": "user_id does not exist"}), 400
     
-    # Save user_id in flask context
+    # Save user_id and user_role in flask context
     g.user_id = user_id
+    g.user_role = user_role
     
     # For DEBUG:
     # print(f"user_id in g: {g.get('user_id')}")

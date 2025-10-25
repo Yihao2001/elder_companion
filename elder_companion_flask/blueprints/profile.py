@@ -1,8 +1,9 @@
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, g
 from sqlalchemy.orm import Session
 from sqlalchemy import text
 from ..db import get_db
 from ..config import Config
+from ..models import ElderlyProfile, user_elderly
 
 elderly_bp = Blueprint("elderly", __name__)
 
@@ -10,94 +11,103 @@ SECRET_KEY = Config.DATABASE_ENCRYPTION_KEY
 
 @elderly_bp.route("/elderly", methods=["GET"])
 def get_elderly():
-
-    # return None if elderly_id not present
-    elderly_id = request.args.get("elderly_id")
-    if not elderly_id:
-        # TODO: Return a list of all elderly that the user has access to
-        return jsonify({"error": "Missing elderly_id"}), 400
-
+    """
+    If elderly_id provided, return a single row 
+    Else return a list of all elderly information that the user has access to
+    """
+    
     db: Session = next(get_db())
-    params = {"elderly_id": elderly_id, "key": SECRET_KEY}
 
-    # Query with decryption using pgp_sym_decrypt
-    query = text(f"""
-        SELECT
-            id,
-            pgp_sym_decrypt(name::bytea, :key) AS name,
-            pgp_sym_decrypt(date_of_birth::bytea, :key) AS date_of_birth,
-            gender,
-            pgp_sym_decrypt(nationality::bytea, :key) AS nationality,
-            pgp_sym_decrypt(dialect_group::bytea, :key) AS dialect_group,
-            marital_status,
-            pgp_sym_decrypt(address::bytea, :key) AS address
-        FROM elderly_profile
-        WHERE id = :elderly_id
-    """)
-
-    row = db.execute(query, params).fetchone()
-    db.close()
-
-    result = {
-        "id": str(row["id"]),
-        "name": row["name"],
-        "date_of_birth": row["date_of_birth"],
-        "gender": row["gender"],
-        "nationality": row["nationality"],
-        "dialect_group": row["dialect_group"],
-        "marital_status": row["marital_status"],
-        "address": row["address"]
-    }
-
-    return jsonify(result), 200
-
-@elderly_bp.route("/elderly", methods=["POST"])
-def post_elderly():
-    data = request.json
-    required_fields = ["name", "date_of_birth", "gender", "nationality",
-                       "dialect_group", "marital_status", "address"]
-
-    # Validate input
-    for field in required_fields:
-        if field not in data:
-            return jsonify({"error": f"Missing field: {field}"}), 400
-
-    db: Session = next(get_db())
     try:
-        # Insert using pgp_sym_encrypt for sensitive fields
-        sql = text(f"""
-            INSERT INTO elderly_profile
-            (name, date_of_birth, gender, nationality, dialect_group, marital_status, address)
-            VALUES (
-                pgp_sym_encrypt(:name, :key),
-                pgp_sym_encrypt(:date_of_birth, :key),
-                :gender::genderenum,
-                pgp_sym_encrypt(:nationality, :key),
-                pgp_sym_encrypt(:dialect_group, :key),
-                :marital_status::maritalenum,
-                pgp_sym_encrypt(:address, :key)
-            )
-            RETURNING id;
-        """)
+        user_id = g.get("user_id")
+        user_role = g.get("user_role")
+        if not user_id or not user_role:
+            return jsonify({"error": "Missing user_id or user_role in flask context"}), 500
 
-        result = db.execute(sql, {
-            "name": data["name"],
-            "date_of_birth": data["date_of_birth"],
-            "gender": data["gender"],
-            "nationality": data["nationality"],
-            "dialect_group": data["dialect_group"],
-            "marital_status": data["marital_status"],
-            "address": data["address"],
-            "key": SECRET_KEY
-        })
-        db.commit()
+        elderly_id = request.args.get("elderly_id")
 
-        new_id = result.scalar_one()
-        return jsonify({"id": str(new_id), "message": "Elderly profile created"}), 201
+        if elderly_id:
+            # Fetch single elderly row with decryption
+            params = {"elderly_id": elderly_id, "key": SECRET_KEY}
+            query = text(f"""
+                SELECT
+                    id,
+                    pgp_sym_decrypt(name::bytea, :key) AS name,
+                    pgp_sym_decrypt(date_of_birth::bytea, :key) AS date_of_birth,
+                    gender,
+                    pgp_sym_decrypt(nationality::bytea, :key) AS nationality,
+                    pgp_sym_decrypt(dialect_group::bytea, :key) AS dialect_group,
+                    marital_status,
+                    pgp_sym_decrypt(address::bytea, :key) AS address
+                FROM elderly_profile
+                WHERE id = :elderly_id
+            """)
+            row = db.execute(query, params).fetchone()
 
-    except Exception as e:
-        db.rollback()
-        return jsonify({"error": str(e)}), 500
+            if not row:
+                return jsonify({"error": "Elderly not found"}), 404
+
+            result = {
+                "id": str(row["id"]),
+                "name": row["name"],
+                "date_of_birth": row["date_of_birth"],
+                "gender": row["gender"],
+                "nationality": row["nationality"],
+                "dialect_group": row["dialect_group"],
+                "marital_status": row["marital_status"],
+                "address": row["address"]
+            }
+
+            return jsonify(result), 200
+
+        else:
+            # Fetch all accessible elderly IDs first
+            if user_role == "super_admin":
+                accessible_ids = [e.id for e in db.query(ElderlyProfile.id).distinct().all()]
+            else:
+                accessible_ids = [eid[0] for eid in (
+                    db.query(user_elderly.c.elderly_id)
+                      .filter(user_elderly.c.user_id == user_id)
+                      .distinct()
+                      .all()
+                )]
+
+            if not accessible_ids:
+                return jsonify([]), 200
+
+            # Fetch full decrypted info for all accessible elderly
+            params = {"key": SECRET_KEY, "ids": accessible_ids}
+            query = text(f"""
+                SELECT
+                    id,
+                    pgp_sym_decrypt(name::bytea, :key) AS name,
+                    pgp_sym_decrypt(date_of_birth::bytea, :key) AS date_of_birth,
+                    gender,
+                    pgp_sym_decrypt(nationality::bytea, :key) AS nationality,
+                    pgp_sym_decrypt(dialect_group::bytea, :key) AS dialect_group,
+                    marital_status,
+                    pgp_sym_decrypt(address::bytea, :key) AS address
+                FROM elderly_profile
+                WHERE id = ANY(:ids)
+            """)
+
+            rows = db.execute(query, params).fetchall()
+
+            result = [
+                {
+                    "id": str(r["id"]),
+                    "name": r["name"],
+                    "date_of_birth": r["date_of_birth"],
+                    "gender": r["gender"],
+                    "nationality": r["nationality"],
+                    "dialect_group": r["dialect_group"],
+                    "marital_status": r["marital_status"],
+                    "address": r["address"]
+                }
+                for r in rows
+            ]
+
+            return jsonify(result), 200
 
     finally:
         db.close()
