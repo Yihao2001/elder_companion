@@ -26,23 +26,19 @@ const ElderlyList: React.FC = () => {
     // const db_auth = { headers: { Authorization: `Bearer ${AUTH_TOKEN}` }}
 
     useEffect(() => {
-    // Temporary hardcoded list of elderly IDs you want to fetch
-    const elderlyIds = ['1632319b-05ba-4ff9-ba35-be63a24e42af', '87654321-4321-4321-4321-019876543210'];
+        const fetchProfiles = async () => {
+            try {
+                // Get a list of all assigned elderly info
+                const response = await axios.get(`${BASE_URL}/elderly`);
+                const results = response.data;
 
-    const fetchProfiles = async () => {
-        try {
-            const results = await Promise.all(
-                elderlyIds.map(id =>
-                    axios.get(`${BASE_URL}/elderly?elderly_id=${id}`).then(res => res.data)
-                )
-            );
-            setElderly(results);
-        } catch (err) {
-            setError("Failed to load elderly profiles");
-            console.error("Elderly profiles fetch error:", err);
-        } finally {
-            setLoading(false);
-        }};
+                setElderly(results);
+            } catch (err) {
+                setError("Failed to fetch or load elderly profiles");
+                console.error("Elderly profiles fetch error:", err);
+            } finally {
+                setLoading(false);
+            }};
 
         fetchProfiles();
     }, []);
